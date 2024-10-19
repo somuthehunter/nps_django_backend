@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Fees Collection</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+             <li class="breadcrumb-item active">Fees Collection</li>
+          </ul>
+       </div>
+    </div>
+</div>
+
+<!-- Filter Form -->
+<div class="row mb-4">
+    <div class="col-md-12">
+      <div class="filter-form">
+        <form method="get" class="form-inline">
+            <div class="form-group mr-3">
+                <label for="class_filter" class="mr-2"><strong>Filter by Class:</strong></label>
+                {{ form.class_filter }}
+            </div>
+            <button type="submit" class="btn btn-danger">Filter</button>
+        </form>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+       <div class="card card-table">
+          <div class="card-body">
+             <div class="table-responsive">
+                <table id="table_id" class="table table-hover table-center mb-0">
+                   <thead>
+                      <tr>
+                         <th>ID</th>
+                         <th>Student Name</th>
+                         {% comment %} <th>Fees Name</th> {% endcomment %}
+                         <th>Class</th>
+                         {% comment %} <th>Amount</th> {% endcomment %}
+                         <th class="text-center">Monthly Fee</th>
+                         {% comment %} <th class="text-center">Transport Fee</th> {% endcomment %}
+                      </tr>
+                   </thead>
+                   <tbody>
+                    {% for student in students %}
+                      <tr>
+                         <td>PRE2209</td>
+                         <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                         {% comment %} <td>
+                            <h2>
+                               <a>Exam Fees</a>
+                            </h2>
+                         </td> {% endcomment %}
+                         <td>{{ student.classes }}</td>
+                         {% comment %} <td>{{ student.fee.fee_structure.amount }}</td> {% endcomment %}
+                         <td class="text-center">
+                            <div class="actions">
+                               <a href="{% url 'update_fees' student.id %}" class="btn btn-sm bg-success-light mr-2">
+                               <i class="fas fa-rupee-sign"></i>
+                               </a>
+                               
+                            </div>
+                         </td>
+                         {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="{% url 'update_transport_fees' student.id %}" class="btn btn-sm bg-success-light mr-2">
+                              <i class="fas fa-bus"></i>
+                              </a>
+                              
+                           </div>
+                        </td> {% endcomment %}
+                      </tr>
+                    {% endfor %}
+                   </tbody>
+                </table>
+             </div>
+          </div>
+       </div>
+    </div>
+</div>
+<style>
+   body {
+       font-family: Arial, sans-serif;
+       line-height: 1.6;
+       margin: 0;
+       padding: 20px;
+   }
+   h1, h2 {
+       color: #333;
+   }
+   table {
+       width: 100%;
+       border-collapse: collapse;
+       margin-bottom: 20px;
+   }
+   th, td {
+       border: 1px solid #ddd;
+       padding: 12px;
+       text-align: left;
+   }
+   th {
+       background-color: #f2f2f2;
+       font-weight: bold;
+   }
+   tr:nth-child(even) {
+       background-color: #f9f9f9;
+   }
+   .month-dues {
+       margin-top: 10px;
+       font-size: 0.9em;
+   }
+   .total-due {
+       font-weight: bold;
+       color: #e74c3c;
+   }
+   .filter-form {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+  }
+  .filter-form select, .filter-form button {
+      padding: 5px 10px;
+      margin-right: 10px;
+  }
+</style>
+{% endblock main-content %}

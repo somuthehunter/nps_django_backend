@@ -1,0 +1,537 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Register Student</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Home</a></li>
+                <li class="breadcrumb-item active">Register Student</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% include "include/message.html" %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Student Information</span></h5>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="Enter student Name" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Address</label>
+                                <textarea class="form-control" name="address" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="contact">Contact</label>
+                                <input type="tel" 
+                                       class="form-control" 
+                                       id="contact" 
+                                       name="contact" 
+                                       pattern="[0-9]{10}"
+                                       inputmode="numeric"
+                                       maxlength="10"
+                                       title="Please enter exactly 10 digits for the contact number"
+                                       placeholder="Enter Student Contact No"
+                                       required>
+                                <small class="form-text text-muted">Enter a 10-digit contact number.</small>
+                                <div id="contactError" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                                                
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select class="form-control" name="gender" required>
+                                    <option value="" disabled selected>Select Gender</option>
+                                    <option>Female</option>
+                                    <option>Male</option>
+                                    <option>Others</option>
+                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Date of Birth</label>
+                                <input type="date" class="form-control" name="date_of_birth" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Class For</label>
+                                <select class="form-control" name="class_for" required>
+                                    <option value="" disabled selected>Select Class</option>
+                                    {% for key, value in class_choices %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Date of Entry</label>
+                                <input type="date" class="form-control" name="date_of_entry" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Last School Attended</label>
+                                <input type="text" class="form-control" name="last_school_attended" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Last Class Attended</label>
+                                <select class="form-control" name="last_class_attended" required>
+                                    <option value="" disabled selected>Select Class</option>
+                                    {% for key, value in class_choices %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Last Examination Attended</label>
+                                <select class="form-control" name="last_examination_attended" required>
+                                    <option value="" disabled selected>Select Class</option>
+                                    {% for key, value in class_choices %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Result</label>
+                                <input type="text" class="form-control" name="result" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Mother's Name</label>
+                                <input type="text" class="form-control" name="mothers_name" placeholder="Enter Mother Name" required>
+                            </div>
+                        </div>
+                        {% comment %} <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Mother's Occupation</label>
+                                 <input type="text" class="form-control" name="mothers_occupation" required>
+                            </div>
+                        </div> {% endcomment %}
+                    <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                       <label>Mother's Occupation</label>
+                       <select class="form-control" name="mothers_occupation" id="mother_occupation" onchange="toggleMotherOccupationField()"  required>
+                         <option value="" disabled selected>Select Mother's Occupation</option>
+                         <option value="House wife/Homemaker">House wife/Homemaker</option>
+                         <option value="Caregiver">Caregiver</option>
+                         <option value="Full time parent">Full time parent</option>
+                         <option value="Family Manager">Family Manager</option>
+                         <option value="Full time Family CEO">Full time Family CEO</option>
+                         <option value="Others">Others</option>
+                       </select>
+                     </div>
+                     <div class="form-group" id="mother_occupation_other_container" style="display: none;">
+                        <label><span style="color:red;">Specify Other Mother's Occupation</span></label>
+                        <input type="text" class="form-control" name="mothers_occupation_other">
+                    </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Mother's Qualification</label>
+                      <select class="form-control" name="mothers_qualification" id="mother_qualification" onchange="toggleMotherQualificationField()" required>
+                        <option value="">Select Mother's Qualification</option>
+                        <option value="Board pass">Board pass</option>
+                        <option value="Class 8">Class 8</option>
+                        <option value="Class 9">Class 9</option>
+                        <option value="Class 10">Class 10</option>
+                        <option value="HS Pass">HS Pass</option>
+                        <option value="Graduate">Graduate</option>
+                        <option value="Post Graduate">Post Graduate</option>
+                        <option value="PHD">PHD</option>
+                        <option value="Madarsa Qualification">Madarsa Qualification</option>
+                        <option value="Uneducated">Uneducated</option>
+                        <option value="Others">Others</option>
+                      </select>
+                    </div>
+                    <div class="form-group" id="mother_qualification_other_container" style="display: none;">
+                        <label><span style="color:red;">Specify Other Mother's Qualification</span></label>
+                        <input type="text" class="form-control" name="mothers_qualification_other">
+                    </div>
+                  </div>
+                  
+                        
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="mothers_mobile_no">Mother's Mobile No</label>
+                                <input type="tel" 
+                                    class="form-control" 
+                                    id="mothers_mobile_no" 
+                                    name="mothers_mobile_no" 
+                                    pattern="[0-9]{10}"
+                                    inputmode="numeric"
+                                    maxlength="10"
+                                    title="Please enter exactly 10 digits"
+                                    required>
+                                <small class="form-text text-muted">Enter a 10-digit contact number.</small>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Father's Name</label>
+                                <input type="text" class="form-control" name="fathers_name"placeholder="Enter Father Name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                              <label>Father's Occupation</label>
+                              <select class="form-control" name="fathers_occupation" id="father_occupation" onchange="toggleFatherOccupationField()" required>
+                                <option value="" disabled selected>Select Father's Occupation</option>
+                                <option value="Businessman">Businessman</option>
+                                <option value="Farmer">Farmer</option>
+                                <option value="Govt. Services">Govt. Services</option>
+                                <option value="Self-Employee">Self-Employee</option>
+                                <option value="Others">Others</option>
+                              </select>
+                            </div>
+                            <div class="form-group" id="father_occupation_other_container" style="display: none;">
+                                <label><span style="color:red;">Specify Other Father's Occupation</span></label>
+                                <input type="text" class="form-control" name="fathers_occupation_other">
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                              <label>Father's Qualification</label>
+                              <select class="form-control" name="fathers_qualification" id="father_qualification" onchange="toggleFatherQualificationField()" required>
+                                <option value="" disabled selected>Select Father's Qualification</option>
+                                <option value="Board pass">Board pass</option>
+                                <option value="Class 8">Class 8</option>
+                                <option value="Class 9">Class 9</option>
+                                <option value="Class 10">Class 10</option>
+                                <option value="HS Pass">HS Pass</option>
+                                <option value="Graduate">Graduate</option>
+                                <option value="Post Graduate">Post Graduate</option>
+                                <option value="PHD">PHD</option>
+                                <option value="Madarsa Qualification">Madarsa Qualification</option>
+                                <option value="Uneducated">Uneducated</option>
+                                <option value="Others">Others</option>
+                              </select>
+                            </div>
+                            <div class="form-group" id="father_qualification_other_container" style="display: none;">
+                                <label><span style="color:red;">Specify Other Father's Qualification</span></label>
+                                <input type="text" class="form-control" name="fathers_qualification_other">
+                            </div>
+                          </div>
+                          
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="fathers_mobile_no">Father's Mobile No</label>
+                                <input type="tel" 
+                                       class="form-control" 
+                                       id="fathers_mobile_no" 
+                                       name="fathers_mobile_no" 
+                                       pattern="[0-9]{10}"
+                                       inputmode="numeric"
+                                       maxlength="10"
+                                       title="Please enter exactly 10 digits"
+                                       required>
+                                <small class="form-text text-muted">Enter a 10-digit contact number.</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                              <label>Local Guardian</label>
+                              <select class="form-control" name="local_guardian" id="local_guardian" onchange="toggleLocalGuardianField()" required>
+                                <option value="" disabled selected>Select Local Guardian</option>
+                                <option value="Father">Father</option>
+                                <option value="Mother">Mother</option>
+                                <option value="Grandfather">Grandfather</option>
+                                <option value="Grandmother">Grandmother</option>
+                                <option value="Brother">Brother</option>
+                                <option value="Sister">Sister</option>
+                                <option value="Others">Others</option>
+                              </select>
+                            </div>
+                            <div class="form-group" id="local_guardian_other_container" style="display: none; ">
+                                <label><span style="color:red;">Specify Other Local Guardian</span></label>
+                                <input type="text" class="form-control" name="local_guardian_other">
+                            </div>
+                          </div>
+                          
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                              <label>Local Guardian Occupation</label>
+                              <select class="form-control" name="local_guardian_occupation" required>
+                                <option value="" disabled selected>Select Local Guardian Occupation</option>
+                                <option value="Businessman">Businessman</option>
+                                <option value="Farmer">Farmer</option>
+                                <option value="Govt. Services">Govt. Services</option>
+                                <option value="Self-Employee">Self-Employee</option>
+                                <option value="Employee">Employee</option>
+                                <option value="House wife/Homemaker">House wife/Homemaker</option>
+                                <option value="Caregiver">Caregiver</option>
+                                <option value="Full time parent">Full time parent</option>
+                                <option value="Family Manager">Family Manager</option>
+                              </select>
+                            </div>
+                          </div>
+                          
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                              <label>Local Guardian Qualification</label>
+                              <select class="form-control" name="local_guardian_qualification" required>
+                                <option value="" disabled selected>Select Local Guardian Qualification</option>
+                                <option value="Board pass">Board pass</option>
+                                <option value="Class 8">Class 8</option>
+                                <option value="Class 9">Class 9</option>
+                                <option value="Class 10">Class 10</option>
+                                <option value="HS Pass">HS Pass</option>
+                                <option value="Graduate">Graduate</option>
+                                <option value="Post Graduate">Post Graduate</option>
+                                <option value="PHD">PHD</option>
+                                <option value="Madarsa Qualification">Madarsa Qualification</option>
+                                <option value="Uneducated">Uneducated</option>
+                                <option value="Others">Others</option>
+                              </select>
+                            </div>
+
+                          </div>
+                          
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Handicapped</label>
+                                <select class="form-control" name="Handicapped" required>
+                                    <option value="" disabled selected>Select</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                              <label>Caste</label>
+                              <select class="form-control" name="caste" required>
+                                <option value="" disabled selected>Select Caste</option>
+                                <option value="General(GN)">General(GN)</option>
+                                <option value="Other Backward Class(OBC)">Other Backward Class(OBC)</option>
+                                <option value="Scheduled Caste(SC)">Scheduled Caste(SC)</option>
+                                <option value="Scheduled Tribe(ST)">Scheduled Tribe(ST)</option>
+                              </select>
+                            </div>
+                          </div>
+                          
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Caste ID</label>
+                                <input type="text" class="form-control" name="caste_id" placeholder="Enter Caste Id" required>
+                            </div>
+                        </div>
+                        {% comment %} <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Nationality</label>
+                                <input type="text" class="form-control" name="nationality" required>
+                            </div>
+                        </div> {% endcomment %}
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="nationality">Nationality</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="nationality" 
+                                       name="nationality" 
+                                       placeholder="Enter Country Name" 
+                                       list="countryList">
+                                <datalist id="countryList">
+                                    <option value="INDIA">
+                                    <!-- You can add more countries here if needed -->
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="aadhar_no">Aadhar Number</label>
+                                <input type="tel" 
+                                       class="form-control" 
+                                       id="aadhar_no" 
+                                       name="aadhar_no" 
+                                       pattern="[0-9]{12}"
+                                       inputmode="numeric"
+                                       maxlength="12"
+                                       title="Please enter exactly 12 digits for the Aadhar number"
+                                       placeholder="Enter Aadhar Number"
+                                       required>
+                                <small class="form-text text-muted">Enter a 12-digit Aadhar number.</small>
+                                <div id="aadharError" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                              <label>Religion</label>
+                              <select class="form-control" name="religion" required>
+                                <option value="" disabled selected>Select Religion</option>
+                                <option value="Hindu">Hindu</option>
+                                <option value="Muslim">Muslim</option>
+                                <option value="Buddhist">Buddhist</option>
+                                <option value="Christian">Christian</option>
+                                <option value="Jewish">Jewish</option>
+                                <option value="Sikh">Sikh</option>
+                                <option value="Others">Others</option>
+                              </select>
+                            </div>
+                          </div>
+                          
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Admission Category</label>
+                                <input type="text" class="form-control" name="boarding_for" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                              <label>Blood Group</label>
+                              <select class="form-control" name="blood_group" required>
+                                <option value="" disabled selected>Select Blood Group</option>
+                                <option value="O+(Positive)">O+(Positive)</option>
+                                <option value="O-(Negative)">O-(Negative)</option>
+                                <option value="A+(Positive)">A+(Positive)</option>
+                                <option value="A-(Negative)">A-(Negative)</option>
+                                <option value="B+(Positive)">B+(Positive)</option>
+                                <option value="B-(Negative)">B-(Negative)</option>
+                                <option value="AB+(Positive)">AB+(Positive)</option>
+                                <option value="AB-(Negative)">AB-(Negative)</option>
+                              </select>
+                            </div>
+                          </div>
+                          
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Date of Submission</label>
+                                <input type="date" class="form-control" name="date_of_submission" required>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-info ">Submit</button>
+                         </div>
+                      </div>
+                   </form>
+                </div>
+             </div>
+          </div>
+       </div>
+<script>
+    function setupPhoneInput(inputId) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'invalid-feedback';
+        input.parentNode.appendChild(errorDiv);
+    
+        input.addEventListener('input', function(e) {
+            // Remove any non-digit characters
+            this.value = this.value.replace(/\D/g, '');
+            
+            // Check the length and show appropriate error
+            if (this.value.length !== 10) {
+                this.classList.add('is-invalid');
+                if (this.value.length < 10) {
+                    errorDiv.textContent = 'Phone number must be 10 digits long.';
+                } else {
+                    errorDiv.textContent = 'Phone number cannot be more than 10 digits.';
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                errorDiv.textContent = '';
+            }
+        });
+    }
+    
+    // Set up both inputs
+    setupPhoneInput('fathers_mobile_no');
+    setupPhoneInput('mothers_mobile_no');
+    setupPhoneInput('contact');
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const aadharInput = document.getElementById('aadhar_no');
+        const aadharError = document.getElementById('aadharError');
+    
+        aadharInput.addEventListener('input', function(e) {
+            // Remove any non-digit characters
+            this.value = this.value.replace(/\D/g, '');
+            
+            // Check the length and show appropriate error
+            if (this.value.length !== 12) {
+                this.classList.add('is-invalid');
+                if (this.value.length < 12) {
+                    aadharError.textContent = 'Aadhar number must be 12 digits long.';
+                } else {
+                    aadharError.textContent = 'Aadhar number cannot be more than 12 digits.';
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                aadharError.textContent = '';
+            }
+        });
+    
+        // Prevent non-numeric input
+        aadharInput.addEventListener('keypress', function(e) {
+            if (e.key < '0' || e.key > '9') {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+<script>
+    function toggleMotherOccupationField() {
+        const motherOccupationSelect = document.getElementById('mother_occupation');
+        const motherOccupationOtherContainer = document.getElementById('mother_occupation_other_container');
+        
+        motherOccupationOtherContainer.style.display = (motherOccupationSelect.value === 'Others') ? 'block' : 'none';
+      }
+    
+    function toggleMotherQualificationField() {
+      const motherQualificationSelect = document.getElementById('mother_qualification');
+      const motherQualificationOtherContainer = document.getElementById('mother_qualification_other_container');
+      
+      motherQualificationOtherContainer.style.display = (motherQualificationSelect.value === 'Others') ? 'block' : 'none';
+    }
+    function toggleFatherOccupationField() {
+      const fatherOccupationSelect = document.getElementById('father_occupation');
+      const fatherOccupationOtherContainer = document.getElementById('father_occupation_other_container');
+      
+      fatherOccupationOtherContainer.style.display = (fatherOccupationSelect.value === 'Others') ? 'block' : 'none';
+    }
+  
+    function toggleFatherQualificationField() {
+      const fatherQualificationSelect = document.getElementById('father_qualification');
+      const fatherQualificationOtherContainer = document.getElementById('father_qualification_other_container');
+      
+      fatherQualificationOtherContainer.style.display = (fatherQualificationSelect.value === 'Others') ? 'block' : 'none';
+    }
+  
+    function toggleLocalGuardianField() {
+      const localGuardianSelect = document.getElementById('local_guardian');
+      const localGuardianOtherContainer = document.getElementById('local_guardian_other_container');
+      
+      localGuardianOtherContainer.style.display = (localGuardianSelect.value === 'Others') ? 'block' : 'none';
+    }
+
+  </script>
+  
+{% endblock main-content %}

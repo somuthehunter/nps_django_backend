@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block main-content %}
+<div class="container-fluid accounts-page">
+    <h1 class="mt-4 mb-4">Financial Dashboard</h1>
+    
+    <div class="row">
+        <!-- Account Balance -->
+        <div class="col-md-4 mb-4">
+            <div class="card balance-card">
+                <div class="card-body">
+                    <h5 class="card-title">Account Balance</h5>
+                    <h2 class="balance">$2,500.00</h2>
+                    <p class="text-muted">Last updated: {% now "F j, Y" %}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Due Payments -->
+        <div class="col-md-4 mb-4">
+            <div class="card due-card">
+                <div class="card-body">
+                    <h5 class="card-title">Due Payments</h5>
+                    <h2 class="due">$500.00</h2>
+                    <p class="text-muted">Next due date: May 15, 2024</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Payment History -->
+        <div class="col-md-4 mb-4">
+            <div class="card history-card">
+                <div class="card-body">
+                    <h5 class="card-title">Payment History</h5>
+                    <h2 class="paid">$1,500.00</h2>
+                    <p class="text-muted">Total paid this semester</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Recent Transactions -->
+        <div class="col-md-8 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Recent Transactions</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Apr 1, 2024</td>
+                                <td>Tuition Fee</td>
+                                <td class="text-success">+$1,000.00</td>
+                            </tr>
+                            <tr>
+                                <td>Mar 15, 2024</td>
+                                <td>Library Fine</td>
+                                <td class="text-danger">-$20.00</td>
+                            </tr>
+                            <tr>
+                                <td>Mar 1, 2024</td>
+                                <td>Semester Fee</td>
+                                <td class="text-success">+$500.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Payment Methods -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Payment Methods</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Credit Card
+                            <span class="badge bg-primary rounded-pill">Default</span>
+                        </li>
+                        <li class="list-group-item">Bank Transfer</li>
+                        <li class="list-group-item">PayPal</li>
+                    </ul>
+                    <button class="btn btn-outline-primary mt-3">Add Payment Method</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .accounts-page {
+        background-color: #f8f9fa;
+        padding: 20px;
+    }
+    
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .balance-card {
+        background-color: #28a745;
+        color: white;
+    }
+    
+    .due-card {
+        background-color: #dc3545;
+        color: white;
+    }
+    
+    .history-card {
+        background-color: #17a2b8;
+        color: white;
+    }
+    
+    .balance, .due, .paid {
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+    
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    
+    .table th {
+        border-top: none;
+    }
+    
+    .text-success {
+        color: #28a745 !important;
+    }
+    
+    .text-danger {
+        color: #dc3545 !important;
+    }
+    
+    .btn-outline-primary {
+        border-color: #007bff;
+        color: #007bff;
+    }
+    
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
+{% endblock %}

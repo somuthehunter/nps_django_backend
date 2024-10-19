@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Edit Attendance</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="{% url 'admin_view_attendance' %}">Attendance</a></li>
+             <li class="breadcrumb-item active">Edit</li>
+          </ul>
+       </div>
+    </div>
+ </div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <header class="custom-header text-center">
+                    <h1><i class="fas fa-edit me-2"></i>&nbsp;Edit Attendance</h1>
+                </header>
+
+                <main class="container">
+                    <form class="attendance-form" method="post">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <h4 class="mb-3 text-center">Date: {{ date }} | Class: {{ class_name }} | Section: {{ section }}</h4>
+                            <div class="select-all form-check">
+                                <input class="form-check-input custom-checkbox" type="checkbox" id="selectAll">
+                                <label class="form-check-label" for="selectAll">
+                                    &nbsp;&nbsp;<strong>Select All</strong>
+                                </label>
+                            </div>
+                            <div class="student-list">
+                                <div class="row fw-bold mb-3">
+                                    <div class="col-1"><strong>#</strong></div>
+                                    <div class="col-8"><strong>Name</strong></div>
+                                    <div class="col-3"><strong>Present</strong></div>
+                                </div>
+                                {% for student in attendance_data %}
+                                <div class="row student-row align-items-center">
+                                    <div class="col-1">{{ forloop.counter }}</div>
+                                    <div class="col-8">{{ student.student_name }}</div>
+                                    <div class="col-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input custom-checkbox student-checkbox" type="checkbox" 
+                                                   id="student_{{ student.student_id }}" name="student_{{ student.student_id }}"
+                                                   {% if student.status == 'present' %}checked{% endif %}>
+                                            <label class="form-check-label" for="student_{{ student.student_id }}"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-submit w-100">
+                            <i class="fas fa-save me-2"></i>&nbsp;&nbsp;Update Attendance
+                        </button>
+                    </form>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .custom-header {
+        background-color: #4a69bd;
+        color: white;
+        padding: 30px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .attendance-form {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .student-list {
+        margin-top: 20px;
+    }
+    .student-row {
+        transition: all 0.3s;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .student-row:hover {
+        background-color: #f8f9fa;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .custom-checkbox {
+        width: 20px;
+        height: 20px;
+    }
+    .btn-submit {
+        background-color: #4a69bd;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        transition: all 0.3s;
+    }
+    .btn-submit:hover {
+        background-color: #3c5aa6;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+</style>
+
+<script>
+    document.getElementById('selectAll').addEventListener('change', function() {
+        var isChecked = this.checked;
+        document.querySelectorAll('.student-checkbox').forEach(function(checkbox) {
+            checkbox.checked = isChecked;
+        });
+    });
+</script>
+{% endblock main-content %}

@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Take Attendance</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="subjects.html">Attendance</a></li>
+             <li class="breadcrumb-item active">Add </li>
+          </ul>
+       </div>
+    </div>
+ </div>
+ {% include "include/message.html" %}
+ <div class="row">
+    <div class="col-sm-12">
+       <div class="card">
+          <div class="card-body">
+            {% if action is None %}
+             <form method="post" action="?action=get_student">
+               {% csrf_token %}
+                <div class="row">
+                   <div class="col-12">
+                      <h5 class="form-title text-center"><span>Student Information</span></h5>
+                   </div>
+                
+                   <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label><strong>Class</strong></label>
+                            <select class="form-control" name="classes">
+                                <option value="" disabled selected>Select Class</option>
+                                {% for key, value in class_choices %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div> 
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label><strong>Section</strong></label>
+                            <select class="form-control" name="section">
+                                <option value="" disabled selected>Select Section</option>
+                                {% for key, value in section_choices %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>       
+                </div>
+                   
+                   <div class="col-12 text-center">
+                      <button type="submit" class="btn btn-dark">Submit</button>
+                   </div>
+                </div>
+             </form>
+            {% elif action == 'take_attendance' %}
+<header class="custom-header text-center">
+    <h1><i class="fas fa-user-check me-2"></i>&nbsp;Take Attendance</h1>
+</header>
+
+<main class="container">
+    <form class="attendance-form" method="post" action="?action=submit_attendance">
+        {% csrf_token %}
+        <input type="hidden" name="classes" value="{{ students.0.classes }}">
+        <div class="mb-4">
+            <label for="date" class="form-label fs-5"><strong>Date:</strong></label>
+            <input type="date" class="form-control form-control-lg" id="date" name="date" required>
+        </div>
+
+        <div class="mb-4">
+            <h2 class="mb-3 text-center">Student List</h2>
+            <div class="select-all form-check">
+                <input class="form-check-input custom-checkbox" type="checkbox" id="selectAll">
+                <label class="form-check-label" for="selectAll">
+                    &nbsp;&nbsp;<strong>Select All</strong>
+                </label>
+            </div>
+            <div class="student-list">
+                <div class="row fw-bold mb-3">
+                    <div class="col-1"><strong>#</strong></div>
+                    <div class="col-8"><strong>Name</strong></div>
+                    <div class="col-3"><strong>Present</strong></div>
+                </div>
+                {% for student in students %}
+                <div class="row student-row align-items-center">
+                    <div class="col-1">{{ forloop.counter }}</div>
+                    <div class="col-8">{{ student.admin.first_name }} {{ student.admin.last_name }}</div>
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox student-checkbox" type="checkbox" id="student_{{ student.id }}" name="student_{{ student.id }}">
+                            <label class="form-check-label" for="student_{{ student.id }}"></label>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-submit w-100">
+            <i class="fas fa-save me-2"></i>&nbsp;&nbsp;Submit Attendance
+        </button>
+    </form>
+</main>
+{% endif %}
+          </div>
+       </div>
+    </div>
+ </div>
+ <style>
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .custom-header {
+        background-color: #4a69bd;
+        color: white;
+        padding: 30px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .attendance-form {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .student-list {
+        margin-top: 20px;
+    }
+    .student-row {
+        transition: all 0.3s;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .student-row:hover {
+        background-color: #f8f9fa;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .custom-checkbox {
+        width: 20px;
+        height: 20px;
+    }
+    .btn-submit {
+        background-color: #4a69bd;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        transition: all 0.3s;
+    }
+    .btn-submit:hover {
+        background-color: #3c5aa6;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+</style>
+<script>
+    document.getElementById('selectAll').addEventListener('change', function() {
+        var isChecked = this.checked;
+        document.querySelectorAll('.student-checkbox').forEach(function(checkbox) {
+            checkbox.checked = isChecked;
+        });
+    });
+</script>
+{% endblock main-content %}

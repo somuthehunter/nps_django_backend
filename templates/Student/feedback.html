@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main-content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Forum - Class Notes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            {% comment %} padding: 20px; {% endcomment %}
+        }
+        .page-header {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .page-title {
+            color: #2c3e50;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+        }
+        .breadcrumb-item a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .subject-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .subject-card:hover {
+            transform: translateY(-5px);
+        }
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .subject-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 0;
+        }
+        .view-all-btn {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .view-all-btn:hover {
+            background-color: #2980b9;
+            color:#fff;
+        }
+        .note-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .note-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .note-item:hover {
+            background-color: #e9ecef;
+        }
+        .note-icon {
+            margin-right: 15px;
+            color: #3498db;
+            font-size: 1.2rem;
+        }
+        .note-details {
+            flex-grow: 1;
+        }
+        .note-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .note-info {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        .download-btn {
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .download-btn:hover {
+            background-color: #27ae60;
+            color:#fff;
+        }
+        /* Styles for the feedback form */
+        .feedback-section {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 40px;
+        }
+        .feedback-title {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .feedback-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #34495e;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        textarea.form-control {
+            height: 150px;
+            resize: vertical;
+        }
+        .submit-btn {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Student Feedback</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Class Notes</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="container">
+    <!-- ... (previous content remains unchanged) ... -->
+    
+    <!-- Feedback Form -->
+    <div class="feedback-section">
+            {% include "include/message.html" %}
+            
+            <h2 class="feedback-title">Provide Feedback on Teaching</h2>
+            <form class="feedback-form" action="#" method="POST">
+                {% csrf_token %}
+                <div class="form-group" hidden>
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name"  value="{{user.first_name}} {{user.last_name}}" >
+                </div>
+                <div class="form-group" hidden>
+                    <label for="classes">Class</label>
+                    <input type="text" class="form-control" id="classes" name="classes" value="{{user.student.classes}}" >
+                </div>
+                <div class="form-group" hidden>
+                    <label for="section">Section</label>
+                    <input type="text" class="form-control" id="section" name="section"  value="{{user.student.section}}" >
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select class="form-control" id="subject" name="subject" required>
+                        <option value="" disabled selected>Select Subject</option>
+                        
+                        {% for i in subjects %}
+                            <option value="{{ i }}">{{ i.subject_name }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="teacher">Teacher</label>
+                    <input type="text" class="form-control" id="teacher" name="teacher_name" placeholder="Enter teacher's name" required>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <select class="form-control" id="rating" name="rating" required>
+                        <option value="" disabled selected>Select Rating</option>
+                        <option value="5">Excellent</option>
+                        <option value="4">Very Good</option>
+                        <option value="3">Good</option>
+                        <option value="2">Fair</option>
+                        <option value="1">Poor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comments">Comments</label>
+                    <textarea class="form-control" id="feedback" name="feedback" placeholder="Please provide your feedback here..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="submit-btn">Submit Feedback</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    </body>
+    </html>
+    {% endblock main-content %}

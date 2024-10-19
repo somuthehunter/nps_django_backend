@@ -1,0 +1,409 @@
+{% comment %} {% extends "base.html" %}
+{% block main-content %} {% endcomment %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form and Receipt</title>
+    <script>
+        function printPage() {
+            window.print();
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="registration-form">
+            <div class="header">
+                <img src="{% static "img/logologo.jpg" %}" alt="School Logo" class="logo">
+                <div class="school-info">
+                    <h1>NATIONAL PUBLIC SCHOOL</h1>
+                    <p>(Under K.M.C.M.W.S.T - Regd. by State Government)</p>
+                    <p><strong>An English Medium Co-Educational School</strong></p>
+                    <p>At. Milanpally, Po.- Panjipara, Ps.-Goalpokher, Dist.- Uttar Dinajpur</p>
+                </div>
+            </div>
+            <div class="form-details">
+                <h2 class="important">Registration Form</h2>
+                <p>2024-2025</p>
+                <div class="form-row">
+                    <div class="form-col">
+                        <p><strong>Form No:</strong> __</p>
+                    </div>
+                </div>
+                <div class="sid-container">
+                    <table>
+                        <tr>
+                            <td class="info">Name of Candidate:</td>
+                            <td>{% for i in student_registration %}{{i.name}}{% endfor %}</td>
+                            <td class="info">DOR:</td>
+                            <td>21/12/2023</td>
+                        </tr>
+                        <tr>
+                            <td class="info">Father's Name:</td>
+                            <td>{% for i in student_registration %}{{i.fathers_name}}{% endfor %}</td>
+                            <td class="info">DOE:</td>
+                            <td>21/12/2023</td>
+                        </tr>
+                        <tr>
+                            <td class="info">Address:</td>
+                            <td colspan="3">{% for i in student_registration %}{{i.address}}{% endfor %}</td>
+                        </tr>
+                        <tr>
+                            <td class="info">Class For:</td>
+                            <td>{% for i in student_registration %}{{i.class_for}}{% endfor %}</td>
+                            <td class="info">Contact No:</td>
+                            <td>{% for i in student_registration %}{{i.fathers_mobile_no}}{% endfor %}</td>
+                        </tr>
+                        <tr>
+                            <td class="info">DOB:</td>
+                            <td>{% for i in student_registration %}{{i.date_of_birth|date:"d-m-Y"}}{% endfor %}</td>
+                            <td class="info">Gender:</td>
+                            <td>{% for i in student_registration %}{{i.gender}}{% endfor %}</td>
+                        </tr>
+                    </table>
+                    <div class="sid">
+                        <p><strong>SID:</strong> __</p>
+                        <div class="spic"></div>
+                    </div>
+                </div>
+                <p class="brown important left">Note: Result of the Entrance Exam will be published on the same day.</p>
+                <p class="authorized important left">Office Copy</p>
+                <p class="authorized important right">Authorized</p>
+            </div>
+        </div>
+
+        <div class="receipt">
+            <div class="header">
+                <img src="{% static "img/logologo.jpg" %}" alt="School Logo" class="logo">
+                <div class="school-info">
+                    <h1>NATIONAL PUBLIC SCHOOL</h1>
+                    <p>(Under K.M.C.M.W.S.T - Regd. by State Government)</p>
+                    <p><strong>An English Medium Co-Educational School</strong></p>
+                    <p>At. Milanpally, Po.- Panjipara, Ps.-Goalpokher, Dist.- Uttar Dinajpur</p>
+                </div>
+            </div>
+            <div class="form-details">
+                <h2 class="important">Receipt</h2>
+                <div class="form-row">
+                    <div class="form-col">
+                        <p><strong class="important brown">RID:</strong> 28</p>
+                        <p><strong class="important brown">DOR:</strong> {% for i in student_registration %}{{i.date_of_entry|date:"d-m-Y"}}{% endfor %}</p>
+                    </div>
+                </div>
+                <table>
+                    <tr>
+                        <td class="info">Received with Thanks, from:</td>
+                        <td>{% for i in student_registration %}{{i.name}}{% endfor %}</td>
+                    </tr>
+                    <tr>
+                        <td class="info">Father's Name:</td>
+                        <td>{% for i in student_registration %}{{i.fathers_name}}{% endfor %}</td>
+                    </tr>
+                    <tr>
+                        <td class="info">Address:</td>
+                        <td>{% for i in student_registration %}{{i.address}}{% endfor %}</td>
+                    </tr>
+                    <tr>
+                        <td class="info">For Class:</td>
+                        <td>{% for i in student_registration %}{{i.class_for}}{% endfor %}</td>
+                    </tr>
+                    <tr>
+                        <td class="info">The sum of Rupees:</td>
+                        <td>0.00 (RUPEES ONLY)</td>
+                    </tr>
+                    <tr>
+                        <td class="info">By Cheque/Cash/Draft/Online/UPI Tr No:</td>
+                        <td>NA</td>
+                    </tr>
+                </table>
+                <p class="authorized important left">Student Copy</p>
+                <p class="authorized important right">Authorized</p>
+            </div>
+        </div>
+        <button class="print-button" onclick="printPage()">Print</button>
+    </div>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+    }
+    
+    .container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .logo {
+        width: 80px;
+        margin-right: 10px;
+    }
+    
+    .school-info {
+        text-align: center;
+    }
+    
+    .school-info h1 {
+        font-size: 28px;
+        margin: 0;
+        text-transform: uppercase;
+        color: #69402e;
+    }
+    
+    .school-info p {
+        margin: 2px 0;
+        font-size: 16px;
+        color: #1d708c;
+    }
+    p{
+        font-size: 16px;
+    }
+    .registration-form,
+    .receipt {
+        margin-bottom: 20px;
+        border: 2px solid #1d708c;
+        padding: 15px 50px;
+        background-color: #fefefe;
+    }
+    
+    .registration-form h2,
+    .receipt h2 {
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        color: #69402e;
+    }
+    
+    .form-details {
+        text-align: left;
+    }
+    
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    
+    .form-col {
+        width: 48%;
+    }
+    .receipt .form-row {
+        display: flex;
+        justify-content: end;
+        margin-bottom: 10px;
+    }
+    
+    .receipt .form-col {
+        width: 20%;
+    }
+    .form-details p {
+        text-align: center;
+        color: #1d708c;
+    }
+    
+    .form-row p {
+        text-align: left;
+        color: #1d708c;
+    }
+    
+    .spic {
+        height: 150px; 
+        width: 150px; 
+        border: 1px solid #000;
+    }
+    
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+    }
+    
+    table,
+    th,
+    td {
+        border: 1px solid #1d708c;
+    }
+    
+    td {
+        padding: 8px;
+        font-size: 16px;
+        color: #1d708c;
+    }
+    
+    .info {
+        font-weight: bold;
+        color: #1f2c6d ;
+    }
+    
+    
+    .sid-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    
+    .sid {
+        margin-left: 10px;
+    }
+    
+    .sid p {
+        margin: 0;
+    }
+    
+    .authorized {
+        text-align: right;
+        font-weight: bold;
+        margin-top: 10px;
+        color: #69402e !important;
+    }
+    .brown{
+        color: #69402e !important;
+    }
+    .important{
+        text-decoration: underline;
+    }
+    .left{
+        text-align: left !important;
+    }
+    .right{
+        text-align: right !important;
+    }
+    @media (max-width: 768px) {
+        .school-info h1 {
+            font-size: 16px;
+        }
+        .school-info p {
+            font-size: 13px;
+        }
+        .registration-form h2, .receipt h2 {
+            font-size: 16px;
+        }
+        .form-details {
+            padding: 10px;
+        }
+    
+        .form-row {
+            display: block;
+            position: absolute;
+        }
+        .receipt .form-row{
+            position: relative;
+        }
+        .receipt .form-col {
+            width: 30%;
+            margin-bottom: 10px;
+        }
+    
+        .sid-container {
+            align-items: flex-start;
+        }
+    
+        table {
+            width: 100%;
+            font-size: 14px;
+            margin: 54px 0;
+        }
+    
+        table,
+        th,
+        td {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    
+        tr {
+            display: table-row;
+            flex-direction: row;
+            margin-bottom: 10px;
+        }
+    
+        td {
+            width: auto;
+            text-align: left;
+        }
+    
+        input {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+    
+        .sid {
+            align-self: center;
+            margin-bottom: 10px;
+        }
+        .registration-form, .receipt{
+            padding: 25px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .form-details {
+            padding: 5px;
+        }
+        .receipt .form-col {
+            width: 30%;
+        }
+        table,
+        th,
+        td {
+            font-size: 12px;
+            padding: 6px;
+        }
+    
+        input {
+            font-size: 12px;
+        }
+    
+        .sid {
+            order: -1;
+            align-self: flex-end;
+            margin-bottom: 10px;
+        }
+        .registration-form, .receipt{
+            padding: 15px 30px;
+        }
+    }
+    @media print {
+        .print-button {
+            display: none;
+        }
+        .registration-form,
+        .receipt {
+            page-break-after: always;
+        }
+    }
+</style>
+</body>
+
+</html>
+{% comment %} 
+{% endblock main-content %} {% endcomment %}

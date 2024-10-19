@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block main-content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System - Staff Portal</title>
+    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> {% endcomment %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        /* Custom CSS */
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .dashboard-header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,.08);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .stats-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #007bff;
+        }
+        .stats-text {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            border-color: #007bff;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            color:#fff;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            color:#fff;
+        }
+        .icon-bg {
+            width: 4rem;
+            height: 4rem;
+            background-color: #e3f2fd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .icon-bg i {
+            font-size: 2rem;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="container">
+            <h1 class="dashboard-title">Student Management System - Portal</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="icon-bg mx-auto">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h5 class="card-title">Enrolled Students</h5>
+                        <p class="stats-number">
+                            {% if enroll %}{{ enroll|default:"0" }}{% else %}0{% endif %}
+                        </p>
+                        <p class="stats-text mb-4">Total students currently enrolled</p>
+                        <a href="{% url "enrolled_student" %}" class="btn btn-custom">Manage Students</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="icon-bg mx-auto">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h5 class="card-title">Student Enquiries</h5>
+                        <p class="stats-number">
+                            {% if enquiry %}{{ enquiry|default:"0" }}{% else %}0{% endif %}
+                        </p>
+                        <p class="stats-text mb-4">New enquiries to be addressed</p>
+                        <a href="{% url "enquiry_students" %}" class="btn btn-custom">View Enquiries</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="icon-bg mx-auto">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h5 class="card-title">Registered Student</h5>
+                        <p class="stats-number">
+                            {% if registered_student %}{{ registered_student|default:"0" }}{% else %}0{% endif %}
+                        </p>
+                        <p class="stats-text mb-4">Total registered students</p>
+                        <a href="{% url "Student_registration_list" %}" class="btn btn-custom">Manage Student</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock main-content %}

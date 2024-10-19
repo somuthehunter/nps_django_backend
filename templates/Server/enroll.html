@@ -1,0 +1,163 @@
+{% extends "Server/header.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enroll Form</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    #country-code {
+      display: inline-block;
+      padding: 0.5rem;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.375rem 0 0 0.375rem;
+      color: #4b5563;
+      font-size: 0.875rem;
+    }
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      height: 100vh;
+      padding: 1rem;
+    }
+    .form-container {
+      flex: 1;
+      max-width: 600px;
+    }
+    .image-container {
+      flex: 1;
+      height: 100%;
+      max-width: 600px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .image-container img {
+      max-width: 100%;
+      height: 85%;
+      border-radius: 0.5rem;
+    }
+    @media (max-width: 480px) {
+      .container {
+        flex-wrap: wrap;
+      }
+      .form-container {
+        flex: auto;
+      }
+      .image-container {
+        flex: auto;
+        height: auto;
+      }
+      .image-container img {
+        width: auto;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100">
+  <div class="container">
+    <div class="form-container bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Post Enquiry Form</h2>
+      <form id="enquiry-form" method="post"  class="flex flex-col">
+        {% csrf_token %}
+        <input
+          placeholder="Student's Name"
+          id="student-name"
+          name="student_name"
+          class="bg-gray-100 text-gray-800 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+          type="text"
+          required
+        />
+
+        <input
+          placeholder="Father's Name"
+          id="father-name"
+          name="father_name"
+          class="bg-gray-100 text-gray-800 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+          type="text"
+          required
+        />
+
+        <label for="class" class="mb-2 text-gray-700">Class:</label>
+        <select
+          id="class"
+          name="class"
+          class="bg-gray-100 text-gray-800 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+          required
+        >
+        <option value="" disabled selected>Select Class</option>
+        <option value="Pre-Nursery">Pre-Nursery</option>
+        <option value="Nursery">Nursery</option>
+        <option value="LKG">LKG</option>
+        <option value="UKG">UKG</option>
+        <option value="I">I</option>
+        <option value="II">II</option>
+        <option value="III">III</option>
+        <option value="IV">IV</option>
+        <option value="V">V</option>
+        <option value="VI">VI</option>
+        <option value="VII">VII</option>
+        <option value="VIII">VIII</option>
+          <!-- Add more options as needed -->
+        </select>
+
+        <input
+          placeholder="Email"
+          id="email"
+          name="email"
+          class="bg-gray-100 text-gray-800 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+          type="email"
+          required
+        />
+
+        <div class="flex items-center mb-4">
+          <span id="country-code" class="text-gray-800">+91</span>
+          <input
+            placeholder="Mobile Number"
+            id="mobile"
+            name="mobile"
+            class="bg-gray-100 text-gray-800 border-0 rounded-r-md p-2 flex-1 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+            type="tel"
+            pattern="\d{10}"
+            maxlength="10"
+            required
+          />
+        </div>
+
+        <textarea
+          placeholder="Your Question"
+          id="question"
+          name="question"
+          rows="4"
+          class="bg-gray-100 text-gray-800 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+          required
+        ></textarea>
+
+        <button
+          class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+    <div class="image-container">
+      <img
+        src="{% static 'Website/Website/For Image Gallery/FINAL/students.jpg' %}"
+        alt="Decorative Image"
+      />
+    </div>
+  </div>
+</body>
+
+{% endblock content %}

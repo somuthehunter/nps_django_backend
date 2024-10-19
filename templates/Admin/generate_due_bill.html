@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Receipt</title>
+    <link rel="shortcut icon" href="{% static "img/logologo.jpg" %}">
+    <link rel="stylesheet" href="{% static 'recipt.css' %}">
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    .containers {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+        
+    .header {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        padding-bottom: 5px;
+        margin-bottom: 0px;
+    } 
+    .header img {
+        max-width: 100px;
+        height: 100px;
+    } 
+    
+    .header h1 {
+        margin-bottom: 5px;
+        font-size: 1.8rem;
+    }
+
+    h1, h2, p {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    table, th, td {
+        border: 1px solid #000;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .blue-text {
+        color: blue;
+    }
+    #print-btn {
+        display: block;
+        margin: 0 auto 20px auto;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    #print-btn:hover {
+        background-color: #45a049;
+    }
+    /* Print-specific styles */
+    @media print {
+        body {
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            display: table; 
+        }
+
+        th, td {
+            font-size: 12px;
+        }
+
+        .container {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        #print-btn {
+            display: none; /* Hide the button during printing */
+        }
+    }
+
+    /* Set the page size for printing on A4 */
+    @page {
+        size: A4;
+        margin: 20mm;
+    }
+
+    
+</style>
+
+<div class="containers">
+     <div class="header">
+        <img src="{% static "img\logologo.jpg" %}" alt="School Logo">
+        <div class="header-text">
+            <h1>NATIONAL PUBLIC SCHOOL</h1>
+            <p>(Under K.M.C.W.S. - Regtd. by State Government)</p>
+            <p>An English Medium Co-Educational School</p>
+            <p>At. Milanpally, Po.- Panjipara, Ps.- Goalpokher, Dist.- Uttar Dinajpur</p>
+            <p><b>Due List - {{ bus_name }} </b></p>
+        </div>
+    </div> 
+
+    <button id="print-btn" onclick="window.print()">Print Report</button>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Sr No</th>
+                <th>Roll No</th>
+                <th>Student Name</th>
+                <th>Father</th>
+                <th>Mobile No</th>
+                <th>Class</th>
+                <th>DS/HS/TR</th>
+                <th>Bus No</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student_data in students_data %}
+                      {% if student_data.total_due > 0 %}
+                      <tr>
+                         <td>{{ student_data.student.id }}</td>
+                         <td>{{ student_data.student.roll_no }}</td>
+                         <td>{{ student_data.student.admin.first_name }} {{ student_data.student.admin.last_name }}</td>
+                         <td>{{student_data.student.father_name}}</td>
+                         <td>{{student_data.student.mobile_number}}</td>
+                         <td>{{ student_data.student.classes }} - {{ student_data.student.section }} </td>
+                         
+                         
+                        
+
+                            
+                        <td> {{ fee_type }}</td>
+                        <td class="total-due">{{ student_data.student.fee.bus_name }}</td>
+                        <td class="total-due">₹{{ student_data.total_due }}</td>
+                        </td>
+                        
+                      </tr>
+                      {% endif %}
+                    {% endfor %}
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // JavaScript function to trigger printing
+    function printPage() {
+        window.print();
+    }
+</script>
+
+</html>

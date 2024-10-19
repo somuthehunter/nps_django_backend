@@ -1,0 +1,387 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Add Students</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="students.html">Students</a></li>
+             <li class="breadcrumb-item active">Add Students</li>
+          </ul>
+       </div>
+    </div>
+ </div>
+{% include "include/message.html" %}
+
+ <div class="row">
+    <div class="col-sm-12">
+       <div class="card">
+          <div class="card-body">
+             <form method="post" action="{% url "add_student" %} " enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                   <div class="col-12">
+                      <h5 class="form-title"><span>Student Information</span></h5>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>First Name</label>
+                         <input type="text" class="form-control" name ="first_name" placeholder="Enter First Name" required>
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Last Name</label>
+                         <input type="text" class="form-control" name="last_name" placeholder="Enter Last Name" required>
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Student Id</label>
+                         <input type="text" class="form-control " placeholder="Enter Student ID" name="student_id">
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label>Roll no </label>
+                        <input type="text" class="form-control " placeholder="Enter roll no" name="roll_no">
+                     </div>
+                  </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Gender</label>
+                         <select class="form-control" name="gender" required>
+                            <option>Select Gender</option>
+                            <option>Female</option>
+                            <option>Male</option>
+                            <option>Others</option>
+                         </select>
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Date of Birth</label>
+                         <div>
+                            <input type="date" class="form-control" name="date_of_birth" required>
+                         </div>
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label>Class Name</label>
+                        <select class="form-control" name="classes" required>
+                            <option value="" disabled selected>Select Class</option>
+                            {% for key, value in class_choices %}
+                                <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                   <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label for="fee_structure">Fee Structure</label>
+                        <select name="fee_structure" id="fee_structure" class="form-control" required>
+                              <option >Select Fee Structure</option>
+                            {% for fee_structure in fee_structures %}
+                                <option value="{{ fee_structure.id }}">{{ fee_structure.class_name }} - {{ fee_structure.amount }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>                 
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label>Religion</label>
+                        <select class="form-control" name="religion" required>
+                           <option value="" disabled selected>Select Religion</option>
+                           <option value="Hindu">Hindu</option>
+                           <option value="Muslim">Muslim</option>
+                           <option value="Buddhist">Buddhist</option>
+                           <option value="Christian">Christian</option>
+                           <option value="Jewish">Jewish</option>
+                           <option value="Sikh">Sikh</option>
+                           <option value="Others">Others</option>
+                         </select>
+                     </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                         <label for="mobile_number">Mobile No</label>
+                         <input type="tel" 
+                                class="form-control" 
+                                id="mobile_number" 
+                                name="mobile_number" 
+                                pattern="[0-9]{10}"
+                                inputmode="numeric"
+                                maxlength="10"
+                                title="Please enter exactly 10 digits for the contact number"
+                                required>
+                         <small class="form-text text-muted">Enter a 10-digit contact number.</small>
+                         <div id="contactError" class="invalid-feedback"></div>
+                     </div>
+                 </div>
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label>Admission Number</label>
+                        <input type="text" class="form-control" placeholder="Enter Adm no" name="admission_no">
+                     </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label>Section </label>
+                        <select class="form-control" name="section" required>
+                            <option value="" disabled selected>Select Section</option>
+                            {% for key, value in section_choices %}
+                                <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                         <label for="country">Country</label>
+                         <input type="text" 
+                                class="form-control" 
+                                id="country" 
+                                name="country" 
+                                placeholder="Enter Country Name" 
+                                list="countryList">
+                         <datalist id="countryList">
+                             <option value="INDIA">
+                             <!-- You can add more countries here if needed -->
+                         </datalist>
+                     </div>
+                 </div>
+                 <div class="col-12 col-sm-6">
+                  <div class="form-group">
+                      <label for="profile_pic">Student Image (Max 2MB)</label>
+                      <input type="file" class="form-control" id="profile_pic" name="profile_pic" accept="image/*" required>
+                      <small class="text-muted">Please upload an image file less than 2MB in size.</small>
+                  </div>
+              </div>
+                  <div class="col-12">
+                     <h5 class="form-title"><span>Category</span></h5>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group" hidden>
+                        <label for="transport_fees">Transport Fee</label>
+                        <select name="transport_fees" id="transport_fees" class="form-control" >
+                            {% for fee_structure in transports %}
+                                <option value="{{ fee_structure.id }}">{{ fee_structure.root_name }} - {{ fee_structure.amount }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group" hidden>
+                        <label for="transport_fees">Hostel Fee</label>
+                        <select name="hostelfee" id="hostelfee" class="form-control" >
+                            {% for fee_structure in hostelfees %}
+                                <option value="{{ fee_structure.id }}">{{ fee_structure.class_name }} - {{ fee_structure.amount }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group" >
+                        <label for="student_type">Student Type</label>
+                        <select name="student_type" id="student_type" class="form-control">
+                           <option>Hostler</option>
+                           <option>Non Hostler</option>
+                           <option>Day Scholar</option>
+                        </select>
+                     </div>
+                  </div>
+                   <div class="col-12">
+                    <h5 class="form-title"><span>Login Details</span></h5>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Username</label>
+                      <input type="text" class="form-control" name ="username" placeholder="Enter Username" required />
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Email ID</label>
+                      <input type="email" class="form-control" name="email" placeholder="Enter Email" required/>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input type="text" class="form-control" name="password" placeholder="Enter Password" required/>
+                    </div>
+                  </div>
+                   <div class="col-12">
+                      <h5 class="form-title"><span>Parent Information</span></h5>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Father's Name</label>
+                         <input type="text" class="form-control" name="father_name" placeholder="Enter Father Name" required>
+                      </div>
+                   </div>
+                   
+                   <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                       <label>Father's Occupation</label>
+                       <select class="form-control" name="father_occupation" id="father_occupation" onchange="toggleFatherOccupationField()"required>
+                         <option value="" disabled selected>Select Father's Occupation</option>
+                         <option value="Businessman">Businessman</option>
+                         <option value="Farmer">Farmer</option>
+                         <option value="Govt. Services">Govt. Services</option>
+                         <option value="Self-Employee">Self-Employee</option>
+                         <option value="Others">Others</option>
+                       </select>
+                     </div>
+                     <div class="form-group" id="father_occupation_other_container" style="display: none;">
+                        <label><span style="color:red;">Specify Other Father's Occupation</span></label>
+                        <input type="text" class="form-control" name="fathers_occupation_other">
+                    </div>
+                   </div>
+                   
+                   
+                   <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                         <label for="father_mobile_number">Father's Mobile</label>
+                         <input type="tel" 
+                                class="form-control" 
+                                id="father_mobile_number" 
+                                name="father_mobile_number" 
+                                pattern="[0-9]{10}"
+                                inputmode="numeric"
+                                maxlength="10"
+                                title="Please enter exactly 10 digits for the contact number"
+                                required>
+                         <small class="form-text text-muted">Enter a 10-digit contact number.</small>
+                         <div id="contactError" class="invalid-feedback"></div>
+                     </div>
+                 </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Mother's Name</label>
+                         <input type="text" class="form-control" name="mother_name" placeholder="Enter Mother Name" required>
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                       <label>Mother's Occupation</label>
+                       <select class="form-control" name="mother_occupation" id="mother_occupation" onchange="toggleMotherOccupationField()" required>
+                         <option value="" disabled selected>Select Mother's Occupation</option>
+                         <option value="House wife/Homemaker">House wife/Homemaker</option>
+                         <option value="Caregiver">Caregiver</option>
+                         <option value="Full time parent">Full time parent</option>
+                         <option value="Family Manager">Family Manager</option>
+                         <option value="Full time Family CEO">Full time Family CEO</option>
+                         <option value="Others">Others</option>
+
+                       </select>
+                     </div>
+                     <div class="form-group" id="mother_occupation_other_container" style="display: none;">
+                        <label><span style="color:red;">Specify Other Mother's Occupation</span></label>
+                        <input type="text" class="form-control" name="mothers_occupation_other">
+                    </div>
+                   </div>
+                   
+                   {% comment %} <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Mother's Mobile</label>
+                         <input type="text" class="form-control" name="mother_mobile_number" placeholder="Enter Mother Mobile" required>
+                      </div>
+                   </div> {% endcomment %}
+                   <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                         <label for="mother_mobile_number">Mother's Mobile</label>
+                         <input type="tel" 
+                                class="form-control" 
+                                id="mother_mobile_number" 
+                                name="mother_mobile_number" 
+                                pattern="[0-9]{10}"
+                                inputmode="numeric"
+                                maxlength="10"
+                                title="Please enter exactly 10 digits for the contact number"
+                                required>
+                         <small class="form-text text-muted">Enter a 10-digit contact number.</small>
+                         <div id="contactError" class="invalid-feedback"></div>
+                     </div>
+                 </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Present Address</label>
+                         <textarea class="form-control" name="present_address" required></textarea>
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Permanent Address</label>
+                         <textarea class="form-control" name="permanent_address" required></textarea>
+                      </div>
+                   </div>
+                   <div class="col-12 text-center">
+                      <button type="submit" class="btn btn-info">Submit</button>
+                   </div>
+                </div>
+             </form>
+          </div>
+       </div>
+    </div>
+ </div>
+ <script>
+   function setupPhoneInput(inputId) {
+       const input = document.getElementById(inputId);
+       const errorDiv = document.createElement('div');
+       errorDiv.className = 'invalid-feedback';
+       input.parentNode.appendChild(errorDiv);
+   
+       input.addEventListener('input', function(e) {
+           // Remove any non-digit characters
+           this.value = this.value.replace(/\D/g, '');
+           
+           // Check the length and show appropriate error
+           if (this.value.length !== 10) {
+               this.classList.add('is-invalid');
+               if (this.value.length < 10) {
+                   errorDiv.textContent = 'Phone number must be 10 digits long.';
+               } else {
+                   errorDiv.textContent = 'Phone number cannot be more than 10 digits.';
+               }
+           } else {
+               this.classList.remove('is-invalid');
+               errorDiv.textContent = '';
+           }
+       });
+   }
+   
+   // Set up both inputs
+   
+   setupPhoneInput('mobile_number');
+   setupPhoneInput('father_mobile_number');
+   setupPhoneInput('mother_mobile_number');
+
+
+   function toggleFatherOccupationField() {
+      const fatherOccupationSelect = document.getElementById('father_occupation');
+      const fatherOccupationOtherContainer = document.getElementById('father_occupation_other_container');
+      
+      fatherOccupationOtherContainer.style.display = (fatherOccupationSelect.value === 'Others') ? 'block' : 'none';
+    }
+    function toggleMotherOccupationField() {
+      const motherOccupationSelect = document.getElementById('mother_occupation');
+      const motherOccupationOtherContainer = document.getElementById('mother_occupation_other_container');
+      
+      motherOccupationOtherContainer.style.display = (motherOccupationSelect.value === 'Others') ? 'block' : 'none';
+    }
+
+   document.getElementById('profile_pic').addEventListener('change', function(e) {
+       const file = e.target.files[0];
+       const fileSize = file.size / 1024 / 1024; // in MB
+       const maxSize = 2; // maximum file size in MB
+   
+       if (fileSize > maxSize) {
+           alert(`File size exceeds ${maxSize}MB. Please choose a smaller file.`);
+           this.value = ''; // Clear the file input
+       }
+   });
+   </script>
+
+{% endblock main-content %}

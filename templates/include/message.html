@@ -1,0 +1,143 @@
+{% if messages %}
+<div id="notification-container"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('notification-container');
+
+    {% for message in messages %}
+    createNotification("{{ message }}", "{{ message.tags }}");
+    {% endfor %}
+
+    function createNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        
+        const icon = document.createElement('span');
+        icon.className = 'notification-icon';
+        icon.innerHTML = getIcon(type);
+        
+        const text = document.createElement('span');
+        text.className = 'notification-text';
+        text.textContent = message;
+        
+        const closeBtn = document.createElement('span');
+        closeBtn.className = 'notification-close';
+        closeBtn.innerHTML = '&times;';
+        closeBtn.onclick = function() {
+            container.removeChild(notification);
+        };
+        
+        notification.appendChild(icon);
+        notification.appendChild(text);
+        notification.appendChild(closeBtn);
+        
+        container.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 100);
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                container.removeChild(notification);
+            }, 300);
+        }, 5000);
+    }
+
+    function getIcon(type) {
+        switch(type) {
+            case 'success':
+                return '&#10003;'; // Checkmark
+            case 'error':
+                return '&#9888;'; // Warning sign
+            case 'warning':
+                return '&#9432;'; // Information sign
+            default:
+                return '&#8505;'; // Info sign
+        }
+    }
+});
+</script>
+{% endif %}
+<style>
+   #notification-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+  }
+  
+  .notification {
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      color: #333;
+      font-family: 'Arial', sans-serif;
+      margin-bottom: 10px;
+      max-width: 350px;
+      opacity: 0;
+      padding: 15px 20px;
+      transform: translateX(100%);
+      transition: all 0.3s ease-in-out;
+  }
+  
+  .notification.show {
+      opacity: 1;
+      transform: translateX(0);
+  }
+  
+  .notification-icon {
+      font-size: 20px;
+      margin-right: 10px;
+      vertical-align: middle;
+  }
+  
+  .notification-text {
+      display: inline-block;
+      font-size: 14px;
+      line-height: 1.4;
+      vertical-align: middle;
+      width: calc(100% - 50px);
+  }
+  
+  .notification-close {
+      cursor: pointer;
+      float: right;
+      font-size: 20px;
+      line-height: 20px;
+      transition: all 0.2s;
+  }
+  
+  .notification-close:hover {
+      color: #555;
+  }
+  
+  .notification.success {
+      background-color: #4CAF50;
+      color: white;
+  }
+  
+  .notification.success .notification-icon {
+      color: #E8F5E9;
+  }
+  
+  .notification.error {
+      background-color: #F44336;
+      color: white;
+  }
+  
+  .notification.error .notification-icon {
+      color: #FFEBEE;
+  }
+  
+  .notification.warning {
+      background-color: #FFC107;
+      color: #333;
+  }
+  
+  .notification.warning .notification-icon {
+      color: #FFF8E1;
+  }
+</style>

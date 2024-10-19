@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="container-fluid add-routine-page">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% include "include/message.html" %}
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Edit Routine</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="#">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="class_name" class="form-label">Class Name</label>
+                            <select class="form-control" name="class_name" required>
+                                <option value="{{ routine.class_name }}" selected>{{ routine.get_class_name_display }}</option>
+                                {% for key, value in classes %}
+                                    {% if key != routine.class_name %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>                        
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" name="subject" required placeholder="Add Subject" value="{{ routine.subject }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date" value="{{ formatted_date }}" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="start_time" class="form-label">Start Time</label>
+                                <input type="time" class="form-control" id="start_time" name="start_time" value="{{ formatted_start_time }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="end_time" class="form-label">End Time</label>
+                                <input type="time" class="form-control" id="end_time" name="end_time" value="{{ formatted_end_time }}" required>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Update Routine</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .add-routine-page {
+        background-color: #f8f9fa;
+        padding: 40px 0;
+        min-height: 100vh;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-header {
+        background-color: #007bff;
+        color: white;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        padding: 20px;
+    }
+    
+    .card-header h2 {
+        margin: 0;
+        font-size: 28px;
+        color:black;
+        font-weight:600;
+    }
+    
+    .card-body {
+        padding: 30px;
+    }
+    
+    .form-label {
+        font-weight: bold;
+        color: #495057;
+    }
+    
+    .form-control {
+        border-radius: 1px;
+        border: 1px solid #ced4da;
+        padding: 10px 15px;
+    }
+    
+    .form-control:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+    
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+    @media (max-width: 768px) {
+        .add-routine-page {
+            padding: 20px 0;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        .table-responsive {
+            font-size: 14px;
+        }
+    }
+</style>
+{% endblock %}

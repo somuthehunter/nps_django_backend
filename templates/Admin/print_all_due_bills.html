@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Due Bills</title>
+    <link rel="shortcut icon" href="{% static "img/logologo.jpg" %}">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .receipt-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            page-break-inside: avoid;
+            margin-bottom: 30px;
+        }
+        .receipt {
+            background: #fff;
+            padding: 20px;
+            border: 2px solid #556295;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+        .receipt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #556295;
+            padding-bottom: 10px;
+        }
+        .receipt-header .logo {
+            max-width: 80px;
+        }
+        .receipt-header .school-info {
+            text-align: center;
+            flex-grow: 1;
+        }
+        .receipt-header .school-info h1 {
+            margin: 0;
+            color: #563c33;
+        }
+        .student-info {
+            margin-bottom: 20px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: flex-start;
+            padding: 1px;
+            gap: 40px;
+            margin-bottom: 5px;
+        }
+        .info-column {
+            display: flex;
+            align-items: center;
+        }
+        .info-column .cian {
+            color: #258c97;
+            font-weight: 600;
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+        .fee-details {
+            margin-bottom: 20px;
+        }
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1px;
+            color: #1e575d;
+            font-weight: 600;
+        }
+        .rid {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            color: #1e575d;
+            font-weight: 600;
+        }
+        .border {
+            background-color: #cccccc8f;
+            border: 2px solid #556295;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            border-top: 2px solid #556295;
+            padding-top: 10px;
+            color: #203ba9;
+        }
+        p {
+            color: #213dae;
+        }
+        .highlight {
+            color: #563c33;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .print-button, .back-button {
+            
+                margin: 20px  20px;
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+                border-radius: 5px;
+                width:80px;
+            }
+        
+        .print-button:hover {
+            background-color: #45a049;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .total {
+            font-weight: bold;
+        }
+        .filter-info {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        @media (max-width: 768px) {
+            .info-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        @media print {
+            body {
+                background-color: #fff;
+                display: block;
+                height: auto;
+            }
+            .container {
+                max-width: none;
+            }
+            .print-button, .back-button, .filter-info {
+                display: none;
+            }
+            .receipt-container {
+                page-break-after: always;
+                margin-bottom: 0;
+            }
+            .receipt {
+                box-shadow: none;
+                border: none;
+            }
+            .header h1, .header p {
+                color: #000;
+            }
+            p, .footer, .info-column .cian, .highlight {
+                color: #000;
+            }
+            .border {
+                background-color: #fff;
+                border: 1px solid #000;
+            }
+            th {
+                background-color: #fff;
+            }
+            th, td {
+                border: 1px solid #000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>NATIONAL PUBLIC SCHOOL</h1>
+            <br>
+            <p>Due Bills Report</p>
+            <br>
+            
+                <a href="javascript:window.print()" class="print-button">Print All Bills</a>
+                <a href="{% url 'filter_due_bills' %}" class="back-button">Back to Filter</a> 
+                <br>
+        </div>
+        <div class="filter-info">
+            <p><strong>Class:</strong> {{ class_filter }}</p>
+            <p><strong>Section:</strong> {{ section_filter }}</p>
+            <p><strong>Students:</strong> {{ dues_filter }}</p>
+            <p><strong>Fee Type:</strong> {{ fee_type }}</p>
+            <p><strong>Bus Name:</strong> {{ bus_name }}</p>
+            <p><strong>Generation Date:</strong> {{ generation_date|date:"d-m-Y" }}</p>
+        </div>
+
+        {% for student_data in students_data %}
+        <div class="receipt-container">
+            <div class="receipt">
+                <div class="receipt-header">
+                    <img src="{% static "img/logologo.jpg" %}" alt="School Logo" class="logo">
+                    <div class="school-info">
+                        <h1>NATIONAL PUBLIC SCHOOL</h1>
+                        <p>(Under K.M.C.M.W.S.T. Regd. by State Government)</p>
+                        <p>An English Medium Co-Educational School </p>
+                        <br>
+                        <p class="due-bill"><b>Demand Bill</b></p>
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="info-row">
+                        <div class="info-column">
+                            <p class="cian">Adm No.: &nbsp;</p><span>{{ student_data.student.admission_no }}</span>
+                        </div>
+                        <div class="info-column">
+                            <p class="cian">&nbsp;&nbsp;&nbsp;Name:&nbsp;</p><span>{{ student_data.student.admin.first_name }} {{ student_data.student.admin.last_name }}</span>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-column">
+                            <p class="cian">Class:&nbsp;</p><span>{{student_data.student.classes}}</span>
+                        </div>
+                        <div class="info-column">
+                            <p class="cian">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roll No.:&nbsp;</p><span>{{student_data.student.student_id}}</span>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-column">
+                            <p class="cian">Father:&nbsp;</p><span>{{student_data.student.father_name}}</span>
+                        </div>
+                        <div class="info-column">
+                            <p class="cian">&nbsp;&nbsp;&nbsp;Address:&nbsp;</p><span>{{student_data.student.permanent_address}}</span>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-column">
+                            <p class="cian">Bus Name:&nbsp;</p><span>{{student_data.bus_name}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fee-details">
+                    <div class="fee-row rid border">
+                        <div class="fee-column highlight">Head</div>
+                        <div class="fee-column highlight">Payable</div>
+                        <div class="fee-column highlight">Paid</div>
+                    </div>
+                    <div class="due-details">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    {% if fee_type == 'All Fees' or fee_type == 'Tuition' %}
+                                    <th>Tuition Due</th>
+                                    {% endif %}
+                                    {% if fee_type == 'All Fees' or fee_type == 'Transport' %}
+                                    <th>Transport Due</th>
+                                    {% endif %}
+                                    {% if fee_type == 'All Fees' or fee_type == 'Hostel' %}
+                                    <th>Hostel Due</th>
+                                    {% endif %}
+                                    <th>Status</th>
+                                    <th>Payment Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for month in student_data.due_months %}
+                                <tr>
+                                    <td>{{ month.month }}</td>
+                                    {% if fee_type == 'All Fees' or fee_type == 'Tuition' %}
+                                    <td>₹{{ month.tuition_due|floatformat:2 }}</td>
+                                    {% endif %}
+                                    {% if fee_type == 'All Fees' or fee_type == 'Transport' %}
+                                    <td>₹{{ month.transport_due|floatformat:2 }}</td>
+                                    {% endif %}
+                                    {% if fee_type == 'All Fees' or fee_type == 'Hostel' %}
+                                    <td>₹{{ month.hostel_due|floatformat:2 }}</td>
+                                    {% endif %}
+                                    <td>{{ month.status }}</td>
+                                    <td>{{ generation_date|date:"d-m-Y"|default_if_none:"N/A" }}</td>
+                                </tr>
+                                {% endfor %}
+                                <tr class="total">
+                                    {% if fee_type == 'All Fees' %}
+                                    <td colspan="4"><strong>Total Due</strong></td>
+                                    <td colspan="1">₹{{ student_data.total_due|floatformat:2 }}</td>
+                                    {% else %}
+                                    <td colspan="2"><strong>Total Due</strong></td>
+                                    <td colspan="3">₹{{ student_data.total_due|floatformat:2 }}</td>
+                                    {% endif %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="fee-row">
+                        <div class="fee-column highlight">In Words: {{student_data.total_amount_in_words}}</div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div>Office Copy</div>
+                    <div>Accountant</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

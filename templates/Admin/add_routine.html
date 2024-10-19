@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="container-fluid add-routine-page">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% include "include/message.html" %}
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Add New Routine</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'add_routine' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="class_name" class="form-label">Class Name</label>
+                            <select class="form-control" name="class_name" required>
+                                <option value="" disabled selected>Select Class</option>
+                                {% for key, value in classes %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>                        
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" name="subject" required placeholder="Add Subject">
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="start_time" class="form-label">Start Time</label>
+                                <input type="time" class="form-control" id="start_time" name="start_time" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="end_time" class="form-label">End Time</label>
+                                <input type="time" class="form-control" id="end_time" name="end_time" required>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Add Routine</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Added Routines</h2>
+                </div>
+                <div class="card-body">
+                    {% if routines %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Class Name</th>
+                                        <th>Subject</th>
+                                        <th>Date</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Actions</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for routine in routines %}
+                                    <tr>
+                                        <td>{{ routine.class_name }}</td>
+                                        <td>{{ routine.subject }}</td>
+                                        <td>{{ routine.date }}</td>
+                                        <td>{{ routine.start_time }}</td>
+                                        <td>{{ routine.end_time }}</td>
+                                        <td class="text-center">
+                                            <div class="actions">
+                                               <a href="#" class="btn btn-sm bg-primary-light delete-btn" data-url="{% url 'delete_routine' routine.id %}">
+                                               <i class="fas fa-trash"></i>
+                                               </a>
+                                            </div> 
+                                         </td>
+                                         <td class="text-center">
+                                            <div class="actions">
+                                               <a href="{% url "edit_routine" routine.id %}" class="btn btn-sm bg-primary-light " >
+                                               <i class="fas fa-pen"></i>
+                                               </a>
+                                            </div> 
+                                         </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-center">No routines added yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this routine? This action cannot be undone.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <form method="POST" id="deleteForm">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+ 
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+ 
+                const url = this.getAttribute('data-url');
+ 
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    });
+ </script>
+<style>
+    .add-routine-page {
+        background-color: #f8f9fa;
+        padding: 40px 0;
+        min-height: 100vh;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-header {
+        background-color: #007bff;
+        color: white;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        padding: 20px;
+    }
+    
+    .card-header h2 {
+        margin: 0;
+        font-size: 28px;
+        color:black;
+        font-weight:600;
+    }
+    
+    .card-body {
+        padding: 30px;
+    }
+    
+    .form-label {
+        font-weight: bold;
+        color: #495057;
+    }
+    
+    .form-control {
+        border-radius: 1px;
+        border: 1px solid #ced4da;
+        padding: 10px 15px;
+    }
+    
+    .form-control:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+    
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+    @media (max-width: 768px) {
+        .add-routine-page {
+            padding: 20px 0;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        .table-responsive {
+            font-size: 14px;
+        }
+    }
+</style>
+{% endblock main-content %}

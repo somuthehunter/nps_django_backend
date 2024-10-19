@@ -1,0 +1,285 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static "img/logologo.jpg" %}">
+    <title>NPS | Admit Card{% if all_students_data|length > 1 %}s{% endif %}</title>
+    <link rel="stylesheet" href="{% static 'css/admit.css' %}">
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+            height: 100vh;
+            flex-wrap: wrap;
+        }
+        .maincontainer{
+            gap: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 10px auto;
+            border: 2px solid #556295;
+            padding: 10px;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            padding-bottom: 10px;
+            margin-bottom: 0px;
+        }
+        .header img {
+            max-width: 120px;
+            height: 120px;
+        }
+        .header h1 {
+            margin-bottom: 5px;
+            size: 2.5rem;
+        }
+        .details {
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            border: 2px solid #563c33;
+        }
+        .details .left, .details .right {
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .details .left table, .details .right table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .details .photo {
+            text-align: center;
+        }
+        .details .photo img {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #556295;
+        }
+        .exam-schedule {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .exam-schedule th, .exam-schedule td {
+            border: 2px solid #556295;
+            padding: 1px;
+            text-align: center;
+        }
+        
+        .signatures {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .qrcode{
+            width: 120px;
+            height: 120px;
+            border: 2px solid #556295;
+        }
+        p{
+            color: #556295;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        h1{
+            color: #563c33;
+        }
+        .brown{
+            font-weight: 600;
+            color: #563c33;
+        }
+        .highlight{
+            color: #563c33;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .cian{
+            color: #1e575d;
+            font-weight: 600;
+        }
+        .blueline{
+            color: #3f4f6d;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .boldblack{
+            font-weight: 600;
+            color: #000;
+        }
+        .boldblue{
+            font-weight: 600;
+            color: #3f4f6d ;
+        }
+        .print-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 18px;
+            }
+            .header p {
+                font-size: 12px;
+            }
+            .details table td {
+                font-size: 12px;
+            }
+            .exam-schedule th, .exam-schedule td {
+                font-size: 10px;
+                padding: 3px;
+            }
+            .details .photo img, .qrcode {
+                width: 80px;
+                height: 80px;
+            }
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+            @page {
+                margin: 10px 30px 0px 20px;
+                /* margin-top: 20px; */
+            }
+            .report-card{
+                position: absolute;
+                top: 0;
+                height: 90%;
+            }
+            .maincontainer{
+                gap: 10px;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .container {
+                page-break-inside: avoid;
+                margin-bottom: 20px; 
+            }
+            
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="maincontainer">
+            {% for student_data in all_students_data %}
+            <div class="container">
+                <div class="header">
+                    <img src="{% static "img/logologo.jpg" %}" alt="School Logo">
+                    <div class="header-text">
+                        <h1>NATIONAL PUBLIC SCHOOL</h1>
+                        <p>(Under K.M.C.W.S. - Regtd. by State Government)</p>
+                        <p>An English Medium Co-Educational School</p>
+                        <br>
+                        {% comment %} <p>At. Milanpally, Po.- Panjipara, Ps.- Goalpokher, Dist.- Uttar Dinajpur</p> {% endcomment %}
+                        <p><b>Admit Card</b></p>
+                        <p>{% for i in session %}{{i.session_name}} {{i.start_date}} - {{i.end_date}}{% endfor %}</p>
+                    </div>
+                </div>
+                <div class="details">
+                    <div class="left">
+                        <table>
+                            <tr>
+                                <td class="blueline">Name of Student:</td>
+                                <td class="cian">{{student_data.student.admin.first_name}} {{student_data.student.admin.last_name}}</td>
+                            </tr>
+                            <tr>
+                                <td class="blueline">Father's Name:</td>
+                                <td class="cian">{{student_data.student.father_name}}</td>
+                            </tr>
+                            <tr>
+                                <td class="blueline">Mother's Name:</td>
+                                <td class="cian">{{student_data.student.mother_name}}</td>
+                            </tr>
+                            <tr>
+                                <td class="blueline">Class:</td>
+                                <td class="cian">{{student_data.student.classes}} - {{student_data.student.section}}</td>
+                            </tr>
+                            <tr>
+                                <td class="blueline">Roll No:</td>
+                                <td class="cian">{{student_data.student.roll_no}}</td>
+                            </tr>
+                            <tr>
+                                <td class="blueline">ADM No:</td>
+                                <td class="cian">{{student_data.student.admission_no}}</td>
+                            </tr>
+                            <tr>
+                                <td class="blueline">DOB:</td>
+                                <td class="cian">{{student_data.student.date_of_birth|date:"d-m-Y"}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="right">
+                        <div class="photo">
+                            <img src="{% static "img/qr.jpg" %}" alt="QR Code">
+                        </div>
+                        <div class="photo">
+                            <img src="{{student_data.student.admin.profile_pic.url}}" alt="Student Photo">
+                        </div>
+                    </div>
+                </div>
+                <table class="exam-schedule">
+                    <tr>
+                        <th rowspan="3" class="highlight">Date Time & Subject</th>
+                        {% for i in student_data.routine %}
+                        <td class="boldblue">{{i.date}}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for i in student_data.routine %}
+                        <td class="boldblack">{{i.start_time}} - {{i.end_time}}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for i in student_data.routine %}
+                        <td class="cian">{{i.subject}}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th class="highlight">Sign of Invigilator</th>
+                        {% for i in student_data.routine %}
+                        <td></td>
+                        {% endfor %}
+                    </tr>
+                </table>
+                <div class="signatures">
+                    <p>Principal</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        window.onload = function() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

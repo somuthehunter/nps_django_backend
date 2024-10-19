@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center mb-3">
+            <div class="col">
+                <h2 class="page-title">Generate Marksheet</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="">Marksheet</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">View</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form method="get" id="filterForm" class="mb-4">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="{{ form.class_name.id_for_label }}" class="form-label"><strong>Class:</strong></label>
+                                    {{ form.class_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="{{ form.section.id_for_label }}" class="form-label"><strong>Section:</strong></label>
+                                    {{ form.section }}
+                                </div>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button type="submit" class="btn btn-dark w-100">Filter Results</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    {% if students %}
+                    <div class="table-responsive">
+                        <h3 class="mb-3">Students List</h3>
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                                    <td>
+                                        <a href="{% url 'print_marksheet_1' student.id %}" class="btn btn-sm btn-outline-info me-2">Generate Marksheet 1</a>
+                                        <a href="{% url 'print_marksheet' student.id %}" class="btn btn-sm btn-outline-dark">Generate Marksheet 2</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info mt-3" role="alert">
+                        No students found. Please adjust your filter criteria.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

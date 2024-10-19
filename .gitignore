@@ -1,0 +1,30 @@
+# Python
+*.py[cod]
+__pycache__/
+*.so
+*.egg
+*.egg-info
+*.pyo
+
+# Django
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# Virtual Environments
+venv/
+.env
+
+# MacOS specific files
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
+
+# Git Large File Storage (LFS)
+*.mp4
+*.zip
+*.tar
+*.gz

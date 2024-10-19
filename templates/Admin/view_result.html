@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block main-content %}
+
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">View Results</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="">Results</a></li>
+                <li class="breadcrumb-item active">View</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="get" id="filterForm" class="mb-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="class_name"><strong>Class:</strong></label>
+                                {{ form.class_name }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="section"><strong>Section:</strong></label>
+                                {{ form.section }}
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button type="submit" class="btn btn-dark btn-block">Filter Results</button>
+                        </div>
+                    </div>
+                </form>
+
+                {% if results %}
+                <div class="accordion" id="resultsAccordion">
+                    {% regroup results by student as student_results %}
+                    {% for student in student_results %}
+                    <div class="card mb-3">
+                        <div class="card-header" id="heading{{ forloop.counter }}">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                    data-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                                    <strong>{{ student.grouper.admin.first_name }} {{ student.grouper.admin.last_name }}</strong>
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapse{{ forloop.counter }}" class="collapse show" aria-labelledby="heading{{ forloop.counter }}"
+                            data-parent="#resultsAccordion">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Subject</th>
+                                                <th>FA - I</th>
+                                                <th>N.B - I</th>
+                                                <th>S.E - I</th>
+                                                <th>First Term</th>
+                                                <th>FA - II</th>
+                                                <th>N.B - II</th>
+                                                <th>S.E - II</th>
+                                                <th>Second Term</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for result in student.list %}
+                                            <tr>
+                                                <td>{{ result.subject.subject_name }}</td>
+                                                
+                                                <td>
+                                                    {{ result.FA_I }}
+                                                </td>
+                                                <td>
+                                                    {{ result.NB_I }}
+                                                </td>
+                                                <td>
+                                                    {{ result.SE_I }}
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-info" data-toggle="popover" data-html="true"
+                                                        title="First Term Details"
+                                                        data-content="FA I: {{ result.FA_I }}<br>NB I: {{ result.NB_I }}<br>SE I: {{ result.SE_I }}<br>Total: {{ result.first_term_marks }}">
+                                                        {{ result.first_term_marks }}
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    {{ result.FA_II }}
+                                                </td>
+                                                <td>
+                                                    {{ result.NB_II }}
+                                                </td>
+                                                <td>
+                                                    {{ result.SE_II }}
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-info" data-toggle="popover" data-html="true"
+                                                        title="Second Term Details"
+                                                        data-content="FA II: {{ result.FA_II }}<br>NB II: {{ result.NB_II }}<br>SE II: {{ result.SE_II }}<br>Total: {{ result.second_term_marks }}">
+                                                        {{ result.second_term_marks }}
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'edit_result' result.id %}" class="btn btn-sm btn-warning">
+                                                        <i class="fas fa-pen"></i> Edit
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    No results found. Please select a class and section to view results.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main-content %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Initialize popovers
+    $('[data-toggle="popover"]').popover({
+        trigger: 'hover',
+        placement: 'top'
+    });
+
+    // Enhance select inputs
+    $('#id_class_name, #id_section').select2({
+        theme: 'bootstrap4',
+    });
+
+    // Auto-submit form on change
+    $('#id_class_name, #id_section').change(function() {
+        $('#filterForm').submit();
+    });
+});
+</script>
+{% endblock extra_js %}

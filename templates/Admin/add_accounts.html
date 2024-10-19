@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Add Accountant</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="teachers.html">Accountant</a></li>
+          <li class="breadcrumb-item active">Add Accountant</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% include "include/message.html" %}
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <form method="post" action="{% url "add_accounts" %}" enctype="multipart/form-data">
+              {% csrf_token %}
+            <div class="row">
+              <div class="col-12">
+                <h5 class="form-title"><span>Basic Details</span></h5>
+              </div>
+              {% comment %} <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <label>Teacher ID</label>
+                  <input type="text" class="form-control" />
+                </div>
+              </div> {% endcomment %}
+              <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" class="form-control" name ="first_name" placeholder="Enter First Name" required/>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" name ="last_name" placeholder="Enter Last Name" required/>
+                  </div>
+                </div>
+                <div class="col-12">
+                    <h5 class="form-title"><span>Login Details</span></h5>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Username</label>
+                      <input type="text" class="form-control" name ="username" placeholder="Enter Username" required/>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Email ID</label>
+                      <input type="email" class="form-control" name="email" placeholder="Enter Email" required/>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input type="text" class="form-control" name="password" placeholder="Enter Password" required/>
+                    </div>
+                  </div>
+                  <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-info">Submit</button>
+                  </div>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock main-content %}

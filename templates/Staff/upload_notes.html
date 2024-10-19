@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main-content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Notes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+         .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        } 
+         .page-header {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        } 
+        .page-title {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+        }
+        .breadcrumb-item a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .upload-container {
+            max-width: 800px;
+            background-color: #fff;
+            border: none;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .upload-container h4 {
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: 500;
+            color: #34495e;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-control {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 10px;
+            width: 100%;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        .form-control-file {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 10px;
+            width: 100%;
+        }
+        .btn-primary {
+            background-color: #3498db;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        .form-control[type="date"] {
+            padding: 9px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Page Header -->
+         <div class="page-header my-4">
+            <div class="row">
+                <div class="col">
+                    <h3 class="page-title">Upload Notes</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Upload Notes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Notes Upload Form -->
+        <div class="upload-container">
+            <h4 class="text-center">Upload Class Notes</h4>
+            {% include "include/message.html" %}
+            
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="subject"><strong>Subject</strong></label>
+                    <select class="form-control" id="subject" name="subject" required>
+                        <option value="" disabled selected>Select Subject</option>
+                        {% for subject in subjects %}
+                            <option value="{{ subject.id }}">{{ subject.class_name }} - {{ subject.subject_name }}</option>
+                        {% endfor %} 
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="class"><strong>Teacher Name</strong></label>
+                    <input type="text" class="form-control" id="teacher_name" name ="teacher_name" value="{{user.first_name}} {{user.last_name}} "readonly>
+
+                    
+                </div> 
+                <div class="form-group">
+                    <label for="note_name"><strong>Note Title</strong></label>
+                    <input type="text" class="form-control" id="note_name" name="note_name" required>
+                </div>
+                
+                
+                <div class="form-group">
+                    <label for="notes"><strong>Upload Notes</strong></label>
+                    <input type="file" class="form-control-file" id="notes" name="notes" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock main-content %}

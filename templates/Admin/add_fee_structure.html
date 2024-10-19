@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Add Fee Structure</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="">Fee Structure</a></li>
+             <li class="breadcrumb-item active">Add </li>
+          </ul>
+       </div>
+       <div class="col-auto text-right float-right ml-auto">
+         <a href="{% url "view_fees_structure" %}" class="btn btn-dark "><i class="fas fa-eye"></i>&nbsp;&nbsp;  View All</a>
+      </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-sm-12">
+       <div class="card">
+          <div class="card-body">
+             <form method="post">
+               {% csrf_token %}
+                <div class="row">
+                   <div class="col-12">
+                      <h5 class="form-title text-center"><span>Subject Information</span></h5>
+                   </div>
+                
+                   <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label>Class Name</label>
+                        <select class="form-control" name="class_name" required>
+                            <option value="" disabled selected>Select Class</option>
+                            {% for key, value in class_choices %}
+                                <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Amount Per Month</label>
+                         <input type="text" class="form-control" name="amount" required>
+                      </div>
+                   </div>
+                   
+                   <div class="col-12 text-center">
+                      <button type="submit" class="btn btn-info">Submit</button>
+                   </div>
+                </div>
+             </form>
+          </div>
+       </div>
+    </div>
+ </div>
+ </div>
+ </div>
+ </div>
+{% endblock main-content %}

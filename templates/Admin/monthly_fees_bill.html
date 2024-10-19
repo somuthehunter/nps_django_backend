@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Receipt</title>
+    <link rel="stylesheet" href="recipt.css">
+</head>
+
+<body>
+    <div class="receipt-container">
+        <div class="receipt">
+            <div class="header">
+                <img src="{% static "img\logologo.jpg" %}" alt="School Logo" class="logo">
+                <div class="school-info">
+                    <h1>NATIONAL PUBLIC SCHOOL</h1>
+                    <p>(Under K.M.C.M.W.S.T. Regd. by State Government)</p>
+                    <p>An English Medium Co-Educational School</p>
+                    <p>ESTD. 2014</p>
+                </div>
+            </div>
+            <div class="student-info">
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Adm No.: &nbsp;</p> {{student.admission_no}}
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">&nbsp;&nbsp;&nbsp;Name:&nbsp;</p> {{ student.admin.first_name }} {{ student.admin.last_name }}
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Class:&nbsp;</p> {{student.classes}}
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roll No.:&nbsp;</p> {{student.student_id}}
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Father:&nbsp;</p> {{student.father_name}}
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">&nbsp;&nbsp;&nbsp;House:&nbsp;</p>
+                    </div>
+                </div>
+            </div>
+            <div class="fee-details">
+                <div class="fee-row">
+                    <div class="fee-column highlight">Head</div>
+                    <div class="fee-column yellowlight">Payable</div>
+                    <div class="fee-column yellowlight">Pay</div>
+                </div>
+                <div class="rid border">
+                    <p><strong class="highlight">RID:</strong>6969 CS</p>
+                    <p>{{month_data.status}}</p>
+                    <p>{{ month_data.payment_date|date:"d-m-Y"|default:"Not paid" }}</p>
+                    <p>CAS1 0</p>
+                </div>
+                <div class="date"><span style="color:black;">Month :</span> {{month_data.month}}</div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Tution Fee</div>
+                    <div class="fee-column">{{month_data.TuAmount}}</div>
+                    <div class="fee-column">{{month_data.TuAmount}}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Hostel Fee</div>
+                    <div class="fee-column">{{month_data.Hamount}}</div>
+                    <div class="fee-column">{{month_data.Hamount}}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Transport Fee</div>
+                    <div class="fee-column">{{month_data.TrAmount}}</div>
+                    <div class="fee-column">{{month_data.TrAmount}}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Due</div>
+                    <div class="fee-column">{{month_data.Tdue}}</div>
+                    <div class="fee-column">{{month_data.Tdue}}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column highlight">Total</div>
+                    <div class="fee-column">{{ month_data.TotalAmount }}</div>
+                    <div class="fee-column">{{ month_data.TotalAmount }}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column highlight">In Words: {{total_amount_in_words}}</div>
+                </div>
+            </div>
+            <div class="footer">
+                <div>Office Copy</div>
+                <div>Accountant</div>
+            </div>
+        </div>
+    </div>
+    <div class="receipt-container">
+        <div class="receipt">
+            <div class="header">
+                <img src="{% static "img\logologo.jpg" %}" alt="School Logo" class="logo">
+                <div class="school-info">
+                    <h1>NATIONAL PUBLIC SCHOOL</h1>
+                    <p>(Under K.M.C.M.W.S.T. Regd. by State Government)</p>
+                    <p>An English Medium Co-Educational School</p>
+                    <p>ESTD. 2014</p>
+                </div>
+            </div>
+            <div class="student-info">
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Adm No.: &nbsp;</p> {{student.admission_no}}
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">&nbsp;&nbsp;&nbsp;Name:&nbsp;</p> {{ student.admin.first_name }} {{ student.admin.last_name }}
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Class:&nbsp;</p> {{student.classes}}
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roll No.:&nbsp;</p> {{student.student_id}}
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Father:&nbsp;</p> {{student.father_name}}
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">&nbsp;&nbsp;&nbsp;House:&nbsp;</p>
+                    </div>
+                </div>
+            </div>
+            <div class="fee-details">
+                <div class="fee-row">
+                    <div class="fee-column highlight">Head</div>
+                    <div class="fee-column yellowlight">Payable</div>
+                    <div class="fee-column yellowlight">Pay</div>
+                </div>
+                <div class="rid border">
+                    <p><strong class="highlight">RID:</strong>6969 CS</p>
+                    <p>{{month_data.status}}</p>
+                    <p>{{ month_data.payment_date|date:"d-m-Y"|default:"Not paid" }}</p>
+                    <p>CAS1 0</p>
+                </div>
+                <div class="date"><span style="color:black;">Month :</span> {{month_data.month}}</div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Tution Fee</div>
+                    <div class="fee-column">{{month_data.TuAmount}}</div>
+                    <div class="fee-column">{{month_data.TuAmount}}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Hostel Fee</div>
+                    <div class="fee-column">{{month_data.Hamount}}</div>
+                    <div class="fee-column">{{month_data.Hamount}}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Transport Fee</div>
+                    <div class="fee-column">{{month_data.TrAmount}}</div>
+                    <div class="fee-column">{{month_data.TrAmount}}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Due</div>
+                    <div class="fee-column">{{month_data.Tdue}}</div>
+                    <div class="fee-column">{{month_data.Tdue}}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column highlight">Total</div>
+                    <div class="fee-column">{{ month_data.TotalAmount }}</div>
+                    <div class="fee-column">{{ month_data.TotalAmount }}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column highlight">In Words: {{total_amount_in_words}}</div>
+                </div>
+            </div>
+            <div class="footer">
+                <div>Student Copy</div>
+                <div>Accountant</div>
+            </div>
+        </div>
+    </div>
+    
+    <button onclick="window.print();" class="print-button">Print</button>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .receipt-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .receipt {
+            background: #fff;
+            padding: 20px;
+            border: 2px solid #556295;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: 10px;
+            width: 100%;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #556295;
+            padding-bottom: 10px;
+        }
+        
+        .header .logo {
+            max-width: 80px;
+        }
+        
+        .header .school-info {
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .header .school-info h1 {
+            margin: 0;
+            color: #563c33;
+        }
+        
+        .header .details {
+            text-align: right;
+        }
+        
+        .student-info {
+            margin-bottom: 20px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: left;
+            /* border: 2px solid #556295; */
+            padding: 1px;
+            gap: 40px;
+        }
+        
+        .fee-details {
+            margin-bottom: 20px;
+        }
+        .info-column{
+            display: flex;
+            color: #203ba9;
+            font-weight: 600;
+        }
+        .border{
+            background-color: #cccccc8f;
+            border: 2px solid #556295;
+        }
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1px;
+            color: #1e575d;
+            font-weight: 600;
+        }
+        .rid{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            color: #1e575d;
+            font-weight: 600;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            border-top: 2px solid #556295;
+            padding-top: 10px;
+            color: #203ba9;
+        }
+        .date{
+            margin: 10px 0;
+            color:#556295;
+            font-weight:600;
+        }
+        p{
+            color: #213dae;
+        }
+        .brown{
+            font-weight: 600;
+            color: #563c33;
+        }
+        .highlight{
+            color: #563c33;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .yellowlight{
+            color: #a1894e;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .cian{
+            color: #258c97;
+            font-weight: 600;
+        }
+        .print-button {
+            position: absolute;
+            bottom: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        @media (max-width: 768px) {
+            body {
+                flex-wrap: wrap;
+                height: 100%;
+            }
+            .receipt {
+                padding: 10px;
+            }
+            .header {
+                /* flex-direction: column; */
+                text-align: center;
+            }
+            .header .details {
+                text-align: center;
+            }
+            .print-button {
+                display: block;
+                position: fixed;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* .header{
+                flex-direction: column;
+            } */
+            .header .details {
+                text-align: center;
+            }
+            .info-row, .fee-row {
+                /* flex-direction: column; */
+                text-align: center;
+            }
+        }  
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+            @page {
+                margin: 0 30px 0px 20px;
+                /* margin-top: 20px; */
+            }
+            /* body *{
+                visibility: hidden;
+            }
+            .report-card *{
+                visibility: visible;
+            } */
+            .report-card{
+                position: absolute;
+                top: 0;
+                height: 90%;
+            }
+            .receipt-container {
+                page-break-after: always;
+            }
+            
+        }
+        
+    </style>
+</body>
+
+</html>

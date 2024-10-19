@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Edit Student Transport Fee</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="">Students</a></li>
+             <li class="breadcrumb-item active">Edit Student Transport</li>
+          </ul>
+       </div>
+       <div class="col-auto text-right float-right ml-auto">
+        <a href="{% url "add_hostel_fee" %}" class="btn btn-sm bg-success-light mr-3 "><i class="fas fa-plus"></i> &nbsp; Add Custom Hostel Fee </a>
+        <a href="" class="btn btn-sm bg-success-light mr-3"><i class="fas fa-eye"></i>&nbsp; See All Custom Fees</a>
+     </div>
+    </div>
+</div>
+{% include "include/message.html" %}
+<div class="row">
+    <div class="col-sm-12">
+       <div class="card">
+          <div class="card-body">
+             <form method="post" >
+                {% csrf_token %}
+                <div class="row">
+                   <div class="col-12">
+                      <h5 class="form-title"><span>Student Information</span></h5>
+                   </div>
+                   <input type="text" class="form-control" name="student_id" value="{{ student.id }}" hidden>
+                   <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label>Student Name</label>
+                        <input type="text" class="form-control" value="{{ student.admin.first_name }} {{ student.admin.last_name }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label>Student Class</label>
+                        <input type="text" class="form-control" value="{{ student.classes }} " readonly>
+                    </div>
+                </div>
+                   {% comment %} <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="bus_name">Bus Name</label>
+                            <select name="bus_name" id="bus_name" class="form-control">
+                                {% if fee %}
+                                    <option value="{{ fee.bus_name }}">{{ fee.bus_name }}</option>
+                                {% else %}
+                                    <option value="">Select Bus</option>
+                                {% endif %}
+                                {% for bus_choice in bus_choices %}
+                                    <option value="{{ bus_choice.0 }}">{{ bus_choice.1 }}</option>
+                                {% endfor %} 
+                            </select>
+                        </div>
+                    </div> {% endcomment %}
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="transport_fee">Hostel Fee Structure</label>
+                            <select name="hostelfee" id="hostelfee" class="form-control">
+                                {% if fee %}
+                                    <option value="{{ fee.hostelfee.id }}">{{ fee.hostelfee.class_name }} - {{ fee.hostelfee.amount }}</option>
+                                {% else %}
+                                    <option value="">Select Fee Structure</option>
+                                {% endif %}
+                                {% for hostel_fee in hostel_fees %}
+                                    <option value="{{ hostel_fee.id }}">{{hostel_fee.class_name}} - {{ hostel_fee.amount }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-dark">Submit</button>
+                     </div>
+                </div>
+             </form>
+          </div>
+       </div>
+    </div>
+</div>
+{% endblock main-content %}

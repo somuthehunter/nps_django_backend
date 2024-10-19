@@ -1,0 +1,369 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Transport Fees --<i class="fas fa-bus"></i> -- <span style="color:red;"> {{ student.admin.first_name }} {{ student.admin.last_name }}</span></h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+             <li class="breadcrumb-item active">Fees</li>
+          </ul>
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-sm-12">
+       <div class="card card-table">
+          <div class="card-body">
+             <div class="table-responsive">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <table class="table table-hover table-center mb-0">
+                       <thead>
+                          <tr>
+                             <th><b>Month</b></th>
+                             <th><b>Amount</b></th>
+                             <th><b>Payment Date</b></th>
+                             <th><b>Status</b></th>
+                             <th><b>Badge</b></th>
+                             <th><b>Action</b></th>
+                             <th><b>Generate Bill</b></th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                          <tr>
+                             <td><b>January</b></td>
+                             <td>{{ transport_fees.transport_fees.amount}}</td>
+                             <td><input type="date" name="jan_payment_date" class="form-control" value="{{ transport_fees.jan_payment_date|date:'Y-m-d' }}"></td>
+                             <td>
+                                <select name="jan_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.jan_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.jan_status == "Paid" %}selected{% endif %}>Paid</option>
+                                </select>
+                             </td>
+                             <td>
+                                {% if transport_fees.jan_status == "Paid" %}
+                                <span class="badge badge-success">Paid</span>
+                                {% else %}
+                                <span class="badge badge-danger">Unpaid</span>
+                                {% endif %}
+                             </td>
+                             <td><button type="submit" class="btn btn-dark">Update</button></td>
+                             <td class="text-center">
+                                <div class="actions">
+                                   <a href="{% url "monthly_transport_bill"   student.id 'January' %}"  class="btn btn-sm bg-primary-light">
+                                   <i class="fas fa-download"></i>
+                                   </a>
+                                </div> 
+                             </td>
+                          </tr>
+                          <tr>
+                             <td><b>February</b></td>
+                             <td>{{ transport_fees.transport_fees.amount }}</td>
+                             <td><input type="date" name="feb_payment_date" class="form-control" value="{{ transport_fees.feb_payment_date|date:'Y-m-d' }}"></td>
+                             <td>
+                                <select name="feb_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.feb_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.feb_status == "Paid" %}selected{% endif %}>Paid</option>
+                                </select>
+                             </td>
+                             <td>
+                                {% if transport_fees.feb_status == "Paid" %}
+                                <span class="badge badge-success">Paid</span>
+                                {% else %}
+                                <span class="badge badge-danger">Unpaid</span>
+                                {% endif %}
+                             </td>
+                             <td><button type="submit" class="btn btn-dark">Update</button></td>
+                             <td class="text-center">
+                                <div class="actions">
+                                   <a href="{% url "monthly_transport_bill"   student.id 'February' %}" class="btn btn-sm bg-primary-light">
+                                   <i class="fas fa-download"></i>
+                                   </a>
+                                </div> 
+                             </td>
+                          </tr>
+                           <tr>
+                           <td><b>March</b></td>
+                           <td>{{ transport_fees.transport_fees.amount }}</td>
+                           <td><input type="date" name="mar_payment_date" class="form-control" value="{{ transport_fees.mar_payment_date|date:'Y-m-d' }}"></td>
+                           <td>
+                               <select name="mar_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.mar_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.mar_status == "Paid" %}selected{% endif %}>Paid</option>
+                               </select>
+                           </td>
+                           
+                           <td>
+                               {% if transport_fees.mar_status == "Paid" %}
+                               <span class="badge badge-success">Paid</span>
+                               {% else %}
+                               <span class="badge badge-danger">Unpaid</span>
+                               {% endif %}
+                           </td>
+                           <td><button type="submit" class="btn btn-dark">Update</button></td>
+                           <td class="text-center">
+                            <div class="actions">
+                               <a href="{% url "monthly_transport_bill"   student.id 'March' %}" class="btn btn-sm bg-primary-light">
+                               <i class="fas fa-download"></i>
+                               </a>
+                            </div> 
+                         </td>
+                       </tr>
+                       
+                       <tr>
+                           <td><b>April</b></td>
+                           <td>{{ transport_fees.transport_fees.amount }}</td>
+                           <td><input type="date" name="apr_payment_date" class="form-control" value="{{ transport_fees.apr_payment_date|date:'Y-m-d' }}"></td>
+                           <td>
+                               <select name="apr_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.apr_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.apr_status == "Paid" %}selected{% endif %}>Paid</option>
+                               </select>
+                           </td>
+                           <td>
+                               {% if transport_fees.apr_status == "Paid" %}
+                               <span class="badge badge-success">Paid</span>
+                               {% else %}
+                               <span class="badge badge-danger">Unpaid</span>
+                               {% endif %}
+                           </td>
+                           <td><button type="submit" class="btn btn-dark">Update</button></td>
+                           <td class="text-center">
+                            <div class="actions">
+                               <a href="{% url "monthly_transport_bill"   student.id 'April' %}" class="btn btn-sm bg-primary-light">
+                               <i class="fas fa-download"></i>
+                               </a>
+                            </div> 
+                         </td>
+                       </tr>
+                       
+                       <tr>
+                           <td><b>May</b></td>
+                           <td>{{ transport_fees.transport_fees.amount }}</td>
+                           <td><input type="date" name="may_payment_date" class="form-control" value="{{ transport_fees.may_payment_date|date:'Y-m-d' }}"></td>
+                           <td>
+                               <select name="may_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.may_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.may_status == "Paid" %}selected{% endif %}>Paid</option>
+                               </select>
+                           </td>
+                           <td>
+                               {% if transport_fees.may_status == "Paid" %}
+                               <span class="badge badge-success">Paid</span>
+                               {% else %}
+                               <span class="badge badge-danger">Unpaid</span>
+                               {% endif %}
+                           </td>
+                           <td><button type="submit" class="btn btn-dark">Update</button></td>
+                           <td class="text-center">
+                            <div class="actions">
+                               <a href="{% url "monthly_transport_bill"   student.id 'May' %}" class="btn btn-sm bg-primary-light">
+                               <i class="fas fa-download"></i>
+                               </a>
+                            </div> 
+                         </td>
+                       </tr>
+                       
+                       <!-- Continue similarly for June to December -->
+                       <tr>
+                           <td><b>June</b></td>
+                           <td>{{ transport_fees.transport_fees.amount }}</td>
+                           <td><input type="date" name="jun_payment_date" class="form-control" value="{{ transport_fees.jun_payment_date|date:'Y-m-d' }}"></td>
+                           <td>
+                               <select name="jun_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.jun_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.jun_status == "Paid" %}selected{% endif %}>Paid</option>
+                               </select>
+                           </td>
+                           <td>
+                               {% if transport_fees.jun_status == "Paid" %}
+                               <span class="badge badge-success">Paid</span>
+                               {% else %}
+                               <span class="badge badge-danger">Unpaid</span>
+                               {% endif %}
+                           </td>
+                           <td><button type="submit" class="btn btn-dark">Update</button></td>
+                           <td class="text-center">
+                            <div class="actions">
+                               <a href="{% url "monthly_transport_bill"   student.id 'June' %}" class="btn btn-sm bg-primary-light">
+                               <i class="fas fa-download"></i>
+                               </a>
+                            </div> 
+                         </td>
+                       </tr>
+                       
+                       <tr>
+                           <td><b>July</b></td>
+                           <td>{{ transport_fees.transport_fees.amount }}</td>
+                           <td><input type="date" name="jul_payment_date" class="form-control" value="{{ transport_fees.jul_payment_date|date:'Y-m-d' }}"></td>
+                           <td>
+                               <select name="jul_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.jul_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.jul_status == "Paid" %}selected{% endif %}>Paid</option>
+                               </select>
+                           </td>
+                           <td>
+                               {% if transport_fees.jul_status == "Paid" %}
+                               <span class="badge badge-success">Paid</span>
+                               {% else %}
+                               <span class="badge badge-danger">Unpaid</span>
+                               {% endif %}
+                           </td>
+                           <td><button type="submit" class="btn btn-dark">Update</button></td>
+                           <td class="text-center">
+                            <div class="actions">
+                               <a href="{% url "monthly_transport_bill"   student.id 'July' %}" class="btn btn-sm bg-primary-light">
+                               <i class="fas fa-download"></i>
+                               </a>
+                            </div> 
+                         </td>
+                       </tr>
+                       
+                       <tr>
+                           <td><b>August</b></td>
+                           <td>{{ transport_fees.transport_fees.amount }}</td>
+                           <td><input type="date" name="aug_payment_date" class="form-control" value="{{ transport_fees.aug_payment_date|date:'Y-m-d' }}"></td>
+                           <td>
+                               <select name="aug_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.aug_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.aug_status == "Paid" %}selected{% endif %}>Paid</option>
+                               </select>
+                           </td>
+                           <td>
+                               {% if transport_fees.aug_status == "Paid" %}
+                               <span class="badge badge-success">Paid</span>
+                               {% else %}
+                               <span class="badge badge-danger">Unpaid</span>
+                               {% endif %}
+                           </td>
+                           <td><button type="submit" class="btn btn-dark">Update</button></td>
+                           <td class="text-center">
+                            <div class="actions">
+                               <a href="{% url "monthly_transport_bill"   student.id 'August' %}" class="btn btn-sm bg-primary-light">
+                               <i class="fas fa-download"></i>
+                               </a>
+                            </div> 
+                         </td>
+                       </tr>
+                       
+                       <tr>
+                           <td><b>September</b></td>
+                           <td>{{ transport_fees.transport_fees.amount }}</td>
+                           <td><input type="date" name="sep_payment_date" class="form-control" value="{{ transport_fees.sep_payment_date|date:'Y-m-d' }}"></td>
+                           <td>
+                               <select name="sep_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.sep_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.sep_status == "Paid" %}selected{% endif %}>Paid</option>
+                               </select>
+                           </td>
+                           <td>
+                               {% if transport_fees.sep_status == "Paid" %}
+                               <span class="badge badge-success">Paid</span>
+                               {% else %}
+                               <span class="badge badge-danger">Unpaid</span>
+                               {% endif %}
+                           </td>
+                           <td><button type="submit" class="btn btn-dark">Update</button></td>
+                           <td class="text-center">
+                            <div class="actions">
+                               <a href="{% url "monthly_transport_bill"   student.id 'September' %}" class="btn btn-sm bg-primary-light">
+                               <i class="fas fa-download"></i>
+                               </a>
+                            </div> 
+                         </td>
+                       </tr>
+                       
+                       <tr>
+                           <td><b>October</b></td>
+                           <td>{{ transport_fees.transport_fees.amount }}</td>
+                           <td><input type="date" name="oct_payment_date" class="form-control" value="{{ transport_fees.oct_payment_date|date:'Y-m-d' }}"></td>
+                           <td>
+                               <select name="oct_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.oct_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.oct_status == "Paid" %}selected{% endif %}>Paid</option>
+                               </select>
+                           </td>
+                           <td>
+                               {% if transport_fees.oct_status == "Paid" %}
+                               <span class="badge badge-success">Paid</span>
+                               {% else %}
+                               <span class="badge badge-danger">Unpaid</span>
+                               {% endif %}
+                           </td>
+                           <td><button type="submit" class="btn btn-dark">Update</button></td>
+                           <td class="text-center">
+                            <div class="actions">
+                               <a href="{% url "monthly_transport_bill"   student.id 'October' %}" class="btn btn-sm bg-primary-light">
+                               <i class="fas fa-download"></i>
+                               </a>
+                            </div> 
+                         </td>
+                       </tr>
+                       
+                       <tr>
+                           <td><b>November</b></td>
+                           <td>{{ transport_fees.transport_fees.amount }}</td>
+                           <td><input type="date" name="nov_payment_date" class="form-control" value="{{ transport_fees.nov_payment_date|date:'Y-m-d' }}"></td>
+                           <td>
+                               <select name="nov_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.nov_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.nov_status == "Paid" %}selected{% endif %}>Paid</option>
+                               </select>
+                           </td>
+                           <td>
+                               {% if transport_fees.nov_status == "Paid" %}
+                               <span class="badge badge-success">Paid</span>
+                               {% else %}
+                               <span class="badge badge-danger">Unpaid</span>
+                               {% endif %}
+                           </td>
+                           <td><button type="submit" class="btn btn-dark">Update</button></td>
+                           <td class="text-center">
+                            <div class="actions">
+                               <a href="{% url "monthly_transport_bill"   student.id 'November' %}" class="btn btn-sm bg-primary-light">
+                               <i class="fas fa-download"></i>
+                               </a>
+                            </div> 
+                         </td>
+                       </tr>
+                       
+                       <tr>
+                           <td><b>December</b></td>
+                           <td>{{ transport_fees.transport_fees.amount }}</td>
+                           <td><input type="date" name="dec_payment_date" class="form-control" value="{{ transport_fees.dec_payment_date|date:'Y-m-d' }}"></td>
+                           <td>
+                               <select name="dec_status" class="form-control">
+                                   <option value="Unpaid" {% if transport_fees.dec_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                   <option value="Paid" {% if transport_fees.dec_status == "Paid" %}selected{% endif %}>Paid</option>
+                               </select>
+                           </td>
+                           <td>
+                               {% if transport_fees.dec_status == "Paid" %}
+                               <span class="badge badge-success">Paid</span>
+                               {% else %}
+                               <span class="badge badge-danger">Unpaid</span>
+                               {% endif %}
+                           </td>
+                           <td><button type="submit" class="btn btn-dark">Update</button></td>
+                           <td class="text-center">
+                            <div class="actions">
+                               <a href="{% url "monthly_transport_bill"   student.id 'December' %}" class="btn btn-sm bg-primary-light">
+                               <i class="fas fa-download"></i>
+                               </a>
+                            </div> 
+                         </td>
+                       </tr>
+                        
+                          
+                          
+                       </tbody>
+                    </table>
+                </form>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+</div>
+{% endblock main-content %}

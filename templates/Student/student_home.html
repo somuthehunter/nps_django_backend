@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row">
+    <div class="col-sm-12">
+    <h3 class="page-title">Welcome {{user.first_name}} {{user.last_name}}!</h3>
+    <ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+    <li class="breadcrumb-item active">Student Dashboard</li>
+    </ul>
+    </div>
+    </div>
+    </div>
+    
+    
+    <div class="row">
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+    <div class="card bg-nine w-100">
+    <div class="card-body">
+    <div class="db-widgets d-flex justify-content-between align-items-center">
+    <div class="db-icon">
+    <i class="fas fa-book-open"></i>
+    </div>
+    <div class="db-info">
+    <h3>{{present_days}}/{{total_days}}</h3>
+    <h7>{{attendance_percentage}}%</h7>
+    <h6><strong>Attendance</strong></h6>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+    <div class="card bg-six w-100">
+    <div class="card-body">
+    <div class="db-widgets d-flex justify-content-between align-items-center">
+    <div class="db-icon">
+    <i class="fas fa-file-alt"></i>
+    </div>
+    <div class="db-info">
+    <h3>40/60</h3>
+    <h6>All Projects</h6>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+    <div class="card bg-ten w-100">
+    <div class="card-body">
+    <div class="db-widgets d-flex justify-content-between align-items-center">
+    <div class="db-icon">
+    <i class="fas fa-clipboard-list"></i>
+    </div>
+    <div class="db-info">
+    <h3>30/50</h3>
+    <h6>Test Attended</h6>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+    <div class="card bg-eleven w-100">
+    <div class="card-body">
+    <div class="db-widgets d-flex justify-content-between align-items-center">
+    <div class="db-icon">
+    <i class="fas fa-clipboard-check"></i>
+    </div>
+    <div class="db-info">
+    <h3>15/20</h3>
+    <h6>Test Passed</h6>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Notice Board -->
+            <div class="col-lg-6 mb-4">
+                <div class="card notice-board">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Notice Board</h5>
+                    </div>
+                    <div class="card-body scrollable-content">
+                        <ul class="list-group list-group-flush">
+                            {% for i in notice %}
+                            <li class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{i.title}}</h6>
+                                    <small class="text-muted">{{i.created_at|timesince}} ago</small>
+                                </div>
+                                <p class="mb-1">{{i.message}}</p>
+                            </li>
+                            {% empty %}
+                                <li class="list-group-item">
+                                    <p class="mb-1">No Notice Uploaded yet.</p>
+                                </li>
+                            {% endfor %}
+                            <!-- Add more items to test scrolling -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Notifications Board -->
+            {% comment %} <div class="col-lg-6 mb-4">
+                <div class="card notifications-board">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Notifications</h5>
+                    </div>
+                    <div class="card-body scrollable-content">
+                        <ul class="list-group list-group-flush">
+                            {% for notification in user_notifications %}
+                                <li class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">Book Due Reminder</h6>
+                                        <small class="text-muted">{{ notification.sent_at|timesince  }} ago</small>
+                                    </div>
+                                    <p class="mb-1">{{ notification.message }}</p>
+                                </li>
+                            {% endfor %}
+                            
+                            <!-- Add more items to test scrolling -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> {% endcomment %}
+<!-- Notifications Board -->
+<div class="col-lg-6 mb-4">
+    <div class="card notifications-board">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Homework</h5>
+        </div>
+        <div class="card-body scrollable-content">
+            <ul class="list-group list-group-flush">
+                {% for homework in homeworks %}
+                
+                    <li class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{ homework.subject.subject_name }}</h6>
+                            <small class="text-muted">{{ homework.uploaded_at|timesince }} ago</small>
+                        </div>
+                        <p class="mb-1">{{ homework.description }}</p>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">
+                        <p class="mb-1">No homework assigned yet.</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<style>
+    .notice-board, .notifications-board {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: none;
+        border-radius: 4px;
+        height: 370px; /* Increased height for more content */
+        display: flex;
+        flex-direction: column;
+        background-color: #f8f9fa;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .notice-board:hover, .notifications-board:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+        border-top-left-radius: 4px !important;
+        border-top-right-radius: 4px !important;
+        font-weight: 600;
+        padding: 1rem 1.5rem;
+        background-color: #343a40;
+        color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-header h5 {
+        margin: 0;
+        font-size: 1.25rem;
+    }
+
+    .scrollable-content {
+        overflow-y: auto;
+        flex-grow: 1;
+        padding: 0.5rem;
+    }
+
+    .list-group-item {
+        border: none;
+        border-radius: 6px;
+        margin-bottom: 0.5rem;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        background-color: #ffffff;
+    }
+
+    .list-group-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .list-group-item:hover {
+        background-color: #e9ecef;
+        transform: translateY(-2px);
+    }
+
+    .notice-board .list-group-item {
+        border-left: 4px solid #007bff;
+    }
+
+    .notifications-board .list-group-item {
+        border-left: 4px solid #28a745;
+    }
+
+    h6 {
+        color: #495057;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        font-size: 1rem;
+    }
+
+    .card-body p {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 0;
+        line-height: 1.5;
+    }
+
+    .text-muted {
+        font-size: 0.75rem;
+        color: #adb5bd !important;
+    }
+
+    /* Custom scrollbar styles */
+    .scrollable-content::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .scrollable-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+
+    .scrollable-content::-webkit-scrollbar-thumb {
+        background: #c1c9d0;
+        border-radius: 3px;
+    }
+
+    .scrollable-content::-webkit-scrollbar-thumb:hover {
+        background: #a8b2bc;
+    }
+
+    @media (max-width: 991.98px) {
+        .col-lg-6 {
+            margin-bottom: 1.5rem;
+        }
+    }
+</style>
+{% endblock main-content %}

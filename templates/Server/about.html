@@ -1,0 +1,309 @@
+{% extends "Server/header.html" %}
+{% load static %}
+{% block content %}
+
+
+    <div class="about-us-section">
+        <div class="left-section">
+            <div class="text-content">
+                <h1>About us</h1>
+                <div class="underline"></div>
+            </div>
+        </div>
+        <div class="right-section">
+            <img src="{% static "Website/Website/For Image Gallery/FINAL/students.jpg" %}" alt="School Building">
+        </div>
+    </div>
+    <div class="about-school-section animatable">
+        <div class="about-school-content">
+            <div class="about-school-image">
+                <img src="Website/Website/For Image Gallery/FINAL/school7.jpg" alt="Wise Indian Private School">
+            </div>
+            <div class="about-school-text">
+                <h1>About <span>School</span></h1>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint animi optio, recusandae tempora nihil,
+                    incidunt sed deserunt, officia hic quis fugiat debitis voluptatibus aut a iure earum. Sapiente,
+                    incidunt sequi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Autem magni tenetur
+                    mollitia officia molestias perferendis nobis voluptatibus nisi distinctio quas, corrupti eligendi
+                    quaerat nam et praesentium pariatur quam molestiae sint?
+                    Quod nihil tempora nisi quia illo in quisquam at libero perspiciatis, nostrum ipsum minima expedita
+                    facere omnis debitis suscipit iste </p>
+            </div>
+        </div>
+    </div>
+    <section class="school-sections ">
+        <div class="section animatable">
+            <div class="section-image">
+                <img src="Website/Website/For Image Gallery/FINAL/STUDY.jpg" alt="Kindergarten">
+            </div>
+            <div class="section-content">
+                <h2>KINDERGARTEN</h2>
+                <h3>To be a child in our Nursery-Kindergarten is to enter into the realm of guided joyful discovery.
+                </h3>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis laboriosam sit libero voluptate
+                    adipisci eligendi cumque eum rerum modi, explicabo reprehenderit esse unde rem pariatur voluptatibus
+                    omnis, minus quibusdam nam!</p>
+            </div>
+        </div>
+        <div class="section reverse animatable">
+            <div class="section-image ">
+                <img src="Website/Website/For Image Gallery/FINAL/food.png" alt="Primary">
+            </div>
+            <div class="section-content">
+                <h2>PRIMARY</h2>
+                <h3>Mastering Skills.</h3>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias expedita sapiente dolorem vero quod
+                    possimus nemo, eveniet quia quasi! Provident distinctio saepe exercitationem repellendus inventore
+                    fugiat totam, dolores ut aliquid?</p>
+            </div>
+        </div>
+        <div class="section animatable">
+            <div class="section-image">
+                <img src="Website/Website/For Image Gallery/FINAL/inside hostel 1.jpg" alt="Middle School">
+            </div>
+            <div class="section-content">
+                <h2>MIDDLE SCHOOL</h2>
+                <h3>Time to spread the wings and fly.</h3>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente aspernatur architecto tempora.
+                    Laboriosam facilis reiciendis accusamus dignissimos commodi obcaecati eveniet rerum mollitia eius
+                    tempore quae aliquam numquam, enim, eos ducimus.</p>
+            </div>
+        </div>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Alatsi&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Khand:wght@300;400;500;600;700&family=Madimi+One&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* styles.css */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Sofia Sans Semi Condensed", sans-serif;
+}
+
+.about-us-section {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.left-section {
+    flex: 1;
+    background-color: #452662;
+    /* Use the purple color from the image */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+    min-width: 300px;
+    /* Ensures left section maintains some width on smaller screens */
+}
+
+.text-content {
+    text-align: center;
+}
+
+.text-content h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+.underline {
+    width: 50px;
+    height: 4px;
+    background-color: #FFD700;
+    /* Use the yellow color for the underline */
+    margin: 20px auto 0;
+}
+
+.right-section {
+    flex: 1;
+    position: relative;
+    min-width: 300px;
+    /* Ensures right section maintains some width on smaller screens */
+}
+
+.right-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-school-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.about-school-content {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 900px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.about-school-image {
+    flex: 1;
+    min-width: 200px;
+    border-bottom: 10px solid #FFD700;
+    border-left: 10px solid #FFD700;
+}
+
+.about-school-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.about-school-text {
+    flex: 1;
+    padding: 20px;
+    min-width: 200px;
+    border-top: 10px solid #FFD700;
+    border-right: 10px solid #FFD700;
+}
+
+.about-school-text h1 {
+    margin: 0 0 10px;
+    font-size: 2rem;
+}
+
+.about-school-text h1 span {
+    color: #ffcc00;
+}
+
+.about-school-text p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+}
+
+.school-sections {
+    padding: 20px 240px;
+}
+
+.section {
+    display: flex;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.section.reverse {
+    flex-direction: row-reverse;
+}
+
+.section-image {
+    width: 430px;
+    height: 300px;
+}
+
+.section-image img {
+
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.section-content {
+    flex: 1;
+    padding: 20px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.section-content h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #002d72;
+}
+
+.section-content h3 {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #002d72;
+    font-weight: normal;
+}
+
+.section-content p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+
+    .left-section,
+    .right-section {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    .about-us-section,
+    .about-school-section {
+        flex-direction: column;
+    }
+
+    .about-school-content {
+        flex-direction: column;
+    }
+
+    .about-school-text {
+        padding: 20px;
+        border-top: 0;
+    }
+
+    .section {
+        flex-direction: column;
+    }
+    .section-image{
+        width:100%;
+    }
+    .school-sections {
+        padding: 20px;
+    }
+
+    .section.reverse {
+        flex-direction: column;
+    }
+
+    .section-content {
+        padding: 10px;
+    }
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* Animation class */
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.fadeInUp {
+    animation-name: fadeInUp;
+}
+
+    </style>
+    </section>{% endblock content %}
+

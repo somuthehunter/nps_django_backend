@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Manage Notices and Notifications</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Manage Notices</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% include "include/message.html" %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">General Notices</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url "send_notice" %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Notice Type</label>
+                            <select class="form-control" name="types" required>
+                                <option >Academic</option>
+                                <option >Hostel</option>
+                                <option >Transport</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control"  name="title" placeholder="Enter a Title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Teacher Name</label>
+                            <input type="text" class="form-control" value="{{user.first_name}} {{user.last_name}}" name="sent_by" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea class="form-control" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-block">Send General Notice</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Student Notifications</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Class </label>
+                            <select class="form-control" name="class_name" required>
+                              <option value="" disabled selected>Select Class</option>
+                              {% for key, value in class_choices %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                              {% endfor %}
+                          </select>
+                        </div>
+                        {% comment %} <div class="form-group" id="class-selection" style="display: none;">
+                            <label>Class</label>
+                            <select class="form-control" name="class_name">
+                                <option value="" disabled selected>Select Class</option>
+                                {% for key, value in class_choices %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> {% endcomment %}
+                        <div class="form-group">
+                           <label>Teacher Name</label>
+                           <input type="text" class="form-control" value="{{user.first_name}} {{user.last_name}}" name="sent_by" readonly>
+  
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea class="form-control" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-block">Send Student Notification</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+      <div class="col-12 col-lg-6">
+          <div class="card">
+              <div class="card-header">
+                  <h5 class="card-title">Recent General Notices</h5>
+              </div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                      <table class="table table-hover table-center mb-0  " >
+                          <thead>
+                              <tr>
+                                  <th>Type</th>
+                                  <th>Sent</th>
+                                  <th>Date Sent</th>
+                                  <th>Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {% for notice in notice %}
+                              
+                              <tr>
+                                  <td>{{ notice.types }}</td>
+                                  <td>{{ notice.sent_by }}</td>
+                                  <td>{{ notice.created_at|date:"d-m-Y" }}</td>
+                                  <td>
+                                      <div class="actions">
+                                          <a href="#" class="btn btn-sm bg-success-light mr-2" data-toggle="modal" data-target="#view-notice-{{ notice.id }}">
+    <i class="fas fa-eye"></i>
+</a>
+                                      </div>
+                                  </td>
+                              </tr>
+                              
+                              {% endfor %}
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+      <div class="col-12 col-lg-6">
+          <div class="card">
+              <div class="card-header">
+                  <h5 class="card-title">Recent Student Notifications</h5>
+              </div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                      <table class="table table-hover table-center mb-0 " >
+                          <thead>
+                              <tr>
+                                  <th>Class</th>
+                                  <th>Sent By</th>
+                                  <th>Date Sent</th>
+                                  <th>Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {% for notice in notification %}
+                              
+                              <tr>
+                                  <td>{{ notice.class_name }}</td>
+                                  <td>{{ notice.sent_by }}</td>
+                                  <td>{{ notice.sent_at|date:"d-m-Y" }}</td>
+                                  <td>
+                                      <div class="actions">
+                                       <a href="#" class="btn btn-sm bg-success-light mr-2" data-toggle="modal" data-target="#view-notification-{{ notice.id }}">
+                                          <i class="fas fa-eye"></i>
+                                      </a>
+                                  </td>
+                              </tr>
+                              
+                              {% endfor %}
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  <!-- Notice View Modals -->
+  {% for notice in notice %}
+  <div class="modal fade" id="view-notice-{{ notice.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">General Notice Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <p><strong>Type:</strong> {{ notice.types|title }}</p>
+                  <p><strong>Message:</strong> {{ notice.message }}</p>
+                  <p><strong>Sent By:</strong> {{ notice.sent_by }}</p>
+                  <p><strong>Date Sent:</strong> {{ notice.created_at|date:"d-m-Y H:i" }}</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  {% endfor %}
+  {% for notice in notification %}
+  <div class="modal fade" id="view-notification-{{ notice.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Student Notification Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <p><strong>Class:</strong> {{ notice.class_name }}</p>
+                  <p><strong>Message:</strong> {{ notice.message }}</p>
+                  <p><strong>Sent By:</strong> {{ notice.sent_by }}</p>
+                  <p><strong>Date Sent:</strong> {{ notice.sent_at|date:"d-m-Y H:i" }}</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  {% endfor %}
+
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+       const studentRecipientSelect = document.getElementById('student-recipient');
+       const classSelection = document.getElementById('class-selection');
+   
+       studentRecipientSelect.addEventListener('change', function() {
+           if (this.value === 'class') {
+               classSelection.style.display = 'block';
+           } else {
+               classSelection.style.display = 'none';
+           }
+       });
+   });
+   </script>
+{% endblock main-content %}
+
+
+

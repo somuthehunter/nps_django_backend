@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block main-content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">View Attendance</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Attendance</a></li>
+                    <li class="breadcrumb-item active">View</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {% include "include/message.html" %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-4">Attendance Management</h4>
+
+                    <!-- Edit Attendance Section -->
+                    <div class="mb-4">
+                        <h5 class="text-primary mb-3">Edit Attendance</h5>
+                        <form method="get" class="row g-3 align-items-end">
+                            
+                            <div class="col-md-3">
+                                <label for="edit_class" class="form-label">Class</label>
+                                <select id="edit_class" name="edit_class" class="form-select" required>
+                                    <option value="" disabled selected>Select Class</option>
+                                    {% for key, value in class_choices %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="edit_section" class="form-label">Section</label>
+                                <select id="edit_section" name="edit_section" class="form-select" required>
+                                    <option value="" disabled selected>Select Section</option>
+                                    {% for key, value in section_choices %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="edit_date" class="form-label">Date</label>
+                                <input type="date" id="edit_date" name="edit_date" class="form-control" required>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary w-100">Edit Attendance</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <hr>
+
+                    <!-- View Attendance Section -->
+                    <div class="mt-4">
+                        <h5 class="text-primary mb-3">View Attendance Summary</h5>
+                        <form method="get" class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label for="id_class_name" class="form-label">Class</label>
+                                {{ form.class_name }}
+                            </div>
+                            <div class="col-md-3">
+                                <label for="id_section_name" class="form-label">Section</label>
+                                {{ form.section_name }}
+                            </div>
+                            <div class="col-md-2">
+                                <label for="id_start_date" class="form-label">From Date</label>
+                                {{ form.start_date }}
+                            </div>
+                            <div class="col-md-2">
+                                <label for="id_end_date" class="form-label">To Date</label>
+                                {{ form.end_date }}
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary w-100">Filter</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Attendance Summary Table -->
+                    <div class="mt-4">
+                        {% if attendance_summary %}
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Student Name</th>
+                                            <th>Class</th>
+                                            <th>Section</th>
+                                            <th>Attendance Ratio</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for summary in attendance_summary %}
+                                            <tr>
+                                                <td>{{ summary.student_name }}</td>
+                                                <td>{{ summary.class }}</td>
+                                                <td>{{ summary.section }}</td>
+                                                <td>{{ summary.ratio }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p class="text-muted text-center">No attendance records found for the selected criteria.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% comment %} Modals for editing individual student attendance
+{% for summary in attendance_summary %}
+    <div class="modal fade" id="editModal{{ summary.student_id }}" tabindex="-1" aria-labelledby="editModalLabel{{ summary.student_id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel{{ summary.student_id }}">Edit Attendance for {{ summary.student_name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% for attendance in summary.attendance_details %}
+                        <form method="post" action="{% url 'edit_attendance' %}" class="mb-3">
+                            {% csrf_token %}
+                            <input type="hidden" name="attendance_id" value="{{ attendance.id }}">
+                            <div class="mb-3">
+                                <label class="form-label">Date: {{ attendance.date }}</label>
+                                <select name="status" class="form-select">
+                                    <option value="present" {% if attendance.status == 'present' %}selected{% endif %}>Present</option>
+                                    <option value="absent" {% if attendance.status == 'absent' %}selected{% endif %}>Absent</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %} {% endcomment %}
+
+<style>
+    .card {
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        border: none;
+    }
+    .card-title {
+        color: black;
+        font-weight: 700;
+    }
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fc;
+    }
+    .btn-primary {
+        background-color: black;
+        border-color: #4e73df;
+    }
+    .btn-primary:hover {
+        background-color: #2e59d9;
+        border-color: #2e59d9;
+    }
+    .btn-outline-primary {
+        color: #4e73df;
+        border-color: #4e73df;
+    }
+    .btn-outline-primary:hover {
+        background-color: #4e73df;
+        color: #fff;
+    }
+    .text-primary {
+        color: #4e73df !important;
+    }
+</style>
+
+{% endblock %}

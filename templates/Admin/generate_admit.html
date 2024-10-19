@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block main-content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center mb-3">
+            <div class="col">
+                <h2 class="page-title">Generate Admit Card</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Admit</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">View</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    {% include "include/message.html" %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <!-- Session Information Form -->
+                    <h3 class="mb-3">Session Information</h3>
+                    <form method="POST" class="mb-4">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="session_name" class="form-label">Session Name</label>
+                                    <input type="text" class="form-control" id="session_name" name="session_name" value="{{ session.session_name }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="start_date" class="form-label">Start Date</label>
+                                    <input type="text" class="form-control" id="start_date" name="start_date" value="{{ session.start_date }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="end_date" class="form-label">End Date</label>
+                                    <input type="text" class="form-control" id="end_date" name="end_date" value="{{ session.end_date }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button type="submit" class="btn btn-dark w-100">Update Session</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <!-- Student Filter Form -->
+                    <h3 class="mb-3">Filter Students</h3>
+                    <form method="get" id="filterForm" class="mb-4">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="{{ form.class_name.id_for_label }}" class="form-label">Class</label>
+                                    {{ form.class_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="{{ form.section.id_for_label }}" class="form-label">Section</label>
+                                    {{ form.section }}
+                                </div>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button type="submit" class="btn btn-dark w-100">Filter Students</button>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button type="submit" name="print_all" class="btn btn-outline-danger w-100">Print All Admit Cards</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Students List -->
+                    {% if students %}
+                    <div class="table-responsive">
+                        <h3 class="mb-3">Students List</h3>
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Class</th>
+                                    <th>Section</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                                    <td>{{ student.classes }}</td>
+                                    <td>{{ student.section }}</td>
+                                    <td>
+                                        <a href="{% url 'print_admit' student.id %}" class="btn btn-sm btn-outline-info">Generate Admit Card</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info mt-3" role="alert">
+                        No students found. Please adjust your filter criteria.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

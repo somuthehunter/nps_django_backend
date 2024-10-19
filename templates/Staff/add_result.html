@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block main-content %}
+
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Add Result</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="#">Result</a></li>
+             <li class="breadcrumb-item active">Add</li>
+          </ul>
+       </div>
+    </div>
+</div>
+{% include "include/message.html" %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                {% if action is None %}
+                <!-- Form to filter students -->
+                <form method="post" action="?action=get_student" id="filterForm">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label><strong>Class</strong></label>
+                                
+                                {{ filter_form.class_name }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label><strong>Section</strong></label>
+                                {{ filter_form.section }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label><strong>Subject</strong></label>
+                                {{ filter_form.subject }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label><strong>Exam Term</strong></label>
+                                {{ filter_form.exam_term }}
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-dark">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                {% elif action == 'get_student' %}
+<!-- Form to enter results -->
+<form method="post" action="?action=add_result" id="resultForm">
+    {% csrf_token %}
+    <input type="hidden" name="exam_term" value="{{ filter_form.exam_term.value }}">
+    <div class="row">
+        <div class="col-12">
+            <h5 class="form-title text-center"><span>Enter Marks</span></h5>
+        </div>
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Student Name</th>
+                            {% for subject in subjects %}
+                            <th>
+                                {{ subject.subject_name }}
+                                {% if filter_form.exam_term.value == 'first_term' %}
+                                <span class="badge badge-danger">1st Term</span>
+                                {% elif filter_form.exam_term.value == 'second_term' %}
+                                <span class="badge badge-success">2nd Term</span>
+                                {% endif %}
+                            </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                            {% for subject in subjects %}
+                            <td>
+                                <input type="hidden" name="student_{{ student.id }}_{{ subject.id }}" value="{{ student.id }}">
+                                <input type="hidden" name="subject_{{ student.id }}_{{ subject.id }}" value="{{ subject.id }}">
+                                {% if filter_form.exam_term.value == 'first_term' %}
+                                <div class="form-row mb-2">
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-sm" name="FA_I_{{ student.id}}_{{subject.id}}" placeholder="FA - I" min="0" max="10">
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-sm" name="NB_I_{{ student.id}}_{{subject.id}}" placeholder="N.B - I" min="0" max="5">
+                                    </div>
+                                </div>
+                                <div class="form-row mb-2">
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-sm" name="SE_I_{{ student.id}}_{{subject.id}}" placeholder="SUB ENRICH - I" min="0" max="5">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-sm" name="first_term_marks_{{ student.id }}_{{ subject.id }}" placeholder="First Term Marks" min="0" max="100">
+                                    </div>
+                                </div>
+                                {% elif filter_form.exam_term.value == 'second_term' %}
+                                <div class="form-row mb-2">
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-sm" name="FA_II_{{ student.id}}_{{subject.id}}" placeholder="FA - II" min="0" max="10">
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-sm" name="NB_II_{{ student.id}}_{{subject.id}}" placeholder="N.B - II" min="0" max="5">
+                                    </div>
+                                </div>
+                                <div class="form-row mb-2">
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-sm" name="SE_II_{{ student.id}}_{{subject.id}}" placeholder="SUB ENRICH - II" min="0" max="5">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-sm" name="second_term_marks_{{ student.id }}_{{ subject.id }}" placeholder="Second Term Marks" min="0" max="100">
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-12 text-center mt-4">
+            <button type="submit" class="btn btn-dark btn-lg">Submit Results</button>
+        </div>
+    </div>
+</form>
+
+{% endif %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const classSelect = document.getElementById('id_class_name');
+        const subjectSelect = document.getElementById('id_subject');
+    
+        classSelect.addEventListener('change', function() {
+            const selectedClass = this.value;
+            subjectSelect.innerHTML = '<option value="">---------</option>';
+    
+            if (selectedClass) {
+                fetch(`/get_subjects/?class_name=${selectedClass}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(subject => {
+                            const option = new Option(subject.subject_name, subject.id);
+                            subjectSelect.add(option);
+                        });
+                    });
+            }
+        });
+    });
+</script>
+
+{% endblock main-content %}

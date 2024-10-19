@@ -1,0 +1,60 @@
+
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Edit Transport Fee </h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="subjects.html">Transport Fee </a></li>
+             <li class="breadcrumb-item active">Edit </li>
+          </ul>
+       </div>
+       <div class="col-auto text-right float-right ml-auto">
+        <a href="{% url "view_transport_fee" %}" class="btn btn-sm bg-success-light mr-3 "><i class="fas fa-bus">&nbsp; &nbsp;</i> See All Custom Fees &nbsp;</a>
+        
+     </div>
+    </div>
+ </div>
+ {% include "include/message.html" %}
+
+ <div class="row">
+    <div class="col-sm-12">
+       <div class="card">
+          <div class="card-body">
+             <form method="post">
+               {% csrf_token %}
+                <div class="row">
+                   <div class="col-12">
+                      <h5 class="form-title text-center"><span>Subject Information</span></h5>
+                   </div>
+                
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Root Name</label>
+                         <input type="text" class="form-control" name="root_name" value="{{transport_fee.root_name}}">
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Amount Per Month</label>
+                         <input type="text" class="form-control" name="amount" value="{{transport_fee.amount}}">
+                      </div>
+                   </div>
+                   
+                   <div class="col-12 text-center">
+                      <button type="submit" class="btn btn-info">Submit</button>
+                   </div>
+                </div>
+             </form>
+          </div>
+       </div>
+    </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+
+
+{% endblock main-content %}

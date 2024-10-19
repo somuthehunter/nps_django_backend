@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Receipt</title>
+    {% comment %} <link rel="stylesheet" href="recipt.css"> {% endcomment %}
+</head>
+
+<body>
+    <div class="receipt-container">
+        <div class="receipt">
+            <div class="header">
+                {% comment %} <img src="{% static "images/logologo.jpg" %}" alt="School Logo" class="logo"> {% endcomment %}
+                <div class="school-info">
+                    <h2>NATIONAL PUBLIC SCHOOL</h2>
+                    <p>(Under K.M.C.M.W.S.T. Regd. by State Government)</p>
+                    <p>An English Medium Co-Educational School</p>
+                    <p>ESTD. 2014</p>
+                </div>
+            </div>
+            <div class="student-info">
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Adm No.:&nbsp;</p>{{student.admission_no}}
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">Name:&nbsp;</p> {{ student.admin.first_name }} {{ student.admin.last_name }}
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Class:&nbsp;</p>{{student.classes}}
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">Roll No.:&nbsp;</p> 12
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Father:&nbsp;</p> {{student.guardian_name}}
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">House:&nbsp;</p>
+                    </div>
+                </div>
+            </div>
+            <div class="fee-details">
+                <div class="fee-row">
+                    <div class="fee-column highlight">Head</div>
+                    <div class="fee-column yellowlight">Payable: <span style="color:black;">{{ month_data.amount }} /-</span> </div>
+                    <div class="fee-column yellowlight">Pay: <span style="color:black;"> {{ month_data.status }}</span></div>
+                </div>
+                <div class="rid">
+                    <p><strong class="highlight">RID:</strong>6969 CS</p>
+                    <p>NA</p>
+                    <p>{{ month_data.payment_date|default:"Not paid" }}</p>
+                    <p>CAS1 0</p>
+                </div>
+                <div class="date"><strong> <span style="color:black;">Month:</span> {{ month_data.month }}</strong></div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Monthly Fees</div>
+                    <div class="fee-column">{{month_data.amount}}</div>
+                    <div class="fee-column">{{month_data.amount}}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Dues</div>
+                    <div class="fee-column">0.00</div>
+                    <div class="fee-column">0.00</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Discount</div>
+                    <div class="fee-column">0.00</div>
+                    <div class="fee-column">0.00</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Add</div>
+                    <div class="fee-column">0.00</div>
+                    <div class="fee-column">0.00</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column highlight">Total</div>
+                    <div class="fee-column">{{month_data.amount}}</div>
+                    <div class="fee-column">{{month_data.amount}}</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column highlight">In Words: RUPEES TWO THOUSAND FIFTY ONLY</div>
+                </div>
+            </div>
+            <div class="footer">
+                <div>Office Copy</div>
+                <div>Accountant</div>
+            </div>
+        </div>
+    </div>
+    <div class="receipt-container">
+        <div class="receipt">
+            <div class="header">
+                {% comment %} <img src="{% static "images/logologo.jpg" %}" alt="School Logo" class="logo"> {% endcomment %}
+                <div class="school-info">
+                    <h2>NATIONAL PUBLIC SCHOOL</h2>
+                    <p>(Under K.M.C.M.W.S.T. Regd. by State Government)</p>
+                    <p>An English Medium Co-Educational School</p>
+                    <p>ESTD. 2014</p>
+                </div>
+            </div>
+            <div class="student-info">
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Adm No.:</p> 0667
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">Name:</p> {{ student.admin.first_name }} {{ student.admin.last_name }}
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Class:</p>{{student.classes}}
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">Roll No.:</p> 12
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-column">
+                        <p class="cian">Father:</p> MD SANJAR ALAM
+                    </div>
+                    <div class="info-column">
+                        <p class="cian">House:</p>
+                    </div>
+                </div>
+            </div>
+            <div class="fee-details">
+                <div class="fee-row">
+                    <div class="fee-column highlight">Head</div>
+                    <div class="fee-column yellowlight">Payable</div>
+                    <div class="fee-column yellowlight">Pay</div>
+                </div>
+                <div class="rid">
+                    <p><strong class="highlight">RID:</strong>6969 CS</p>
+                    <p>NA</p>
+                    <p>16-7-2024</p>
+                    <p>CAS1 0</p>
+                </div>
+                <div class="date">MAY/24</div>
+                <div class="fee-row">
+                    <div class="fee-column brown">HOSTEL</div>
+                    <div class="fee-column">2050.00</div>
+                    <div class="fee-column">2050.00</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Dues</div>
+                    <div class="fee-column">0.00</div>
+                    <div class="fee-column">0.00</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Discount</div>
+                    <div class="fee-column">0.00</div>
+                    <div class="fee-column">0.00</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column brown">Add</div>
+                    <div class="fee-column">0.00</div>
+                    <div class="fee-column">0.00</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column highlight">Total</div>
+                    <div class="fee-column">2050.00</div>
+                    <div class="fee-column">2050.00</div>
+                </div>
+                <div class="fee-row">
+                    <div class="fee-column highlight">In Words: RUPEES TWO THOUSAND FIFTY ONLY</div>
+                </div>
+            </div>
+            <div class="footer">
+                <div>Student Copy</div>
+                <div>Accountant</div>
+            </div>
+        </div>
+    </div>
+    <button onclick="window.print();" class="print-button">Print</button>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .receipt-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .receipt {
+            background: #fff;
+            padding: 20px;
+            border: 2px solid #556295;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: 10px;
+            width: 100%;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #556295;
+            padding-bottom: 10px;
+        }
+        
+        .header .logo {
+            max-width: 80px;
+        }
+        
+        .header .school-info {
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .header .school-info h2 {
+            margin: 0;
+            color: #563c33;
+        }
+        
+        .header .details {
+            text-align: right;
+        }
+        
+        .student-info {
+            margin-bottom: 20px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            border: 2px solid #556295;
+            padding: 8px;
+        }
+        
+        .fee-details {
+            margin-bottom: 20px;
+        }
+        .info-column{
+            display: flex;
+            color: #203ba9;
+            font-weight: 600;
+        }
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            border: 2px solid #556295;
+            padding: 8px;
+            color: #1e575d;
+            font-weight: 600;
+        }
+        .rid{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            color: #1e575d;
+            font-weight: 600;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            border-top: 2px solid #556295;
+            padding-top: 10px;
+            color: #203ba9;
+        }
+        .date{
+            margin: 10px 0;
+            color: #1e575d;
+        }
+        p{
+            color: #556295;
+        }
+        .brown{
+            font-weight: 600;
+            color: #563c33;
+        }
+        .highlight{
+            color: #563c33;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .yellowlight{
+            color: #a1894e;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .cian{
+            color: #1e575d;
+            font-weight: 600;
+        }
+        .print-button {
+            position: absolute;
+            bottom: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        @media (max-width: 768px) {
+            body {
+                flex-wrap: wrap;
+                height: 100%;
+            }
+            .receipt {
+                padding: 10px;
+            }
+            .header {
+                /* flex-direction: column; */
+                text-align: center;
+            }
+            .header .details {
+                text-align: center;
+            }
+            .print-button {
+                display: block;
+                position: fixed;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* .header{
+                flex-direction: column;
+            } */
+            .header .details {
+                text-align: center;
+            }
+            .info-row, .fee-row {
+                /* flex-direction: column; */
+                text-align: center;
+            }
+        }  
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+            @page {
+                margin: 0 30px 0px 20px;
+                /* margin-top: 20px; */
+            }
+            /* body *{
+                visibility: hidden;
+            }
+            .report-card *{
+                visibility: visible;
+            } */
+            .report-card{
+                position: absolute;
+                top: 0;
+                height: 90%;
+            }
+            .receipt-container {
+                page-break-after: always;
+            }
+            
+        }
+        
+    </style>
+</body>
+
+</html>

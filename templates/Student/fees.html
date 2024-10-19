@@ -1,0 +1,473 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Fees </h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+             <li class="breadcrumb-item active">Fees </li>
+          </ul>
+       </div>
+       {% comment %} <div class="col-auto text-right float-right ml-auto">
+          <a href="#" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>
+          <a href="add-fees-collection.html" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+       </div> {% endcomment %}
+    </div>
+ </div>
+ <div class="row">
+   <div class="col-sm-12">
+      <div class="card card-table">
+         <div class="card-body">
+            <div class="table-responsive">
+                   <table class="table table-hover table-center mb-0">
+                   <thead>
+                      <tr>
+                         
+                         <th>Name</th>
+                         <th>Class</th>
+                         <th>Transport Fee</th>
+                         <th>Monthly Fee</th>
+                         <th>Month</th>
+                         <th>Paid Date</th>
+                         <th class="text-right">Status</th>
+                         {% comment %} <th>Bill</th> {% endcomment %}
+                         {% comment %} <th> Pay </th> {% endcomment %}
+                      </tr>
+                   </thead>
+                   <tbody>
+                      <tr>
+                         
+                         <td>
+                            <h2 class="table-avatar">
+                               {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-01.jpg" alt="User Image"></a> {% endcomment %}
+                               <a>{{user.first_name}} {{user.last_name}}</a>
+                            </h2>
+                         </td>
+                         <td>{{user.student.classes}}</td>
+                         <td>{{user.student.fee.transport_fees.amount}}</td>
+                         <td>{{user.student.fee.fee_structure.amount}}</td>
+                         <td>January</td>
+                         <td>{{user.student.fee.jan_payment_date}}</td>
+                         <td class="text-right">
+                           {% if user.student.fee.jan_status == "Paid" %}
+                               <span class="badge badge-success">{{ user.student.fee.jan_status }}</span>
+                           {% elif user.student.fee.jan_status == "Due" %}
+                              <span class="badge badge-warning" style="width:50px; border-radius:0px;" >{{ user.student.fee.jan_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger">{{ user.student.fee.jan_status }}</span>
+                           {% endif %}
+                       </td>
+                       {% comment %} <td class="text-center">
+                        <div class="actions">
+                           <a href="" class="btn btn-sm bg-primary-light">
+                           <i class="fas fa-download"></i>
+                           </a>
+                        </div> 
+                     </td>
+                     <td class="text-center">
+                        <div class="actions">
+                           <a href="{% url "student-payment" %}" class="btn btn-sm bg-primary-light">
+                           <i class="fas fa-rupee-sign"></i>
+                           </a>
+                        </div> 
+                     </td> {% endcomment %}
+                       
+                      </tr>
+                      
+                      <tr>
+                         
+                         <td>
+                            <h2 class="table-avatar">
+                               {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-04.jpg" alt="User Image"></a> {% endcomment %}
+                               <a>{{user.first_name}} {{user.last_name}}</a>
+                            </h2>
+                         </td>
+                         <td>{{user.student.classes}}</td>
+                         <td>{{user.student.fee.transport_fees.amount}}</td>
+                         <td>{{user.student.fee.fee_structure.amount}}</td>
+                         <td>February</td>
+                         <td>{{user.student.fee.feb_payment_date}}</td>
+                         <td class="text-right">
+                           {% if user.student.fee.feb_status == "Paid" %}
+                               <span class="badge badge-success" style="width:50px; border-radius:0px;">{{ user.student.fee.feb_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger" style="width:50px; border-radius:0px;">{{ user.student.fee.feb_status }}</span>
+                           {% endif %}
+                        </td>
+                        {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-download"></i>
+                              </a>
+                           </div> 
+                        </td>
+                        <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-rupee-sign"></i>
+                              </a>
+                           </div> 
+                        </td> {% endcomment %}
+
+                    </tr>
+                    <tr>
+                        
+                        <td>
+                           <h2 class="table-avatar">
+                              {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-01.jpg" alt="User Image"></a> {% endcomment %}
+                              <a>{{user.first_name}} {{user.last_name}}</a>
+                           </h2>
+                        </td>
+                        <td>{{user.student.classes}}</td>
+                        <td>{{user.student.fee.transport_fees.amount}}</td>
+                        <td>{{user.student.fee.fee_structure.amount}}</td>
+                        <td>March</td>
+                        <td>{{user.student.fee.mar_payment_date}}</td>
+                        <td class="text-right">
+                           {% if user.student.fee.mar_status == "Paid" %}
+                               <span class="badge badge-success"style="width:50px; border-radius:0px;">{{ user.student.fee.mar_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger"style="width:50px; border-radius:0px;" >{{ user.student.fee.mar_status }}</span>
+                           {% endif %}
+                        </td>
+                        {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-download"></i>
+                              </a>
+                           </div> 
+                        </td>
+                        <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-rupee-sign"></i>
+                              </a>
+                           </div> 
+                        </td> {% endcomment %}
+                     </tr>
+                     <tr>
+                        
+                        <td>
+                           <h2 class="table-avatar">
+                              {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-01.jpg" alt="User Image"></a> {% endcomment %}
+                              <a>{{user.first_name}} {{user.last_name}}</a>
+                           </h2>
+                        </td>
+                        <td>{{user.student.classes}}</td>
+                        <td>{{user.student.fee.transport_fees.amount}}</td>
+                        <td>{{user.student.fee.fee_structure.amount}}</td>
+                        <td>April</td>
+                        <td>{{user.student.fee.apr_payment_date}}</td>
+                        <td class="text-right">
+                           {% if user.student.fee.apr_status == "Paid" %}
+                               <span class="badge badge-success" style="width:50px; border-radius:0px;">{{ user.student.fee.apr_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger" style="width:50px; border-radius:0px;">{{ user.student.fee.apr_status }}</span>
+                           {% endif %}
+                        </td>
+                        {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-download"></i>
+                              </a>
+                           </div> 
+                        </td>
+                        <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-rupee-sign"></i>
+                              </a>
+                           </div> 
+                        </td> {% endcomment %}
+                     </tr>
+                     <tr>
+                        
+                        <td>
+                           <h2 class="table-avatar">
+                              {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-01.jpg" alt="User Image"></a> {% endcomment %}
+                              <a>{{user.first_name}} {{user.last_name}}</a>
+                           </h2>
+                        </td>
+                        <td>{{user.student.classes}}</td>
+                        <td>{{user.student.fee.transport_fees.amount}}</td>
+                        <td>{{user.student.fee.fee_structure.amount}}</td>
+                        <td>May</td>
+                        <td>{{user.student.fee.may_payment_date}}</td>
+                        <td class="text-right">
+                           {% if user.student.fee.may_status == "Paid" %}
+                               <span class="badge badge-success">{{ user.student.fee.may_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger">{{ user.student.fee.may_status }}</span>
+                           {% endif %}
+                        </td>
+                        {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-download"></i>
+                              </a>
+                           </div> 
+                        </td>
+                        <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-rupee-sign"></i>
+                              </a>
+                           </div> 
+                        </td> {% endcomment %}
+                     </tr>
+                     <tr>
+                        
+                        <td>
+                           <h2 class="table-avatar">
+                              {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-01.jpg" alt="User Image"></a> {% endcomment %}
+                              <a>{{user.first_name}} {{user.last_name}}</a>
+                           </h2>
+                        </td>
+                        <td>{{user.student.classes}}</td>
+                        <td>{{user.student.fee.transport_fees.amount}}</td>
+                        <td>{{user.student.fee.fee_structure.amount}}</td>
+                        <td>June</td>
+                        <td>{{user.student.fee.jun_payment_date}}</td>
+                        <td class="text-right">
+                           {% if user.student.fee.jun_status == "Paid" %}
+                               <span class="badge badge-success">{{ user.student.fee.jun_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger">{{ user.student.fee.jun_status }}</span>
+                           {% endif %}
+                        </td>
+                        {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-download"></i>
+                              </a>
+                           </div> 
+                        </td>
+                        <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-rupee-sign"></i>
+                              </a>
+                           </div> 
+                        </td> {% endcomment %}
+                     </tr>
+                     <tr>
+                        
+                        <td>
+                           <h2 class="table-avatar">
+                              {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-01.jpg" alt="User Image"></a> {% endcomment %}
+                              <a>{{user.first_name}} {{user.last_name}}</a>
+                           </h2>
+                        </td>
+                        <td>{{user.student.classes}}</td>
+                        <td>{{user.student.fee.transport_fees.amount}}</td>
+                        <td>{{user.student.fee.fee_structure.amount}}</td>
+                        <td>July</td>
+                        <td>{{user.student.fee.jul_payment_date}}</td>
+                        <td class="text-right">
+                           {% if user.student.fee.jul_status == "Paid" %}
+                               <span class="badge badge-success">{{ user.student.fee.jul_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger">{{ user.student.fee.jul_status }}</span>
+                           {% endif %}
+                        </td>
+                        {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-download"></i>
+                              </a>
+                           </div> 
+                        </td>
+                        <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-rupee-sign"></i>
+                              </a>
+                           </div> 
+                        </td> {% endcomment %}
+                     </tr>
+                     <tr>
+                        
+                        <td>
+                           <h2 class="table-avatar">
+                              {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-01.jpg" alt="User Image"></a> {% endcomment %}
+                              <a>{{user.first_name}} {{user.last_name}}</a>
+                           </h2>
+                        </td>
+                        <td>{{user.student.classes}}</td>
+                        <td>{{user.student.fee.transport_fees.amount}}</td>
+                        <td>{{user.student.fee.fee_structure.amount}}</td>
+                        <td>August</td>
+                        <td>{{user.student.fee.aug_payment_date}}</td>
+                        <td class="text-right">
+                           {% if user.student.fee.aug_status == "Paid" %}
+                               <span class="badge badge-success">{{ user.student.fee.aug_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger">{{ user.student.fee.aug_status }}</span>
+                           {% endif %}
+                        </td>
+                        {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-download"></i>
+                              </a>
+                           </div> 
+                        </td>
+                        <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-rupee-sign"></i>
+                              </a>
+                           </div> 
+                        </td> {% endcomment %}
+                     </tr>
+                     <tr>
+                        
+                        <td>
+                           <h2 class="table-avatar">
+                              {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-01.jpg" alt="User Image"></a> {% endcomment %}
+                              <a>{{user.first_name}} {{user.last_name}}</a>
+                           </h2>
+                        </td>
+                        <td>{{user.student.classes}}</td>
+                        <td>{{user.student.fee.transport_fees.amount}}</td>
+                        <td>{{user.student.fee.fee_structure.amount}}</td>
+                        <td>September</td>
+                        <td>{{user.student.fee.sep_payment_date}}</td>
+                        <td class="text-right">
+                           {% if user.student.fee.sep_status == "Paid" %}
+                               <span class="badge badge-success">{{ user.student.fee.sep_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger">{{ user.student.fee.sep_status }}</span>
+                           {% endif %}
+                        </td>
+                        {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-download"></i>
+                              </a>
+                           </div> 
+                        </td>
+                        <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-rupee-sign"></i>
+                              </a>
+                           </div> 
+                        </td> {% endcomment %}
+                     </tr>
+                     <tr>
+                        
+                        <td>
+                           <h2 class="table-avatar">
+                              {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-01.jpg" alt="User Image"></a> {% endcomment %}
+                              <a>{{user.first_name}} {{user.last_name}}</a>
+                           </h2>
+                        </td>
+                        <td>{{user.student.classes}}</td>
+                        <td>{{user.student.fee.transport_fees.amount}}</td>
+                        <td>{{user.student.fee.fee_structure.amount}}</td>
+                        <td>October</td>
+                        <td>{{user.student.fee.oct_payment_date}}</td>
+                        <td class="text-right">
+                           {% if user.student.fee.oct_status == "Paid" %}
+                               <span class="badge badge-success">{{ user.student.fee.oct_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger">{{ user.student.fee.oct_status }}</span>
+                           {% endif %}
+                        </td>
+                        {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-download"></i>
+                              </a>
+                           </div> 
+                        </td>
+                        <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-rupee-sign"></i>
+                              </a>
+                           </div> 
+                        </td> {% endcomment %}
+                     </tr>
+                     <tr>
+                       
+                        <td>
+                           <h2 class="table-avatar">
+                              {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-01.jpg" alt="User Image"></a> {% endcomment %}
+                              <a>{{user.first_name}} {{user.last_name}}</a>
+                           </h2>
+                        </td>
+                        <td>{{user.student.classes}}</td>
+                        <td>{{user.student.fee.transport_fees.amount}}</td>
+                        <td>{{user.student.fee.fee_structure.amount}}</td>
+                        <td>November</td>
+                        <td>{{user.student.fee.nov_payment_date}}</td>
+                        <td class="text-right">
+                           {% if user.student.fee.nov_status == "Paid" %}
+                               <span class="badge badge-success">{{ user.student.fee.nov_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger">{{ user.student.fee.nov_status }}</span>
+                           {% endif %}
+                        </td>
+                        {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-download"></i>
+                              </a>
+                           </div> 
+                        </td>
+                        <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-rupee-sign"></i>
+                              </a>
+                           </div> 
+                        </td> {% endcomment %}
+                     </tr>
+                     <tr>
+                        
+                        <td>
+                           <h2 class="table-avatar">
+                              {% comment %} <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-01.jpg" alt="User Image"></a> {% endcomment %}
+                              <a>{{user.first_name}} {{user.last_name}}</a>
+                           </h2>
+                        </td>
+                        <td>{{user.student.classes}}</td>
+                        <td>{{user.student.fee.transport_fees.amount}}</td>
+                        <td>{{user.student.fee.fee_structure.amount}}</td>
+                        <td>December</td>
+                        <td>{{user.student.fee.dec_payment_date}}</td>
+                        <td class="text-right">
+                           {% if user.student.fee.dec_status == "Paid" %}
+                               <span class="badge badge-success">{{ user.student.fee.dec_status }}</span>
+                           {% else %}
+                               <span class="badge badge-danger">{{ user.student.fee.dec_status }}</span>
+                           {% endif %}
+                        </td>
+                        {% comment %} <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-download"></i>
+                              </a>
+                           </div> 
+                        </td>
+                        <td class="text-center">
+                           <div class="actions">
+                              <a href="" class="btn btn-sm bg-primary-light">
+                              <i class="fas fa-rupee-sign"></i>
+                              </a>
+                           </div> 
+                        </td> {% endcomment %}
+                     </tr>
+            
+                   </tbody>
+                </table>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+ </div>
+{% endblock main-content %}

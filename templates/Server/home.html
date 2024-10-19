@@ -1,0 +1,365 @@
+{% extends "Server/header.html" %}
+{% load static %}
+{% block content %}
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close-btn">&times;</span>
+    <img
+      src="{% static "Website/Website/For Image Gallery/FINAL/school4.jpg" %}"
+      alt="Popup Image"
+      class="popup-image"
+    />
+    <div class="popup-text">
+      <h1>FREE ADMISSION & REGISTRATION</h1>
+      <p>Only session fees <strike>₹6000</strike></p>
+      <p>"The best guidance for your lovely kids"</p>
+      <button class="enroll-btn "> <a href="{% url "enroll" %}" >ENROLL NOW</a></button>
+    </div>
+  </div>
+</div>
+<div class="slider-container">
+    <div class="slider">
+      <video class="slider-video" autoplay muted loop>
+        <source
+          src="{% static "Website/Website/VIDEO/school function1.mp4" %}"
+          type="video/mp4"
+        />
+        Your browser does not support the video tag.
+      </video>
+      <div class="slider-message">
+        <h1>Welcome to National Public School Panjipara</h1>
+        <p class="sh-details">
+          National Public School Panjipara under A Unit of K.M. Chishty
+          Memorial Welfare Society. It is the most trusted name in the field
+          of quality education which is recognised throughout the academic
+          world for its progressive approach and commitment to excellence. The
+          school provides ample opportunities for the holistic and all-round
+          development of the child along with promoting critical thinking.
+        </p>
+        <a href="#name" class="btn">Explore More</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- home section ends here  -->
+
+  <!-- about section strats from here  -->
+
+  <div class="container animatable" id="name">
+    <h1>National Public School Panjipara</h1>
+
+    <div class="content">
+      <p>
+        National Public School Panjipara under A Unit of K.M. Chishty Memorial
+        Welfare Society. It is the most trusted name in the field of quality
+        education which is recognised throughout the academic world for its
+        progressive approach and commitment to excellence. The school provides
+        ample opportunities for the holistic and all-round development of the
+        child along with promoting critical thinking. National Public School
+        Panjipara management team is a unique combination of experienced
+        educationist, qualified and trained teachers and corporate manager, it
+        strives to achieve the objectives of the organizations via continuous
+        research, introduction of latest training methodologies and follow up
+        to ensure adherence to set guidelines. Vision: Provide
+        student-centered educational programs that challenge all students to
+        perform at their highest potential to serve the nation. It is a
+        community where all children feel loved, respected and encouraged to
+        develop to their fullest potential. Mission: Provide high quality
+        education and childcare in a safe, respectful and inclusive
+        environment that builds a foundation for life-long learning, globally
+        competative and socially responsible citizens
+      </p>
+      <button class="btn" id="readMoreBtn">Read More</button>
+    </div>
+  </div>
+  <div class="stats-container animatable">
+    <div class="stat-box">
+      <h2 class="counter" data-target="500">0</h2>
+      <p>Toppers</p>
+    </div>
+    <div class="stat-box">
+      <h2 class="counter" data-target="250">0</h2>
+      <p>Mentors</p>
+    </div>
+    <div class="stat-box">
+      <h2 class="counter" data-target="50000">0</h2>
+      <p>Students</p>
+    </div>
+    <div class="stat-box">
+      <h2 class="counter" data-target="600">0</h2>
+      <p>Teachers</p>
+    </div>
+  </div>
+  <h1>Our Features</h1>
+  <div class="grid">
+    <div class="grid-item animatable">
+      <img src="{% static "Website/Website/VMVO/FINAL/VISION.png" %}" alt="Vision" />
+      <div class="overlay">
+        <h2>Vision</h2>
+        <p>Best Educational School Ever</p>
+      </div>
+    </div>
+    <div class="grid-item animatable">
+      <img src="{% static "Website/Website/VMVO/FINAL/MISSION.png" %}" alt="Mission" />
+      <div class="overlay">
+        <h2>Mission</h2>
+        <p>Make Education for Everyone</p>
+      </div>
+    </div>
+    <div class="grid-item animatable">
+      <img src="{% static "Website/Website/VMVO/FINAL/VALUE.png" %}" alt="Values" />
+      <div class="overlay">
+        <h2>Values</h2>
+        <p>Create a bright future</p>
+      </div>
+    </div>
+    <div class="grid-item animatable">
+      <img
+        src="{% static "Website/Website/VMVO/FINAL/OUR ENVIRONMENT.png" %}"
+        alt="Our Environment"
+      />
+      <div class="overlay">
+        <h2>Our Environment</h2>
+        <p>Green campus with CCTV surveillance</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- about section ends here  -->
+
+  <!-- head master-->
+  <div class="top-section animatable">
+    <div class="header-content">
+      <div class="header-icon">
+        <img src="{% static "Website/Website/VMVO/FINAL/enroll.png" %}" alt="Enroll Icon" />
+      </div>
+      <div class="header-text">
+        <h2>ENROLL YOUR CHILD</h2>
+        <p>We assure a great learning experience</p>
+      </div>
+      <div class="header-button">
+        <button class="btn">Contact Us</button>
+      </div>
+    </div>
+  </div>
+  <div class="principal">
+    <section class="principal-message animatable">
+      <div class="message-number animatable">
+        <p>01</p>
+        <span>MESSAGE</span>
+      </div>
+      <div class="message-content animatable">
+        <h3>Shivaji Satam</h3>
+        <h4>PRINCIPAL</h4>
+        <hr />
+        <p class="talk">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestiae
+          aliquam, saepe quia porro deserunt dolore impedit illo tenetur totam
+          quae accusantium doloribus culpa error quisquam fuga earum cum nemo
+          itaque! Assumenda ducimus non sint praesentium error incidunt dolore
+          nihil labore. Sapiente quasi quaerat nihil illo mollitia molestias
+          officia dolores nam velit facilis quas assumenda, sunt id
+          consectetur magni labore! Incidunt! Autem deleniti fugiat, delectus
+          quibusdam similique voluptate inventore dicta tenetur ratione
+          dolores, reiciendis earum qui. Commodi dolore animi amet earum
+          architecto magnam quo cupiditate, illo ex recusandae quisquam,
+          incidunt saepe.
+        </p>
+      </div>
+
+      <div class="message-image animatable">
+        <img
+          src="{% static "Website/Website/Principal Sir/principal sir.png" %}"
+          alt="Principal"
+        />
+      </div>
+    </section>
+  </div>
+  <!-- head master end -->
+  <!-- about start -->
+  <!-- <div class="about-section">
+      <h2>ABOUT NPS</h2>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas porro quam ad rerum accusantium ipsum voluptates dolorum suscipit error! Voluptate enim tempore libero rerum adipisci accusantium excepturi eum velit temporibus?</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita corrupti impedit harum nemo quas mollitia illo possimus totam, exercitationem consequuntur? Inventore amet voluptatibus doloribus quis molestiae voluptate sint ullam libero!</p>
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius, quasi odit, tempora quo quos molestias, error dolore eaque blanditiis quis cupiditate. Perferendis omnis dicta quia autem quaerat officia eveniet maiores?</p>
+      <div class="buttons">
+          <button>Admission Form</button>
+          <button>Parent School Contract</button>
+      </div>
+  </div> -->
+  <!-- about end -->
+  <!-- login section starts  -->
+
+  <h2 class="login-head animatable">Log In</h2>
+  <div class="login-section animatable">
+    <div class="container-login animatable">
+      <a href="#">Student's Login</a>
+      <i class="fa-solid fa-graduation-cap icon-log"></i>
+    </div>
+    <div class="container-login animatable">
+      <a href="#">Teacher's Login</a>
+      <i class="fa-solid fa-chalkboard-user icon-log"></i>
+    </div>
+    <div class="container-login animatable">
+      <a href="#">Admin Login</a>
+      <i class="fa-solid fa-user-tie icon-log"></i>
+    </div>
+  </div>
+  <!-- login section ends   -->
+
+  <!-- notice start -->
+  <div class="notice-container animatable" id="notice">
+    <div class="info">
+      <h3>NOTICE</h3>
+      <hr />
+    </div>
+    <div class="navigation">
+   
+      <div class="main-board">
+        <div class="small-board">
+          <div class="notice-head">
+            <h2>Academic Notice</h2>
+          </div>
+          <div class="notices">
+            {% for i in academic_notice %}
+            <hr />
+            <p>{{i.message}} - "{{i.sent_by}}"</p>
+            <hr />
+            {% endfor %}
+            
+            
+          </div>
+        </div>
+        <div class="small-board">
+          <div class="notice-head">
+            <h2>Hostel Notice</h2>
+          </div>
+          <div class="notices">
+            {% for i in hostel_notice %}
+            <hr />
+            <p>{{i.message}} - "{{i.sent_by}}"</p>
+            <hr />
+            {% endfor %}
+          </div>
+        </div>
+        
+        <div class="small-board">
+          <div class="notice-head">
+            <h2>Transport Notice</h2>
+          </div>
+          <div class="notices">
+            {% for i in transport_notice %}
+            <hr />
+            <p>{{i.message}} - "{{i.sent_by}}"</p>
+            <hr />
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- notice end -->
+  <!-- gallery start -->
+  <div class="gallery-container">
+    <h2>GALLERY</h2>
+    <div class="gallery">
+      <div class="gallery-item animatable" >
+        <img
+          src="{% static "Website/Website/For Image Gallery/FINAL/classroom.png" %}"
+          alt="Image Gallery"
+        />
+        <p>IMAGE GALLERY</p>
+      </div>
+      <div class="gallery-item animatable" >
+        <img src="{% static "Website/Website/VIDEO Gallery/VIDEO Gallery.png" %}"alt="Video Gallery"/>
+        <p>VIDEO GALLERY</p>
+      </div>
+      <div class="gallery-item animatable">
+        <img
+          src="{% static "Website/Website/For Image Gallery/FINAL/swocila education.png" %}"
+          alt="Downloads"
+        />
+        <p>DOWNLOADS</p>
+      </div>
+    </div>
+  </div>
+  <!-- gallery end -->
+  <!-- school-gallery-section -->
+  <div class="school-section animatable">
+    <h1>Life at National Public School</h1>
+    <div class="school-content">
+      <div class="school-description">
+        <h2>Infrastructure that encourages</h2>
+        <p>
+          We believe children enjoy and learn in a setup that gives ample
+          scope to experiment, experience, and excel. Our infrastructure is
+          designed in a way that brings out the best of our kids to prepare
+          them to face the worldly challenges. Lorem ipsum dolor sit amet
+          consectetur adipisicing elit. Hic error, porro sed dicta atque
+          expedita neque, corrupti harum adipisci dolorum similique rem ipsam
+          commodi deleniti. Assumenda eligendi tempore nesciunt distinctio.
+        </p>
+        <button>Know More</button>
+      </div>
+      <div class="school-gallery">
+        <div class="school-gallery-item animatable">
+          <img
+            src="{% static "Website/Website/For Image Gallery/FINAL/comp lab.png" %}"
+            alt="Digital Classroom"
+          />
+          <p>Digital Classroom</p>
+        </div>
+        <div class="school-gallery-item animatable">
+          <img
+            src="{% static "Website/Website/For Image Gallery/FINAL/Library.png" %}"
+            alt="Medical Room"
+          />
+          <p>Library Room</p>
+        </div>
+        <div class="school-gallery-item animatable">
+          <img
+            src="{% static "Website/Website/For Image Gallery/FINAL/travelling.png" %}"
+            alt="Travelling"
+          />
+          <p>Travelling</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-container">
+    <div class="contact-info">
+      <h2>National Public School Panjipara</h2>
+      <p>Milanpally, Panjipara, U/Dinajpur, (W.B), 733208</p>
+      <p>Tel: +91-62950-25646</p>
+      <p>
+        Email:
+        <a href="mailto:nationalpublicschool86@gmail.com"
+          >nationalpublicschool86@gmail.com</a
+        >
+      </p>
+      <div class="footdetails">
+        <a href="#"><i class="fa-regular fa-envelope icon"></i></a>
+        <a href="#"><i class="fa-solid fa-phone icon"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp icon"></i></a>
+      </div>
+    </div>
+    <div class="contact-form" id ="contact-form">
+      <form id="contactForm" method="post">
+        {% csrf_token %}
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter Your Name" required />
+
+        <label for="email">Mobile No:</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter Your Mobile No"/>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" placeholder="Enter Your message" required></textarea>
+
+        <button type="submit">SEND</button>
+      </form>
+    </div>
+  </div>
+{% endblock content %}
+{% comment %} {% include "Server/header.html" %}
+{% include "Server/body.html" %} {% endcomment %}
+

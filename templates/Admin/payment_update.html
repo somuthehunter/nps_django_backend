@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="container-fluid py-4">
+    <div class="page-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h1 class="page-title">Monthly Fees List</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Collect Fees</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    {% include "include/message.html" %}
+    
+    <div class="card shadow">
+        <div class="card-body">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Month</th>
+                                <th>Tuition</th>
+                                <th>Transport</th>
+                                <th>Hostel</th>
+                                <th>Payment Date</th>
+                                <th>Status</th>
+                                <th>Tuition Due</th>
+                                <th>Transport Due</th>
+                                <th>Hostel Due</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for month, month_name in months %}
+                            <tr>
+                                <td><strong>{{ month_name }}</strong></td>
+                                <td>{{ fees.fee_structure.amount }}</td>
+                                <td>{{ fees.transport_fees.amount }}</td>
+                                <td>{{ fees.hostelfee.amount }}</td>
+                                <td>
+                                    <input type="date" name="{{ month }}_payment_date" class="form-control form-control-sm" 
+                                        value="{% if month == 'jan' %}{{ fees.jan_payment_date|date:'Y-m-d' }}
+                                               {% elif month == 'feb' %}{{ fees.feb_payment_date|date:'Y-m-d' }}
+                                               {% elif month == 'mar' %}{{ fees.mar_payment_date|date:'Y-m-d' }}
+                                               {% elif month == 'apr' %}{{ fees.apr_payment_date|date:'Y-m-d' }}
+                                               {% elif month == 'may' %}{{ fees.may_payment_date|date:'Y-m-d' }}
+                                               {% elif month == 'jun' %}{{ fees.jun_payment_date|date:'Y-m-d' }}
+                                               {% elif month == 'jul' %}{{ fees.jul_payment_date|date:'Y-m-d' }}
+                                               {% elif month == 'aug' %}{{ fees.aug_payment_date|date:'Y-m-d' }}
+                                               {% elif month == 'sep' %}{{ fees.sep_payment_date|date:'Y-m-d' }}
+                                               {% elif month == 'oct' %}{{ fees.oct_payment_date|date:'Y-m-d' }}
+                                               {% elif month == 'nov' %}{{ fees.nov_payment_date|date:'Y-m-d' }}
+                                               {% elif month == 'dec' %}{{ fees.dec_payment_date|date:'Y-m-d' }}
+                                               {% endif %}">
+                                </td>
+                                <td>
+                                    <select name="{{ month }}_status" class="form-select form-select-sm status-select">
+                                        <option value="Unpaid" {% if month == 'jan' and fees.jan_status == "Unpaid" %}selected{% endif %}
+                                                               {% if month == 'feb' and fees.feb_status == "Unpaid" %}selected{% endif %}
+                                                               {% if month == 'mar' and fees.mar_status == "Unpaid" %}selected{% endif %}
+                                                               {% if month == 'apr' and fees.apr_status == "Unpaid" %}selected{% endif %}
+                                                               {% if month == 'may' and fees.may_status == "Unpaid" %}selected{% endif %}
+                                                               {% if month == 'jun' and fees.jun_status == "Unpaid" %}selected{% endif %}
+                                                               {% if month == 'jul' and fees.jul_status == "Unpaid" %}selected{% endif %}
+                                                               {% if month == 'aug' and fees.aug_status == "Unpaid" %}selected{% endif %}
+                                                               {% if month == 'sep' and fees.sep_status == "Unpaid" %}selected{% endif %}
+                                                               {% if month == 'oct' and fees.oct_status == "Unpaid" %}selected{% endif %}
+                                                               {% if month == 'nov' and fees.nov_status == "Unpaid" %}selected{% endif %}
+                                                               {% if month == 'dec' and fees.dec_status == "Unpaid" %}selected{% endif %}>Unpaid</option>
+                                        <option value="Paid" {% if month == 'jan' and fees.jan_status == "Paid" %}selected{% endif %}
+                                                             {% if month == 'feb' and fees.feb_status == "Paid" %}selected{% endif %}
+                                                             {% if month == 'mar' and fees.mar_status == "Paid" %}selected{% endif %}
+                                                             {% if month == 'apr' and fees.apr_status == "Paid" %}selected{% endif %}
+                                                             {% if month == 'may' and fees.may_status == "Paid" %}selected{% endif %}
+                                                             {% if month == 'jun' and fees.jun_status == "Paid" %}selected{% endif %}
+                                                             {% if month == 'jul' and fees.jul_status == "Paid" %}selected{% endif %}
+                                                             {% if month == 'aug' and fees.aug_status == "Paid" %}selected{% endif %}
+                                                             {% if month == 'sep' and fees.sep_status == "Paid" %}selected{% endif %}
+                                                             {% if month == 'oct' and fees.oct_status == "Paid" %}selected{% endif %}
+                                                             {% if month == 'nov' and fees.nov_status == "Paid" %}selected{% endif %}
+                                                             {% if month == 'dec' and fees.dec_status == "Paid" %}selected{% endif %}>Paid</option>
+                                        <option value="Due" {% if month == 'jan' and fees.jan_status == "Due" %}selected{% endif %}
+                                                            {% if month == 'feb' and fees.feb_status == "Due" %}selected{% endif %}
+                                                            {% if month == 'mar' and fees.mar_status == "Due" %}selected{% endif %}
+                                                            {% if month == 'apr' and fees.apr_status == "Due" %}selected{% endif %}
+                                                            {% if month == 'may' and fees.may_status == "Due" %}selected{% endif %}
+                                                            {% if month == 'jun' and fees.jun_status == "Due" %}selected{% endif %}
+                                                            {% if month == 'jul' and fees.jul_status == "Due" %}selected{% endif %}
+                                                            {% if month == 'aug' and fees.aug_status == "Due" %}selected{% endif %}
+                                                            {% if month == 'sep' and fees.sep_status == "Due" %}selected{% endif %}
+                                                            {% if month == 'oct' and fees.oct_status == "Due" %}selected{% endif %}
+                                                            {% if month == 'nov' and fees.nov_status == "Due" %}selected{% endif %}
+                                                            {% if month == 'dec' and fees.dec_status == "Due" %}selected{% endif %}>Due</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" name="{{ month }}_due" 
+                                        value="{% if month == 'jan' %}{{ fees.jan_due }}
+                                               {% elif month == 'feb' %}{{ fees.feb_due }}
+                                               {% elif month == 'mar' %}{{ fees.mar_due }}
+                                               {% elif month == 'apr' %}{{ fees.apr_due }}
+                                               {% elif month == 'may' %}{{ fees.may_due }}
+                                               {% elif month == 'jun' %}{{ fees.jun_due }}
+                                               {% elif month == 'jul' %}{{ fees.jul_due }}
+                                               {% elif month == 'aug' %}{{ fees.aug_due }}
+                                               {% elif month == 'sep' %}{{ fees.sep_due }}
+                                               {% elif month == 'oct' %}{{ fees.oct_due }}
+                                               {% elif month == 'nov' %}{{ fees.nov_due }}
+                                               {% elif month == 'dec' %}{{ fees.dec_due }}
+                                               {% endif %}">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" name="{{ month }}_transport_due" 
+                                        value="{% if month == 'jan' %}{{ fees.jan_transport_due }}
+                                               {% elif month == 'feb' %}{{ fees.feb_transport_due }}
+                                               {% elif month == 'mar' %}{{ fees.mar_transport_due }}
+                                               {% elif month == 'apr' %}{{ fees.apr_transport_due }}
+                                               {% elif month == 'may' %}{{ fees.may_transport_due }}
+                                               {% elif month == 'jun' %}{{ fees.jun_transport_due }}
+                                               {% elif month == 'jul' %}{{ fees.jul_transport_due }}
+                                               {% elif month == 'aug' %}{{ fees.aug_transport_due }}
+                                               {% elif month == 'sep' %}{{ fees.sep_transport_due }}
+                                               {% elif month == 'oct' %}{{ fees.oct_transport_due }}
+                                               {% elif month == 'nov' %}{{ fees.nov_transport_due }}
+                                               {% elif month == 'dec' %}{{ fees.dec_transport_due }}
+                                               {% endif %}">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" name="{{ month }}_hostel_due" 
+                                        value="{% if month == 'jan' %}{{ fees.jan_hostel_due }}
+                                               {% elif month == 'feb' %}{{ fees.feb_hostel_due }}
+                                               {% elif month == 'mar' %}{{ fees.mar_hostel_due }}
+                                               {% elif month == 'apr' %}{{ fees.apr_hostel_due }}
+                                               {% elif month == 'may' %}{{ fees.may_hostel_due }}
+                                               {% elif month == 'jun' %}{{ fees.jun_hostel_due }}
+                                               {% elif month == 'jul' %}{{ fees.jul_hostel_due }}
+                                               {% elif month == 'aug' %}{{ fees.aug_hostel_due }}
+                                               {% elif month == 'sep' %}{{ fees.sep_hostel_due }}
+                                               {% elif month == 'oct' %}{{ fees.oct_hostel_due }}
+                                               {% elif month == 'nov' %}{{ fees.nov_hostel_due }}
+                                               {% elif month == 'dec' %}{{ fees.dec_hostel_due }}
+                                               {% endif %}">
+                                </td>
+                                <td>
+                                    <a href="{% url 'monthly_fees_bill' student.id month_name %}" class="btn btn-sm btn-info">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right mt-3">
+                    <button type="submit" class="btn btn-dark">Update All</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table td, .table th { 
+        vertical-align: middle; 
+    }
+    .form-control, .form-select { 
+        max-width: 150px; 
+    }
+    .btn-sm { 
+        padding: .25rem .5rem; 
+        font-size: .875rem; 
+    }
+    .card {
+        border: none;
+        
+    }
+    .shadow {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+    }
+    .page-title {
+        color: #333;
+        font-weight: 600;
+    }
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+        margin: 0;
+    }
+    .table-responsive {
+        
+        overflow: hidden;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const statusSelects = document.querySelectorAll('.status-select');
+    statusSelects.forEach(select => {
+        updateRowStyle(select);
+        select.addEventListener('change', function() {
+            updateRowStyle(this);
+        });
+    });
+
+    function updateRowStyle(select) {
+        const row = select.closest('tr');
+        row.classList.remove('table-success', 'table-danger', 'table-warning');
+        switch(select.value) {
+            case 'Paid':
+                row.classList.add('table-success');
+                break;
+            case 'Unpaid':
+                row.classList.add('table-danger');
+                break;
+            case 'Due':
+                row.classList.add('table-warning');
+                break;
+        }
+    }
+});
+</script>
+{% endblock main-content %}

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block main-content %}
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Edit Result</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_view_result' %}">Results</a></li>
+                <li class="breadcrumb-item active">Edit</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <h5 class="form-title"><span>Result Information</span></h5>
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Field</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Student Name</strong></td>
+                                <td>
+                                    <input type="text" class="form-control " value="{{ result.student.admin.first_name }} {{ result.student.admin.last_name }}" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Subject</strong></td>
+                                <td>
+                                    <input type="text" class="form-control" value="{{ result.subject.subject_name }}" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>FA I</strong></td>
+                                <td>
+                                    <input type="number" class="form-control" name="FA_I" value="{{ result.FA_I }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>NB I</strong></td>
+                                <td>
+                                    <input type="number" class="form-control" name="NB_I" value="{{ result.NB_I }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>SE I</strong></td>
+                                <td>
+                                    <input type="number" class="form-control" name="SE_I" value="{{ result.SE_I }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>First Term Marks</strong></td>
+                                <td>
+                                    <input type="number" class="form-control" name="first_term_marks" value="{{ result.first_term_marks }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >_________________</td>
+                                <td >_________________</td>
+                            </tr>
+                            <tr>
+                                <td><strong>FA II</strong></td>
+                                <td>
+                                    <input type="number" class="form-control" name="FA_II" value="{{ result.FA_II }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>NB II</strong></td>
+                                <td>
+                                    <input type="number" class="form-control" name="NB_II" value="{{ result.NB_II }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>SE II</strong></td>
+                                <td>
+                                    <input type="number" class="form-control" name="SE_II" value="{{ result.SE_II }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Second Term Marks</strong></td>
+                                <td>
+                                    <input type="number" class="form-control" name="second_term_marks" value="{{ result.second_term_marks }}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-danger">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

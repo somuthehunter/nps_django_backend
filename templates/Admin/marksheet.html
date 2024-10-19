@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Card</title>
+    <link rel="stylesheet" href="result.css">
+</head>
+
+<body>
+    <div class="report-card">
+        <header>
+            <div class="school-header">
+                
+                <img src="{% static "img/logologo.jpg" %}" alt="School Logo" class="school-logo">
+                <div class="school-info">
+                    <h1>NATIONAL PUBLIC SCHOOL</h1>
+                    <h2>Under K.M.C.M.W.S.T. Regd. by State Government</h2>
+                    <h2 class="deep">(An English Medium Co-Educational School)</h2>
+                </div>
+                <div class="school-details">
+                    <p><strong>Govt. Rec. No.: 0385/2002-03</strong></p>
+                    <p><strong>ESTD. 2014</strong></p>
+                    <p><strong>School Code: 19940609385</strong></p>
+                </div>
+            </div>
+            <div class="performancee">
+                <div class="subperf">
+                    <h4>PERFORMANCE REVIEW</h4>
+                    <h3>Annual Report Card (2023 - 2024)</h3>
+                </div>
+            </div>
+        </header>
+        <div class="result-body">
+            <section class="student-details">
+                <table>
+                    <tr>
+                        <td><strong class="brown">Name:</strong> {{student.admin.first_name}} {{student.admin.last_name}}</td>
+                        <td><strong class="brown">Student Id:</strong> {{student.student_id}}</td>
+                        <td rowspan="4">
+                            
+                            <td rowspan="4" class="student-photo"><img src="{% static "img/qr.jpg" %}" alt="Student Photo"></td>
+                        </td>
+                        <td rowspan="4" class="student-photo"><img src="{{student.admin.profile_pic.url}}" alt="Student Photo"></td>
+                        
+                    </tr>
+                    <tr>
+                        <td><strong class="brown">Father:</strong> {{student.father_name}}</td>
+                        <td><strong class="brown">Class:</strong> {{student.classes}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong class="brown">Mother:</strong> {{student.mother_name}}</td>
+                        <td><strong class="brown">Section:</strong> {{student.section}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong class="brown">Date of Birth:</strong> {{student.date_of_birth|date:"d-m-Y"}}</td>
+                        <td><strong class="brown">Roll No:</strong> {{student.roll_no}}</td>
+                    </tr>
+                </table>
+            </section>
+            <section class="performance">
+                <h2 class="highlight">Part - A: Scholastic Areas</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Subjects</th>
+                            <th colspan="6">First Terminal Examination</th>
+                            <th colspan="6">Second Terminal Examination</th>
+                            <th colspan="3">Annual Performance</th>
+                        </tr>
+                        <tr>
+                            <th>FA-I (10)</th>
+                            <th>N.B.-I (5)</th>
+                            <th>SUB-BURNCH-I (5)</th>
+                            <th>TERM-I (80)</th>
+                            <th>Total-I (100)</th>
+                            <th>GR-I</th>
+                            <th>FA-II (10)</th>
+                            <th>N.B.II (5)</th>
+                            <th>SUB-BURNCH-II (5)</th>
+                            <th>TERM-II (80)</th>
+                            <th>Total-II(100)</th>
+                            <th>GR-II</th>
+                            <th>TOTAL I+II (200)</th>
+                            <th>PER% (100)</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in subject_results %}
+                        <tr>
+                            <td class="brown">{{ result.subject }}</td>
+                            <td>{{ result.FA_I }}</td>
+                            <td>{{ result.NB_I }}</td>
+                            <td>{{ result.SE_I }}</td>
+                            <td>{{ result.TERM_I }}</td>
+                            <td>{{ result.Total_I }}</td>
+                            <td>{{ result.GR_I }}</td>
+                            <td>{{ result.FA_II }}</td>
+                            <td>{{ result.NB_II }}</td>
+                            <td>{{ result.SE_II }}</td>
+                            <td>{{ result.TERM_II }}</td>
+                            <td>{{ result.Total_II }}</td>
+                            <td>{{ result.GR_II }}</td>
+                            <td>{{ result.TOTAL_I_II }}</td>
+                            <td>{{ result.PER }}</td>
+                            <td>{{ result.Grade }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="brown">Total</td>
+                            <td>{{ total_FA_I }}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ total_TERM_I }}</td>
+                            <td>{{total_first_term}}</td>
+                            <td></td>
+                            <td>{{ total_FA_II }}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{total_TERM_II}}</td>
+                            <td>{{ total_second_term }}</td>
+                            <td colspan="1"></td>
+                            <td>{{ grand_total }}</td>
+                            <td>{{ overall_percentage }}</td>
+                            <td>{{ overall_grade }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </section>
+            <section class="remarks">
+                <table>
+                    
+                    <tr>
+                        <td>
+                            <p class="highlight">Attendance:</p>{{ attendance }}/{{ total_school_days }}
+                        </td>
+                        <td>
+                            <p class="highlight">Marks Obtain:</p>;{{ total_marks }}/{{ total_possible_marks }}
+                        </td>
+                        <td>
+                            <p class="highlight">Perc(%):</p>{{ overall_percentage }}
+                        </td>
+                        <td>
+                            <p class="highlight">Overall Grade:</p>;{{ overall_grade }}
+                        </td>
+                        <td>
+                            <p class="highlight">Remarks:</p>{{ remarks }}
+                        </td>
+                        <td>
+                            <p class="highlight">Rank:</p>{{ rank }}
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            <div class="skillsGrade">
+                <section class="co-scholastic">
+                    <h4 class="highlight">Part - B: Co-Scholastic Areas</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="highlight">Optional Subjects</th>
+                                <th class="highlight">Grade/Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="brown">HOLIDAYS BOOK</td>
+                                <td>A1</td>
+                            </tr>
+                            <tr>
+                                <td class="brown">N.L.</td>
+                                <td>49</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4 class="highlight">Skills</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="highlight">Skills</th>
+                                <th class="highlight">Grade/Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="brown">DISCIPLINE</td>
+                                <td>A1</td>
+                            </tr>
+                            <tr>
+                                <td class="brown">ART EDUCATION</td>
+                                <td>A1</td>
+                            </tr>
+                            <tr>
+                                <td class="brown">WORK EDUCATION</td>
+                                <td>A1</td>
+                            </tr>
+                            <tr>
+                                <td class="brown">PHYSICAL EDUCATION</td>
+                                <td>A1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section class="grade-conversion">
+                    <h4 class="highlight">Scholastic/Co-Scholastic Grade Conversion</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Marks (100)</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>91-100</td>
+                                <td>A1</td>
+                            </tr>
+                            <tr>
+                                <td>81-90</td>
+                                <td>A2</td>
+                            </tr>
+                            <tr>
+                                <td>71-80</td>
+                                <td>B1</td>
+                            </tr>
+                            <tr>
+                                <td>61-70</td>
+                                <td>B2</td>
+                            </tr>
+                            <tr>
+                                <td>51-60</td>
+                                <td>C1</td>
+                            </tr>
+                            <tr>
+                                <td>41-50</td>
+                                <td>C2</td>
+                            </tr>
+                            <tr>
+                                <td>33-40</td>
+                                <td>D</td>
+                            </tr>
+                            <tr>
+                                <td>0-32</td>
+                                <td>E</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+            <section class="signatures">
+                <p class="left">Place: NPS PANJIPARA</p>
+                <p class="margin-io left">Date: </p>
+        </div>
+        <div class="signature-blocks">
+            <div>
+                <p class="highlight">Class Teacher</p>
+            </div>
+            <div>
+                <p class="highlight">Controller of Examinations</p>
+            </div>
+            <div>
+                <p class="highlight">Principal</p>
+            </div>
+        </div>
+        </section>
+
+        <button onclick="window.print();" class="print-button">Print</button>
+    </div>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+        
+        .report-card {
+            position: relative; /* Needed for the pseudo-element positioning */
+            padding: 10px;
+            border: 2px solid #556295;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            width: 100%;
+            max-width: 210mm;
+            box-sizing: border-box;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: none; /* Remove direct background image */
+        }
+        
+        .report-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('{% static "img/logologo.jpg" %}') center center no-repeat;
+            background-size: 25%;
+            opacity: 0.3; /* Adjust the opacity value here */
+            z-index: -1; /* Ensure it stays behind the content */
+        }
+        
+        h1 {
+            color: #563c33;
+            margin: 10px;
+            font-size: 2rem; /* Reduced font size */
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .school-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .school-logo {
+            max-width: 80px;
+            margin-right: 20px;
+        }
+        
+        .school-info {
+            text-align: center;
+        }
+        
+        .result-body {
+            border: 2px solid #563c33;
+            padding: 10px;
+            margin-bottom: 10px;
+            overflow: auto; /* Allows scrolling if content overflows */
+        }
+        
+        .school-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+            order: -1;
+        }
+        
+        .student-details table,
+        .performance table,
+        .co-scholastic table,
+        .grade-conversion table,
+        .remarks table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px; /* Reduced margin */
+        }
+        
+        .student-details td {
+            padding: 5px;
+        }
+        
+        .student-photo {
+            text-align: center;
+        }
+        
+        .qrcode {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #556295;
+        }
+        
+        .student-photo img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        
+        .student-details table {
+            border: 2px solid #556295;
+            border-radius: 5%;
+        }
+        
+        .performance th,
+        .performance td,
+        .co-scholastic th,
+        .co-scholastic td,
+        .grade-conversion th,
+        .grade-conversion td,
+        .remarks th,
+        .remarks td {
+            border: 2px solid #556295;
+            text-align: center;
+            word-wrap: break-word;
+            font-size: 11px;
+        }
+        
+        .performance th,
+        .co-scholastic th,
+        .grade-conversion th {
+            padding: 2px;
+        }
+        
+        .signatures {
+            text-align: center;
+        }
+        
+        .signature-blocks {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+        }
+        
+        .signature-blocks div {
+            text-align: center;
+        }
+        
+        .signature-blocks img {
+            max-width: 80px;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .skillsGrade {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .performancee {
+            color: #563c33;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .subperf {
+            border: 2px solid #563c33;
+            padding: 10px 20px;
+        }
+        
+        section.co-scholastic {
+            height: fit-content;
+            padding: 0 10px 10px;
+            border: 2px solid #556295;
+        }
+        
+        .co-scholastic h4,.grade-conversion h4 {
+            margin: 5px;
+        }
+        
+        .co-scholastic table {
+            margin: 0;
+        }
+        
+        p, h2 {
+            margin: 0;
+            color: #556295;
+        }
+        
+        
+        .deep {
+            color: #21316e;
+        }
+        
+        td {
+            color: #556295;
+            
+        }
+        
+        th {
+            color: #563c33;
+        }
+        
+        .brown {
+            font-weight: 600;
+            color: #563c33;
+        }
+        
+        .highlight {
+            color: #563c33;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        
+        .remarks tbody {
+            width: 100%;
+        }
+        
+        .remarks td {
+            display: flex;
+            padding: 0 15px;
+            align-items: center;
+        }
+        
+        .remarks tr {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        h4 {
+            font-size: 18px;
+        }
+        
+        .print-button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .left {
+            margin-top: 10px;
+            text-align: left;
+        }
+        
+        .margin-io {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .performance h2{
+            margin-bottom: 10px;
+            font-size: 19px;
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+        
+            .school-logo {
+                max-width: 50px;
+            }
+        
+            .qrcode, .student-photo img {
+                width: 50px;
+                height: 50px;
+            }
+            .signatures img {
+                max-width: 50px;
+            }
+        
+            .signature-blocks {
+                flex-direction: column;
+            }
+        
+            .signature-blocks div {
+                margin-bottom: 10px;
+            }
+        
+            .skillsGrade {
+                flex-direction: column;
+            }
+        
+            section.co-scholastic {
+                width: 100%;
+                padding: 10px 0;
+            }
+        
+            .performance table {
+                width: 90%;
+            }
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+            
+            .report-card {
+                width: 100%;
+                max-width: 210mm;
+                height: 267mm;
+                margin: 0;
+                justify-content: center;
+                box-shadow: none;
+            }
+            .report-card::before {
+                opacity: 0.3; /* Adjust opacity for print if needed */
+            }
+            .remarks * {
+                padding: 0;
+            }
+        
+            h1, h2, h3, h4 {
+                font-size: smaller;
+            }
+            h1{
+                font-size: 2rem;
+            }
+            h2{
+                font-size: 1.3rem;
+            }
+            * {
+                padding: unset;
+            }
+        }
+        
+    </style>
+</body>
+
+</html>
