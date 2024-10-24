@@ -37,8 +37,19 @@ def HOME(request):
 def ABOUT(request):
     return render(request, 'Server/about.html')
 
+
+
 def GALLARY(request):
-    return render(request, 'Server/gallary.html')
+    # Retrieve all media files from the database
+    media_files = Media.objects.all()
+    # print(media_files.media_type)
+    
+
+    return render(request, 'Server/gallary.html', {'media_files': media_files})
+
+
+
+
 
 
 # def ENQUIRY(request):
@@ -147,3 +158,5 @@ def PROFILE_UPDATE(request):
 
 def ACCOUNTANT_HOME(request):
     return render(request,'accountant_home.html')
+
+

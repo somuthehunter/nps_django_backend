@@ -1,80 +1,73 @@
 {% extends "Server/header.html" %}
 {% load static %}
+
 {% block content %}
 <!-- gallery section -->
 <div class="gallery-pagecontainer">
     <h1>Gallery</h1>
     <div class="masonry">
-        <div class="masonry-item"><img src="{% static "Website/Website/For Image Gallery/FINAL/celeb ration.png" %}" alt="Work 1"></div>
-        <div class="masonry-item"><img src="{% static "Website/Website/For Image Gallery/FINAL/classro.png" %}" alt="Work 2"></div>
+        <!-- Static media items -->
+        <div class="masonry-item"><img src="{% static 'Website/Website/For Image Gallery/FINAL/celeb ration.png' %}"
+                alt="Work 1"></div>
+        <div class="masonry-item"><img src="{% static 'Website/Website/For Image Gallery/FINAL/classro.png' %}"
+                alt="Work 2"></div>
         <div class="masonry-item">
             <video controls>
-                <source src="Website/Website/VIDEO/outdoor activity.mp4" type="video/mp4">
+                <source src="{% static 'Website/Website/VIDEO/outdoor activity.mp4' %}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/classroom.png" alt="Work 3"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/comp lab.png" alt="Work 4"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/food.png" alt="Work 5"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/inside hostel 1.jpg" alt="Work 6"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/Library.png" alt="Work 7"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/MISSION.png" alt="Work 8"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/NPS.png" alt="Work 9"></div>
+        <!-- More static items -->
+
+        <!-- Dynamic media items from the database -->
+        {% for media in media_files %}
         <div class="masonry-item">
+            {% if media.media_type == 'photo' %}
+            <img src="{{ media.file.url }}" alt="{{ media.title }}">
+            <p>{{ media.file.url }}</p>
+            {% elif media.media_type == 'video' %}
             <video controls>
-                <source src="Website/Website/VIDEO/school function1.mp4" type="video/mp4">
+                <source src="{{ media.file.url }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
+            {% endif %}
         </div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/OUR ENVIRONMENT.png" alt="Work 10"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/outdoor 1.png" alt="Work 11"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/outdoor 2.png" alt="Work 12"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/school4.jpg" alt="Work 13"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/school6.jpg" alt="Work 14"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/school7.jpg" alt="Work 15"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/students.jpg" alt="Work 16"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/STUDY.jpg" alt="Work 17"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/swocila education.png" alt="Work 18"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/teachers.jpg" alt="Work 19"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/tp1.png" alt="Work 20"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/transport.jpg" alt="Work 21"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/travelling.png" alt="Work 22"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/VALUE.png" alt="Work 23"></div>
-        <div class="masonry-item"><img src="Website/Website/For Image Gallery/FINAL/VISION.jpg" alt="Work 24"></div>
+        {% endfor %}
     </div>
 </div>
+
 <style>
     body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
     }
-    
+
     .gallery-pagecontainer {
         padding: 20px;
         text-align: center;
     }
-    
+
     .gallery-pagecontainer h1 {
         margin-bottom: 20px;
     }
-    
+
     /* Masonry grid layout */
     .masonry {
         column-count: 3;
         column-gap: 10px;
     }
-    
+
     .masonry-item {
         break-inside: avoid;
         margin-bottom: 10px;
     }
-    
-    .masonry img, .masonry video {
+
+    .masonry img,
+    .masonry video {
         width: 100%;
         height: auto;
         display: block;
     }
-    
 </style>
 {% endblock content %}

@@ -2309,3 +2309,23 @@ def EDIT_TRANSPORT_FEE(request,id):
         return redirect('view_transport_fee')
     return render(request,'Admin/edit_transport_fee.html',{'transport_fee':transport_fee})
         
+
+from django.core.files.storage import FileSystemStorage
+# from django.http import HttpResponse
+@admin_required
+def gallery_uploads(request):
+    if request.method == 'POST' and request.FILES:
+        uploaded_file = request.FILES['document']
+        media_type = request.POST['media_type']
+        fs = FileSystemStorage()
+        filename = fs.save(uploaded_file.name, uploaded_file)
+        file_url = fs.url(filename)
+
+        # Save file information to the Media model
+        media = Media(title=uploaded_file.name, media_type=media_type, file=file_url)
+        media.save()
+
+        # Redirect to the gallery page after the file is uploaded
+        # return redirect('gallery')  # Ensure this view exists for redirect
+
+    return render(request, 'Admin/gallery_uploads.html')

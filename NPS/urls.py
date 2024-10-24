@@ -30,7 +30,7 @@ urlpatterns = [
     path('dologout',views.doLogout, name='doLogout'),
     path('',views.HOME,name='home'),
     path('about',views.ABOUT,name='about'),
-    path('gallary',views.GALLARY,name='gallary'),
+    path('gallary/',views.GALLARY,name='gallary'),
     path('Enroll/',views.ENROLL,name='enroll'),
     path('Accountant/home',views.ACCOUNTANT_HOME,name='accountant'),
 
@@ -52,6 +52,7 @@ urlpatterns = [
     path('Admin/Student/view/<str:id>',admin_views.VIEW_STUDENT, name = "view_student"),
     path('Admin/Student/edit/<str:id>',admin_views.EDIT_STUDENT, name='edit_student'),
     path('Admin/Student/update',admin_views.UPDATE_STUDENT, name = "update_student"),
+    path('Admin/gallery-uploads/',admin_views.gallery_uploads, name='gallery_uploads'),
     #add
     path('delete_student/<int:student_id>/', admin_views.DELETE_STUDENT, name='delete_student'),
     path('Admin/fees_collection',admin_views.FEES_COLLECTION,name="fees_collection"),
@@ -152,3 +153,6 @@ urlpatterns = [
 
 
  ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
