@@ -76,6 +76,7 @@ urlpatterns = [
     path('Admin/transport_fees/view',admin_views.VIEW_TRANSPORT_FEES,name="view_transport_fee"),
     path('Admin/Library',admin_views.LIBRARY,name="library"),
     path('Admin/Library/checkout',admin_views.CHECKOUT,name="checkout"),
+    path('Admin/Library/generate_bill/<int:user_id>/',admin_views.generate_bill,name="generate_bill"),
     path('Admin/add_to_cart/<int:product_id>',admin_views.add_to_cart,name="add_to_cart"),
     path('Admin/cart/remove/<int:cart_item_id>/', admin_views.remove_from_cart, name='remove_from_cart'),
     path('cart/increase/<int:item_id>/', admin_views.increase_quantity, name='increase_quantity'),

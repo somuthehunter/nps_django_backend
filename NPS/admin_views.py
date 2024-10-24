@@ -1080,24 +1080,11 @@ def CHECKOUT(request):
             if search_query:
                 students = students.filter(admin__first_name__icontains=search_query)
 
-            # If no students were found, you can set students to an empty queryset
-            if not students.exists():
-                students = []
         if request.POST.get('generate_bill'):
-            bill_details = {
-                'items': [
-                    {
-                        'product': item.product,
-                        'quantity': item.quantity,
-                        'total_price': item.product.price * item.quantity
-                    } for item in cart_items
-                ],
-                'total_price': total_price,
-                'students': students,
-            }
-            return render(request, 'Admin/generate_bill.html', bill_details)
-            
-
+            selected_student_id = request.POST.get('selected_student', None)
+            if selected_student_id:
+                return redirect('generate_bill', user_id=selected_student_id)
+        
     return render(request, 'Admin/checkout.html', {
         'cart_items': cart_items,
         'total_price': total_price,
@@ -1105,6 +1092,10 @@ def CHECKOUT(request):
         'students': students,
         'bill_details': bill_details,
     })
+
+
+
+
 
 @admin_required
 def add_to_cart(request, product_id):
@@ -1210,6 +1201,7 @@ def generate_bill(request):
                     'price': product.price,
                     'total': product.price * item.quantity
                 })
+                # print(student_details[1])
 
             item.delete()  # Remove item from cart after processing
         
@@ -1220,7 +1212,7 @@ def generate_bill(request):
             'students': student_details
         }
         
-        return render(request, 'Admin/checkout.html', {
+        return render(request, 'Admin/generate_bill.html', {
             'total_price': total_price,
             'bill_details': bill_details,
             'student': student
@@ -1229,26 +1221,26 @@ def generate_bill(request):
     return redirect('choose_student')  # Redirect if not POST request
 
 
-# def cart(request):
-#     cart = Cart.objects.get(user=request.user, is_active=True)
-#     cart_items = CartItem.objects.filter(cart=cart)
-#     return render(request, 'cart.html', {'cart_items': cart_items})
+def cart(request):
+    cart = Cart.objects.get(user=request.user, is_active=True)
+    cart_items = CartItem.objects.filter(cart=cart)
+    return render(request, 'cart.html', {'cart_items': cart_items})
 
-# def checkout(request):
-#     cart = Cart.objects.get(user=request.user, is_active=True)
-#     cart_items = CartItem.objects.filter(cart=cart)
-#     total_price = sum(item.product.price * item.quantity for item in cart_items)
+def checkout(request):
+    cart = Cart.objects.get(user=request.user, is_active=True)
+    cart_items = CartItem.objects.filter(cart=cart)
+    total_price = sum(item.product.price * item.quantity for item in cart_items)
 
-#     if request.method == 'POST':
-#         order = Order.objects.create(user=request.user, total_price=total_price)
-#         for item in cart_items:
-#             item.product.stock -= item.quantity
-#             item.product.save()
-#         cart.is_active = False
-#         cart.save()
-#         return render(request, 'order_confirmation.html', {'order': order})
+    if request.method == 'POST':
+        order = Order.objects.create(user=request.user, total_price=total_price)
+        for item in cart_items:
+            item.product.stock -= item.quantity
+            item.product.save()
+        cart.is_active = False
+        cart.save()
+        return render(request, 'order_confirmation.html', {'order': order})
 
-#     return render(request, 'checkout.html', {'cart_items': cart_items, 'total_price': total_price})
+    return render(request, 'checkout.html', {'cart_items': cart_items, 'total_price': total_price})
 
 @admin_required
 @other_section_required

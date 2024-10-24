@@ -272,7 +272,7 @@ htmlCopy{% extends "base.html" %}
       <!-- Main Checkout Section -->
     <div class="row">
         <!-- Order Summary -->
-        <div class="col-md-6">
+        <div class="row-md-6">
             <div class="order-summary">
                 <h4>Order Summary</h4>
                 {% if cart_items %}
@@ -301,9 +301,9 @@ htmlCopy{% extends "base.html" %}
         </div>
 
         <!-- Shipping Information -->
-    <div class="col-md-6">
+    <div class="row-md-6">
         <div class="shipping-info">
-            <h4>Student Information</h4>
+            <h4>Billing Information</h4>
             <!-- <form>
                 <div class="form-group">
                     <label for="class-select"><strong>Select Class</strong></label>
@@ -350,18 +350,53 @@ htmlCopy{% extends "base.html" %}
         </form>
         
         {% if students %}
-        <ul>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Sl No</th>
+                    <th scope="col"> Name </th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Section</th>
+                    
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <!-- <li>{{ student.admin.first_name }} {{ student.admin.last_name }} - Class: {{ student.classes }}</li> -->
+                   
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                    <td>{{student.classes}}</td>
+                    <td>{{student.section}}</td>
+                    
+                    <td>
+                        <form action="{% url 'generate_bill' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="student_id" value="{{ student.id }}">
+                            <button type="submit" name="generate_bill" class="btn btn-success">Generate Bill</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+        <!-- <ul>
             {% for student in students %}
             <li>{{ student.admin.first_name }} {{ student.admin.last_name }} - Class: {{ student.classes }}</li>
             {% endfor %}
         </ul>
         {% endif %}
 
-    <!-- Checkout Actions -->
-    <form action="{% url 'checkout' %}" method="post">
+    Checkout Actions -->
+    <!-- <form action="{% url 'checkout' %}" method="post">
         {% csrf_token %}
         <button type="submit" name="generate_bill" class="btn btn-success">Generate Bill</button>
-    </form>
+    </form> -->
 
     <!-- Bill Details -->
     {% if bill_details %}
